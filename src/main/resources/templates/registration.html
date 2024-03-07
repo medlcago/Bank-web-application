@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h3 class="text-center">Регистрация</h3>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/registration}" th:object="${UserRegistrationForm}" method="post">
+                        <div class="form-group">
+                            <label for="username">Имя пользователя</label>
+                            <input type="text" class="form-control" id="username" th:field="*{username}"
+                                   placeholder="Введите имя пользователя">
+                            <small class="text-danger" th:errors="*{username}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}"
+                                   placeholder="Введите email">
+                            <small class="text-danger" th:errors="*{email}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Пароль</label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}"
+                                   placeholder="Введите пароль">
+                            <small class="text-danger" th:errors="*{password}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Подтверждение пароля</label>
+                            <input type="password" class="form-control" id="confirmPassword"
+                                   th:field="*{confirmPassword}"
+                                   placeholder="Подтвердите пароль">
+                            <small class="text-danger" th:errors="*{confirmPassword}"></small>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                    </form>
+                </div>
+                <div class="text-center mt-3">
+                    <p>Уже есть аккаунта?
+                        <a th:href="@{/login}">Войти</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
