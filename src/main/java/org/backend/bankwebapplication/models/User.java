@@ -3,6 +3,7 @@ package org.backend.bankwebapplication.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 
 @Entity
@@ -18,8 +19,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Length(min = 6, max = 16)
     private String username;
+
+    @Length(max = 32)
     private String email;
+
+    @Length(min = 6)
     private String password;
 
     public User(String username, String email, String password) {

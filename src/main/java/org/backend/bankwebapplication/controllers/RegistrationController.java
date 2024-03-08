@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.UserRegistrationForm;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +18,13 @@ import java.security.Principal;
 @Controller
 @Slf4j
 public class RegistrationController {
-    @Autowired
-    private UserRepository repository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
+
+    public RegistrationController(UserRepository repository, PasswordEncoder passwordEncoder) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
 
     @GetMapping("/registration")
@@ -37,26 +39,23 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String processRegistrationForm(@Valid @ModelAttribute("UserRegistrationForm") UserRegistrationForm form, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
-
         String username = form.getUsername();
         String password = form.getPassword();
         String confirmPassword = form.getConfirmPassword();
         String email = form.getEmail();
         if (repository.findByUsername(username).isPresent()) {
             bindingResult.rejectValue("username", "error.usernameTaken", "Имя пользователя уже используется");
-            return "registration";
         }
 
         if (!password.equals(confirmPassword)) {
             bindingResult.rejectValue("confirmPassword", "error.passwordMismatch", "Пароли не совпадают");
-            return "registration";
         }
 
         if (repository.findByEmail(email).isPresent()) {
             bindingResult.rejectValue("email", "error.emailTaken", "Данный адрес уже используется");
+        }
+
+        if (bindingResult.hasErrors()) {
             return "registration";
         }
 
