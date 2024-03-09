@@ -45,14 +45,17 @@ public class RegistrationController {
         String email = form.getEmail();
         if (repository.findByUsername(username).isPresent()) {
             bindingResult.rejectValue("username", "error.usernameTaken", "Имя пользователя уже используется");
+            log.error("Имя пользователя " + username + " уже используется!");
         }
 
         if (!password.equals(confirmPassword)) {
             bindingResult.rejectValue("confirmPassword", "error.passwordMismatch", "Пароли не совпадают");
+            log.error("Пароли не совпадают!");
         }
 
         if (repository.findByEmail(email).isPresent()) {
             bindingResult.rejectValue("email", "error.emailTaken", "Данный адрес уже используется");
+            log.error("Почта " + email + " уже используется!");
         }
 
         if (bindingResult.hasErrors()) {
