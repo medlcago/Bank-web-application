@@ -39,7 +39,11 @@ class SecurityConfig {
                                 .defaultSuccessUrl("/home", true)
                                 .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll)
+                .logout(logout ->
+                        logout.permitAll()
+                                .logoutSuccessUrl("/login?logout")
+                                .invalidateHttpSession(true)
+                )
                 .build();
     }
 

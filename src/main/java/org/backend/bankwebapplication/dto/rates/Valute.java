@@ -23,6 +23,9 @@ public class Valute {
     @JacksonXmlProperty(localName = "CharCode")
     private String charCode;
 
+    @JacksonXmlProperty(localName = "Nominal")
+    private int nominal;
+
     @JacksonXmlProperty(localName = "Name")
     private String name;
 
@@ -35,6 +38,7 @@ public class Valute {
         return "Valute{" + '\'' +
                 "numCode='" + numCode + '\'' +
                 "charCode='" + charCode + '\'' +
+                "nominal='" + nominal + '\'' +
                 "name='" + name + '\'' +
                 ", value=" + value +
                 '}';

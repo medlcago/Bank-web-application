@@ -32,7 +32,7 @@ public class RegistrationController {
         if (principal != null) {
             return "redirect:/home";
         }
-        model.addAttribute("title", "Bank - Регистрация");
+        model.addAttribute("title", "Регистрация");
         model.addAttribute("UserRegistrationForm", new UserRegistrationForm());
         return "registration";
     }

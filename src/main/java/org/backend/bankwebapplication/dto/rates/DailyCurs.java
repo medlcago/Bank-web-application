@@ -19,9 +19,6 @@ public class DailyCurs {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date date;
 
-    @JacksonXmlProperty(localName = "name", isAttribute = true)
-    private String name;
-
     @JacksonXmlProperty(localName = "Valute")
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<Valute> valutes;
@@ -31,7 +28,6 @@ public class DailyCurs {
     public String toString() {
         return "DailyCurs{" +
                 "date=" + date +
-                ", name='" + name + '\'' +
                 ", valutes=" + valutes +
                 '}';
     }

@@ -13,7 +13,7 @@ public class LoginController {
         if (principal != null){
             return "redirect:/home";
         }
-        model.addAttribute("title", "Bank - Вход");
+        model.addAttribute("title", "Вход");
         return "login";
     }
 }
