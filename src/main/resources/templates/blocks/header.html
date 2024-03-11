@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Текущий курс валют<span
+                    <a class="nav-link" th:href="@{/currency}">Текущий курс валют<span
                             class="badge badge-primary ml-1">Новое</span></a>
                 </li>
                 <li class="nav-item">
@@ -28,7 +28,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item text-success" href="#" th:if="${authenticated}" th:text="${user.getName}"></a>
-                        <a class="dropdown-item" href="#">Главная</a>
+                        <a class="dropdown-item" th:href="@{/home}">Главная</a>
                         <a class="dropdown-item text-danger" th:href="@{/logout}" th:if="${authenticated}">Выйти</a>
                     </div>
                 </li>
