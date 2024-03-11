@@ -39,6 +39,10 @@
                                 <small class="text-danger">Неверный логин или пароль</small>
                             </div>
                         </div>
+                        <div class="form-group form-check d-flex align-items-center">
+                            <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                            <label class="form-check-label mb-0" for="remember-me">Запомнить меня</label>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-block">Войти</button>
                     </form>
                     <div th:replace="~{blocks/loading_overlay.html}"></div>

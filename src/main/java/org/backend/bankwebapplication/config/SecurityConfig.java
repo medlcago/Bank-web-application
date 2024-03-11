@@ -38,6 +38,9 @@ class SecurityConfig {
                                 .defaultSuccessUrl("/home", true)
                                 .permitAll()
                 )
+                .rememberMe(remember ->
+                        remember.tokenValiditySeconds(7 * 24 * 60 * 60) // 7 дней в секундах
+                )
                 .logout(logout ->
                         logout.permitAll()
                                 .logoutSuccessUrl("/login?logout")
