@@ -6,6 +6,13 @@
 <header th:replace="~{blocks/header :: header}"></header>
 
 <div class="container">
+    <style>
+        .form-control,
+        .card,
+        .register {
+            border-radius: 10px;
+        }
+    </style>
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card mt-5">
@@ -39,7 +46,7 @@
                                    placeholder="Подтвердите пароль" required minlength="6" maxlength="32">
                             <small class="text-danger" th:errors="*{confirmPassword}"></small>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                        <button type="submit" class="btn btn-primary btn-block register">Зарегистрироваться</button>
                     </form>
                     <div th:replace="~{blocks/loading_overlay.html}"></div>
                 </div>

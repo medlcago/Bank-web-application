@@ -6,6 +6,13 @@
 <header th:replace="~{blocks/header :: header}"></header>
 
 <div class="container">
+    <style>
+        .form-control,
+        .card,
+        .login {
+            border-radius: 10px;
+        }
+    </style>
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div th:if="${param.logout}">
@@ -43,7 +50,7 @@
                             <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
                             <label class="form-check-label mb-0" for="remember-me">Запомнить меня</label>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Войти</button>
+                        <button type="submit" class="btn btn-primary btn-block login">Войти</button>
                     </form>
                     <div th:replace="~{blocks/loading_overlay.html}"></div>
                 </div>
