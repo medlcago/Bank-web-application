@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{blocks/head :: head}"></head>
+<body>
+<header th:replace="~{blocks/header :: header}"></header>
+
+<div class="container mt-5">
+    <style>
+        .form-control,
+        .send-message {
+            border-radius: 10px;
+        }
+    </style>
+
+    <h1>Контакты</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h4>Контактная информация</h4>
+            <address>
+                <p><strong>Адрес:</strong> Москва, ул. Стромынка, 20</p>
+                <p><strong>Телефон:</strong> +7 123 456-7890</p>
+                <p><strong>Email:</strong> bank@mirea.ru</p>
+            </address>
+        </div>
+        <div class="col-md-6">
+            <h4>Форма обратной связи</h4>
+            <form>
+                <div class="form-group">
+                    <label for="name">Имя</label>
+                    <input type="text" class="form-control" id="name" placeholder="Введите имя" required maxlength="64">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Тема</label>
+                    <input type="text" class="form-control" id="subject" placeholder="Введите тему" required maxlength="32">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Введите email" required
+                           maxlength="64">
+                </div>
+                <div class="form-group">
+                    <label for="message">Сообщение</label>
+                    <textarea class="form-control" id="message" rows="4" style="resize: none"
+                              placeholder="Введите сообщение" required maxlength="1024"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary send-message">Отправить</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
