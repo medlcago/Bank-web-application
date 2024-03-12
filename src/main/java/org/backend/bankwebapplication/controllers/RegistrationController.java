@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.UserRegistrationForm;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
+import org.backend.bankwebapplication.services.EmailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +20,13 @@ import java.security.Principal;
 @Slf4j
 public class RegistrationController {
     private final UserRepository repository;
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
-    public RegistrationController(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public RegistrationController(UserRepository repository, EmailService emailService, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
 
@@ -38,7 +41,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String processRegistrationForm(@Valid @ModelAttribute("UserRegistrationForm") UserRegistrationForm form, BindingResult bindingResult) {
+    public String processRegistrationForm(@Valid @ModelAttribute("UserRegistrationForm") UserRegistrationForm form, BindingResult bindingResult, Model model) {
+        model.addAttribute("title", "Регистрация");
+
         String username = form.getUsername();
         String password = form.getPassword();
         String confirmPassword = form.getConfirmPassword();
@@ -56,6 +61,11 @@ public class RegistrationController {
         if (repository.findByEmail(email).isPresent()) {
             bindingResult.rejectValue("email", "error.emailTaken", "Данный адрес уже используется");
             log.error("Почта " + email + " уже используется!");
+        }
+
+        if (!emailService.cleanEmail(email).isPersonal()){
+            bindingResult.rejectValue("email", "error.emailInvalid", "Данная почта запрещена для регистрации");
+            log.error("Почта " + email + " запрещена!");
         }
 
         if (bindingResult.hasErrors()) {
