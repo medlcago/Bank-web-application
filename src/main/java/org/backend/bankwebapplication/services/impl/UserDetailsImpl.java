@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.services;
+package org.backend.bankwebapplication.services.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

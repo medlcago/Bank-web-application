@@ -1,6 +1,7 @@
-package org.backend.bankwebapplication.services;
+package org.backend.bankwebapplication.services.impl;
 
 import org.backend.bankwebapplication.dto.rates.DailyCurs;
+import org.backend.bankwebapplication.services.CurrencyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

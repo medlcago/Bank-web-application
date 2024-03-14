@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" id="email" th:field="*{email}"
-                                   placeholder="Введите email" required maxlength="32">
+                                   placeholder="Введите email" required maxlength="128">
                             <small class="text-danger" th:errors="*{email}"></small>
                         </div>
                         <div class="form-group">

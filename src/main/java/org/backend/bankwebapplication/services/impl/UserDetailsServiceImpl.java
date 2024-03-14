@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.services;
+package org.backend.bankwebapplication.services.impl;
 
 import jakarta.transaction.Transactional;
 import org.backend.bankwebapplication.models.User;

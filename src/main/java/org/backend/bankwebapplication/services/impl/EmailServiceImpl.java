@@ -1,6 +1,7 @@
-package org.backend.bankwebapplication.services;
+package org.backend.bankwebapplication.services.impl;
 
 import org.backend.bankwebapplication.dto.email.EmailCleanResponse;
+import org.backend.bankwebapplication.services.EmailService;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;

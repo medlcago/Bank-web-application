@@ -24,9 +24,10 @@
                 <li th:if="${authenticated}" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="font-weight-bold text-white" th:text="${user.getName}"></span>
+                        <span class="font-weight-bold text-white" th:text="${user.getUsername}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-dark-50" href="#">Мой профиль</a>
                         <a class="dropdown-item text-danger" th:href="@{/logout}">Выйти</a>
                     </div>
                 </li>

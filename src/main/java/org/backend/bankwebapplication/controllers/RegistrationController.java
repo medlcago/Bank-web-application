@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.UserRegistrationForm;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
-import org.backend.bankwebapplication.services.EmailService;
+import org.backend.bankwebapplication.validators.RegistrationValidator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +20,15 @@ import java.security.Principal;
 @Slf4j
 public class RegistrationController {
     private final UserRepository repository;
-    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
-    public RegistrationController(UserRepository repository, EmailService emailService, PasswordEncoder passwordEncoder) {
+    private final RegistrationValidator validator;
+
+    public RegistrationController(UserRepository repository, PasswordEncoder passwordEncoder, RegistrationValidator validator) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
-        this.emailService = emailService;
+        this.validator = validator;
     }
-
 
     @GetMapping("/registration")
     public String showRegistrationForm(Principal principal, Model model) {
@@ -44,35 +44,13 @@ public class RegistrationController {
     public String processRegistrationForm(@Valid @ModelAttribute("UserRegistrationForm") UserRegistrationForm form, BindingResult bindingResult, Model model) {
         model.addAttribute("title", "Регистрация");
 
-        String username = form.getUsername();
-        String password = form.getPassword();
-        String confirmPassword = form.getConfirmPassword();
-        String email = form.getEmail();
-        if (repository.findByUsername(username).isPresent()) {
-            bindingResult.rejectValue("username", "error.usernameTaken", "Имя пользователя уже используется");
-            log.error("Имя пользователя " + username + " уже используется!");
-        }
-
-        if (!password.equals(confirmPassword)) {
-            bindingResult.rejectValue("confirmPassword", "error.passwordMismatch", "Пароли не совпадают");
-            log.error("Пароли не совпадают!");
-        }
-
-        if (repository.findByEmail(email).isPresent()) {
-            bindingResult.rejectValue("email", "error.emailTaken", "Данный адрес уже используется");
-            log.error("Почта " + email + " уже используется!");
-        }
-
-        if (!emailService.cleanEmail(email).isPersonal()){
-            bindingResult.rejectValue("email", "error.emailInvalid", "Данная почта запрещена для регистрации");
-            log.error("Почта " + email + " запрещена!");
-        }
+        validator.validate(form, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
-        User user = new User(username, email, passwordEncoder.encode(password));
+        User user = new User(form.getUsername(), form.getEmail(), passwordEncoder.encode(form.getPassword()));
         repository.save(user);
         return "redirect:/login?registrationSuccess";
     }
