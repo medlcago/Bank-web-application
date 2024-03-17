@@ -27,7 +27,7 @@
                         <span class="font-weight-bold text-white" th:text="${user.getUsername}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-dark-50" href="#">Мой профиль</a>
+                        <a class="dropdown-item text-dark-50" th:href="@{/profile}">Мой профиль</a>
                         <form action="/logout" method="post">
                             <input type="submit" class="dropdown-item text-danger" value="Выйти">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

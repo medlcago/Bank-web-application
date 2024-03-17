@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{blocks/head :: head}"></head>
+<body>
+<header th:replace="~{blocks/header :: header}"></header>
+
+<div class="container mt-5">
+    <!-- User Profile Card -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0" th:text="${user.getUsername}"></h3>
+            <p class="mb-0" th:text="'@' + ${user.getUsername}"></p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Персональная информация</h5>
+            <p class="card-text">Полное имя: <span th:text="${user.getUsername}" class="font-weight-bold"></span></p>
+            <p class="card-text">Почта: <span th:text="${user.getEmail}" class="font-weight-bold"></span></p>
+        </div>
+    </div>
+
+    <!-- Tabs for Cards and Accounts -->
+    <ul class="nav nav-tabs mt-4">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#cards">Карты</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#transfers">Переводы</a>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content mt-3">
+        <!-- Cards Tab -->
+        <div id="cards" class="tab-pane fade show active">
+            <div class="row">
+                <!-- Card 1 -->
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Visa Credit Card</h5>
+                            <p class="card-text">Номер карты: <span class="card-number font-weight-bold">**** **** **** 1234</span></p>
+                            <p class="card-text">Баланс: <span class="card-balance font-weight-bold">$5,000</span></p>
+                            <button class="btn btn-link toggle-button">
+                                <i class="fas fa-eye-slash"></i> Скрыть
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">MasterCard Debit Card</h5>
+                            <p class="card-text">Номер карты: <span class="card-number font-weight-bold">**** **** **** 5678</span></p>
+                            <p class="card-text">Баланс: <span class="card-balance font-weight-bold">$25,000</span></p>
+                            <button class="btn btn-link toggle-button">
+                                <i class="fas fa-eye-slash"></i> Скрыть
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more cards here -->
+            </div>
+        </div>
+
+        <!-- Transfers Tab -->
+        <div id="transfers" class="tab-pane fade">
+            <div class="mt-3">
+                <h5>Перевод средств</h5>
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-username">Имя пользователя получателя</label>
+                        <input type="text" class="form-control" id="recipient-username" placeholder="@medlcago">
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Сумма</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="amount" min="1" maxlength="6" placeholder="500">
+                            <div class="input-group-append">
+                                <span class="input-group-text">USD</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Перевести</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const toggleButtons = document.querySelectorAll('.toggle-button');
+
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const cardBody = this.closest('.card-body');
+            const cardNumber = cardBody.querySelector('.card-number');
+            const cardBalance = cardBody.querySelector('.card-balance');
+
+            const isHidden = cardNumber.style.display === 'none';
+            cardNumber.style.display = isHidden ? 'inline' : 'none';
+            cardBalance.style.display = isHidden ? 'inline' : 'none';
+            this.innerHTML = isHidden ? '<i class="fas fa-eye-slash"></i> Скрыть' : '<i class="fas fa-eye"></i> Показать';
+        });
+    });
+</script>
+</body>
+</html>
