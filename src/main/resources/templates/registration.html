@@ -22,15 +22,29 @@
                 <div class="card-body">
                     <form th:action="@{/registration}" th:object="${UserRegistrationForm}" method="post">
                         <div class="form-group">
-                            <label for="username">Имя пользователя:</label>
+                            <label for="username">Логин:</label>
                             <input type="text" class="form-control" id="username" th:field="*{username}"
-                                   placeholder="Введите имя пользователя" required minlength="6" maxlength="16">
+                                   placeholder="durov" required minlength="6" maxlength="16">
                             <small class="text-danger" th:errors="*{username}"></small>
                         </div>
-                        <div class="form-group">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="firstName">Имя:</label>
+                                <input type="text" class="form-control" id="firstName" th:field="*{firstName}"
+                                       placeholder="Павел" required minlength="2" maxlength="64">
+                                <small class="text-danger" th:errors="*{firstName}"></small>
+                            </div>
+                            <div class="col">
+                                <label for="lastName">Фамилия:</label>
+                                <input type="text" class="form-control" id="lastName" th:field="*{lastName}"
+                                       placeholder="Дуров" required minlength="2" maxlength="64">
+                                <small class="text-danger" th:errors="*{lastName}"></small>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" id="email" th:field="*{email}"
-                                   placeholder="Введите email" required maxlength="128">
+                                   placeholder="durov@example.com" required maxlength="128">
                             <small class="text-danger" th:errors="*{email}"></small>
                         </div>
                         <div class="form-group">

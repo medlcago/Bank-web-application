@@ -8,13 +8,14 @@
     <!-- User Profile Card -->
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <h3 class="mb-0" th:text="${user.getUsername}"></h3>
+            <h3 class="mb-0" th:text="${user.getFullName}"></h3>
             <p class="mb-0" th:text="'@' + ${user.getUsername}"></p>
         </div>
         <div class="card-body">
             <h5 class="card-title">Персональная информация</h5>
-            <p class="card-text">Полное имя: <span th:text="${user.getUsername}" class="font-weight-bold"></span></p>
+            <p class="card-text">Полное имя: <span th:text="${user.getFullName}" class="font-weight-bold"></span></p>
             <p class="card-text">Почта: <span th:text="${user.getEmail}" class="font-weight-bold"></span></p>
+            <p class="card-text">Дата регистрации: <span th:text="${user.getCreatedAt}" class="font-weight-bold"></span></p>
         </div>
     </div>
 

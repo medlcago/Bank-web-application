@@ -3,7 +3,10 @@ package org.backend.bankwebapplication.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
+
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -22,14 +25,30 @@ public class User {
     @Length(min = 6, max = 16)
     private String username;
 
+    @Length(min = 2, max = 64)
+    private String firstName;
+
+    @Length(min = 2, max = 64)
+    private String lastName;
+
     @Length(max = 32)
     private String email;
 
     @Length(min = 6)
     private String password;
 
-    public User(String username, String email, String password) {
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(name = "is_active")
+    private Boolean isActive = true;
+
+
+    public User(String username, String firstName, String lastName, String email, String password) {
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -21,17 +22,27 @@ public class UserDetailsImpl implements UserDetails, Serializable {
 
     private Long id;
     private String username;
+    private String firstName;
+    private String lastName;
     private String email;
     @JsonIgnore
     private String password;
+    private String createdAt;
 
     public static UserDetailsImpl build(User user) {
         return new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
-                user.getPassword()
+                user.getPassword(),
+                user.getCreatedAt().format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss"))
         );
+    }
+
+    public String getFullName() {
+        return String.join(" ", this.firstName, this.lastName);
     }
 
     @Override

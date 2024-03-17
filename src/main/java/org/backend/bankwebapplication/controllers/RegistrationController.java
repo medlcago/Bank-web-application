@@ -50,7 +50,7 @@ public class RegistrationController {
             return "registration";
         }
 
-        User user = new User(form.getUsername(), form.getEmail(), passwordEncoder.encode(form.getPassword()));
+        User user = new User(form.getUsername(), form.getFirstName(), form.getLastName(), form.getEmail(), passwordEncoder.encode(form.getPassword()));
         repository.save(user);
         return "redirect:/login?registrationSuccess";
     }
