@@ -41,7 +41,7 @@
                             <h5 class="card-title">Visa Credit Card</h5>
                             <p class="card-text">Номер карты: <span class="card-number font-weight-bold">**** **** **** 1234</span></p>
                             <p class="card-text">Баланс: <span class="card-balance font-weight-bold">$5,000</span></p>
-                            <button class="btn btn-link toggle-button">
+                            <button id="btn-1" class="btn btn-link toggle-button">
                                 <i class="fas fa-eye-slash"></i> Скрыть
                             </button>
                         </div>
@@ -54,7 +54,7 @@
                             <h5 class="card-title">MasterCard Debit Card</h5>
                             <p class="card-text">Номер карты: <span class="card-number font-weight-bold">**** **** **** 5678</span></p>
                             <p class="card-text">Баланс: <span class="card-balance font-weight-bold">$25,000</span></p>
-                            <button class="btn btn-link toggle-button">
+                            <button id="btn-2" class="btn btn-link toggle-button">
                                 <i class="fas fa-eye-slash"></i> Скрыть
                             </button>
                         </div>
@@ -93,17 +93,28 @@
     const toggleButtons = document.querySelectorAll('.toggle-button');
 
     toggleButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const cardBody = this.closest('.card-body');
-            const cardNumber = cardBody.querySelector('.card-number');
-            const cardBalance = cardBody.querySelector('.card-balance');
+        const cardBody = button.closest('.card-body');
+        const cardNumber = cardBody.querySelector('.card-number');
+        const cardBalance = cardBody.querySelector('.card-balance');
 
+        const isHidden = localStorage.getItem(button.id) === 'hidden';
+        cardNumber.style.display = isHidden ? 'none' : 'inline';
+        cardBalance.style.display = isHidden ? 'none' : 'inline';
+        button.innerHTML = isHidden ? '<i class="fas fa-eye"></i> Показать' : '<i class="fas fa-eye-slash"></i> Скрыть';
+
+
+        button.addEventListener('click', function() {
             const isHidden = cardNumber.style.display === 'none';
             cardNumber.style.display = isHidden ? 'inline' : 'none';
             cardBalance.style.display = isHidden ? 'inline' : 'none';
-            this.innerHTML = isHidden ? '<i class="fas fa-eye-slash"></i> Скрыть' : '<i class="fas fa-eye"></i> Показать';
+
+            button.innerHTML = isHidden ? '<i class="fas fa-eye-slash"></i> Скрыть' : '<i class="fas fa-eye"></i> Показать';
+
+            localStorage.setItem(button.id, isHidden ? 'visible' : 'hidden');
         });
     });
 </script>
+
+
 </body>
 </html>
