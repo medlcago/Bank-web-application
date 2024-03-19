@@ -4,9 +4,8 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.UserRegistrationForm;
 import org.backend.bankwebapplication.models.User;
-import org.backend.bankwebapplication.repository.UserRepository;
+import org.backend.bankwebapplication.services.impl.UserServiceImpl;
 import org.backend.bankwebapplication.validators.RegistrationValidator;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,14 +18,11 @@ import java.security.Principal;
 @Controller
 @Slf4j
 public class RegistrationController {
-    private final UserRepository repository;
-    private final PasswordEncoder passwordEncoder;
-
+    private final UserServiceImpl userService;
     private final RegistrationValidator validator;
 
-    public RegistrationController(UserRepository repository, PasswordEncoder passwordEncoder, RegistrationValidator validator) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
+    public RegistrationController(UserServiceImpl userService, RegistrationValidator validator) {
+        this.userService = userService;
         this.validator = validator;
     }
 
@@ -50,8 +46,8 @@ public class RegistrationController {
             return "registration";
         }
 
-        User user = new User(form.getUsername(), form.getFirstName(), form.getLastName(), form.getEmail(), passwordEncoder.encode(form.getPassword()));
-        repository.save(user);
+        User user = new User(form.getUsername(), form.getFirstName(), form.getLastName(), form.getEmail(), form.getPassword());
+        userService.createUser(user);
         return "redirect:/login?registrationSuccess";
     }
 }
