@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
+        // TODO При создании пользователя должен создаваться как минимум 1 счет
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(user);
     }

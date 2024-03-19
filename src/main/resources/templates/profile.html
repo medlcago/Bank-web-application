@@ -33,34 +33,25 @@
     <div class="tab-content mt-3">
         <!-- Cards Tab -->
         <div id="cards" class="tab-pane fade show active">
-            <div class="row">
-                <!-- Card 1 -->
-                <div class="col-md-4">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Visa Credit Card</h5>
-                            <p class="card-text">Номер карты: <span class="card-number font-weight-bold">**** **** **** 1234</span></p>
-                            <p class="card-text">Баланс: <span class="card-balance font-weight-bold">$5,000</span></p>
-                            <button id="btn-1" class="btn btn-link toggle-button">
-                                <i class="fas fa-eye-slash"></i> Скрыть
-                            </button>
-                        </div>
-                    </div>
+            <div class="row" th:unless="${cards}">
+                <div class="col">
+                    <p>Карты отсутствуют</p>
                 </div>
-                <!-- Card 2 -->
-                <div class="col-md-4">
+            </div>
+
+            <div class="row" th:if="${cards}">
+                <div class="col-md-4" th:each="card : ${cards}">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">MasterCard Debit Card</h5>
-                            <p class="card-text">Номер карты: <span class="card-number font-weight-bold">**** **** **** 5678</span></p>
-                            <p class="card-text">Баланс: <span class="card-balance font-weight-bold">$25,000</span></p>
+                            <h5 class="card-title" th:text="${card.getName}"></h5>
+                            <p class="card-text">Номер карты: <span class="card-number font-weight-bold" th:text="${card.getCardNumber}"></span></p>
+                            <p class="card-text">Баланс: <span class="card-balance font-weight-bold" th:text="${card.getBalance} + ' ' + ${card.getCurrency.getCode}"></span></p>
                             <button id="btn-2" class="btn btn-link toggle-button">
                                 <i class="fas fa-eye-slash"></i> Скрыть
                             </button>
                         </div>
                     </div>
                 </div>
-                <!-- Add more cards here -->
             </div>
         </div>
 

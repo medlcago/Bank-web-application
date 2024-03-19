@@ -13,13 +13,17 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String type;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false, unique = true)
     private String cardNumber;
 
-    private Integer balance;
+    @Column(nullable = false)
+    private Integer balance = 0;
 
     @ManyToOne
     @JoinColumn(name = "currency_id")
@@ -29,12 +33,10 @@ public class Card {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    public Card(String type, String name, String cardNumber, Integer balance, Currency currency, Account account) {
-        this.type = type;
-        this.name = name;
-        this.cardNumber = cardNumber;
+    public void setBalance(Integer balance) {
+        if (balance == null || balance < 0) {
+            throw new IllegalArgumentException("Balance must not be null and must be greater than or equal to 0.");
+        }
         this.balance = balance;
-        this.currency = currency;
-        this.account = account;
     }
 }

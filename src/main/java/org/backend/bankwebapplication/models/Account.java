@@ -15,19 +15,13 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "account_number")
+    @Column(nullable = false, unique = true)
     private String accountNumber;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Card> cards;
-
-    public Account(String accountNumber, User user, List<Card> cards) {
-        this.accountNumber = accountNumber;
-        this.user = user;
-        this.cards = cards;
-    }
 }

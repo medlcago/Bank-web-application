@@ -46,7 +46,13 @@ public class RegistrationController {
             return "registration";
         }
 
-        User user = new User(form.getUsername(), form.getFirstName(), form.getLastName(), form.getEmail(), form.getPassword());
+        User user = new User();
+        user.setUsername(form.getUsername());
+        user.setFirstName(form.getFirstName());
+        user.setLastName(form.getLastName());
+        user.setEmail(form.getEmail());
+        user.setPassword(form.getPassword());
+
         userService.createUser(user);
         return "redirect:/login?registrationSuccess";
     }

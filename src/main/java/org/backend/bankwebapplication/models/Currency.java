@@ -11,23 +11,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Currency {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "code")
+    @Column(nullable = false, unique = true)
     private String code;
 
-    @Column(name = "name")
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "currency")
     private List<Card> cards;
-
-    public Currency(String code, String name, List<Card> cards) {
-        this.code = code;
-        this.name = name;
-        this.cards = cards;
-    }
 }
