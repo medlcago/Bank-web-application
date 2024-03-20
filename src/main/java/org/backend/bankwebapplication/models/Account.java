@@ -3,8 +3,9 @@ package org.backend.bankwebapplication.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "accounts")
@@ -22,6 +23,23 @@ public class Account {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Card> cards;
+    @Column(nullable = false)
+    private Integer balance = 0;
+
+    @Column(nullable = false, unique = true)
+    private String currency;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "card_id")
+    private Card card;
+
+    public void setBalance(Integer balance) {
+        if (balance == null || balance < 0) {
+            throw new IllegalArgumentException("Balance must not be null and must be greater than or equal to 0.");
+        }
+        this.balance = balance;
+    }
 }
