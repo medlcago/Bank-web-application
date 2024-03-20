@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRegistrationForm {
-    @Size(min = 6, max = 16, message = "Логин должен содержать от 6 до 16 символов")
+    @Size(min = 5, max = 16, message = "Логин должен содержать от 5 до 16 символов")
     private String username;
 
     @Size(min = 2, max = 64, message = "Имя должно содержать от 2 до 64 символов")
