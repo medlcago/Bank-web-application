@@ -1,6 +1,7 @@
 package org.backend.bankwebapplication.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,7 +24,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Length(min = 6, max = 16)
+    @Length(min = 5, max = 16)
     private String username;
 
     @Length(min = 2, max = 64)
@@ -32,7 +33,8 @@ public class User {
     @Length(min = 2, max = 64)
     private String lastName;
 
-    @Length(max = 32)
+    @Length(max = 128)
+    @Email
     private String email;
 
     @Length(min = 6)
