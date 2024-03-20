@@ -11,7 +11,7 @@ public class LoginController {
     @GetMapping(value = "/login")
     public String loginPage(Principal principal, Model model) {
         if (principal != null){
-            return "redirect:/home";
+            return "redirect:/profile";
         }
         model.addAttribute("title", "Вход");
         return "login";

@@ -29,7 +29,7 @@ public class RegistrationController {
     @GetMapping("/registration")
     public String showRegistrationForm(Principal principal, Model model) {
         if (principal != null) {
-            return "redirect:/home";
+            return "redirect:/profile";
         }
         model.addAttribute("title", "Регистрация");
         model.addAttribute("UserRegistrationForm", new UserRegistrationForm());

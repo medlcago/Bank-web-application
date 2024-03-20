@@ -31,7 +31,6 @@ class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/registration").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/home").authenticated()
                         .anyRequest().authenticated()
                 ).formLogin(form ->
                         form.loginPage("/login")
