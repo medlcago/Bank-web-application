@@ -46,14 +46,8 @@ public class RegistrationController {
             return "registration";
         }
 
-        User user = new User();
-        user.setUsername(form.getUsername());
-        user.setFirstName(form.getFirstName());
-        user.setLastName(form.getLastName());
-        user.setEmail(form.getEmail());
-        user.setPassword(form.getPassword());
-
-        userService.createUser(user);
+        User user = userService.createUser(form);
+        userService.createCardAndAccount(user, "Debit", "Дебетовая карта", "USD");
         return "redirect:/login?registrationSuccess";
     }
 }

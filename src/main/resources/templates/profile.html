@@ -33,20 +33,20 @@
     <div class="tab-content mt-3">
         <!-- Cards Tab -->
         <div id="cards" class="tab-pane fade show active">
-            <div class="row" th:unless="${cards}">
+            <div class="row" th:unless="${userAccounts}">
                 <div class="col">
                     <p>Карты отсутствуют</p>
                 </div>
             </div>
 
-            <div class="row" th:if="${cards}">
-                <div class="col-md-4" th:each="card : ${cards}">
+            <div class="row" th:if="${userAccounts}">
+                <div class="col-md-4" th:each="account : ${userAccounts}">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${card.getName}"></h5>
-                            <p class="card-text">Номер карты: <span class="card-number font-weight-bold" th:text="${card.getCardNumber}"></span></p>
-                            <p class="card-text">Баланс: <span class="card-balance font-weight-bold" th:text="${card.getBalance} + ' ' + ${card.getCurrency.getCode}"></span></p>
-                            <button th:id="'toggle-button-card-' + ${card.getId}" class="btn btn-link toggle-button">
+                            <h5 class="card-title" th:text="${account.getCard.getName}"></h5>
+                            <p class="card-text">Номер карты: <span class="card-number font-weight-bold" th:text="${account.getCard.getCardNumber}"></span></p>
+                            <p class="card-text">Баланс: <span class="card-balance font-weight-bold" th:text="${account.getBalance} + ' ' + ${account.getCurrency}"></span></p>
+                            <button th:id="'toggle-button-card-' + ${account.getCard.getId}" class="btn btn-link toggle-button">
                                 <i class="fas fa-eye-slash"></i> Скрыть
                             </button>
                         </div>
@@ -105,7 +105,5 @@
         });
     });
 </script>
-
-
 </body>
 </html>

@@ -26,7 +26,7 @@ public class Account {
     @Column(nullable = false)
     private Integer balance = 0;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String currency;
 
     @CreationTimestamp

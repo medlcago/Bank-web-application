@@ -25,6 +25,10 @@ public class UserDetailsImpl implements UserDetails, Serializable {
         return new UserDetailsImpl(user);
     }
 
+    public Long getID() {
+        return user.getId();
+    }
+
     public String getEmail() {
         return user.getEmail();
     }

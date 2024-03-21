@@ -3,7 +3,6 @@ package org.backend.bankwebapplication.services.impl;
 import jakarta.transaction.Transactional;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsernameOrEmail(username, username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("Не удалось найти учетную запись " + username));
         return UserDetailsImpl.build(user);
     }
 }
