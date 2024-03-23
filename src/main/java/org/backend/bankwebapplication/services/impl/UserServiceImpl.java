@@ -9,6 +9,7 @@ import org.backend.bankwebapplication.services.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
         account.setCard(card);
         account.setUser(user);
 
-        user.setAccounts(Stream.of(account).toList());
+        user.setAccounts(Stream.of(account).collect(Collectors.toList()));
         userRepository.save(user);
     }
 
