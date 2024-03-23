@@ -2,6 +2,7 @@ package org.backend.bankwebapplication.controllers;
 
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.services.impl.EmailServiceImpl;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
@@ -24,8 +25,13 @@ public class ForgotPasswordController {
     }
 
     @GetMapping(value = "forgot-password")
-    public String showForgotPasswordForm(Model model) {
+    public String showForgotPasswordForm(Model model, HttpSession session) {
         model.addAttribute("title", "Восстановление пароля");
+        String invalidToken = (String) session.getAttribute("invalidToken");
+        if (invalidToken != null) {
+            session.removeAttribute("invalidToken");
+            model.addAttribute("danger", invalidToken);
+        }
         return "forgot-password";
     }
 
@@ -45,7 +51,7 @@ public class ForgotPasswordController {
         } catch (UsernameNotFoundException ex) {
             model.addAttribute("error", ex.getMessage());
         } catch (MessagingException ex) {
-            model.addAttribute("message", "Произошла ошибка при отправке письма. Пожалуйста, попробуйте еще раз");
+            model.addAttribute("danger", "Произошла ошибка при отправке письма. Пожалуйста, попробуйте еще раз");
         }
 
         return "forgot-password";

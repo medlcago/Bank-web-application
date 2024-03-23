@@ -19,12 +19,19 @@ public class ResetPasswordController {
     }
 
     @GetMapping("/reset-password")
-    public String showResetPasswordForm(@RequestParam(value = "token", required = false) String token, Model model) {
-        if (token == null || userService.getByResetPasswordToken(token) == null) {
+    public String showResetPasswordForm(@RequestParam(value = "token", required = false) String token, Model model, HttpSession session) {
+        if (token == null) {
+            return "redirect:/forgot-password";
+        }
+
+        User user = userService.getByResetPasswordToken(token);
+        if (user == null) {
+            session.setAttribute("invalidToken", "Срок действия ссылки истек");
             return "redirect:/forgot-password";
         }
 
         model.addAttribute("token", token);
+        model.addAttribute("username", user.getUsername());
         model.addAttribute("title", "Сброс пароля");
         return "reset-password";
     }
@@ -33,9 +40,14 @@ public class ResetPasswordController {
     public String processResetPassword(HttpServletRequest request, HttpSession session) {
         String token = request.getParameter("token");
         String password = request.getParameter("password");
-        User user = userService.getByResetPasswordToken(token);
 
-        if (token == null || user == null) {
+        if (token == null) {
+            return "redirect:/forgot-password";
+        }
+
+        User user = userService.getByResetPasswordToken(token);
+        if (user == null) {
+            session.setAttribute("invalidToken", "Срок действия ссылки истек");
             return "redirect:/forgot-password";
         }
 
