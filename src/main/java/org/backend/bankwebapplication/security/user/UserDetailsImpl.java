@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.services.impl;
+package org.backend.bankwebapplication.security.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -71,7 +71,7 @@ public class UserDetailsImpl implements UserDetails, Serializable {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !user.getIsBlocked();
     }
 
     @Override

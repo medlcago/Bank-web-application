@@ -43,7 +43,10 @@
                 <div class="col-md-4" th:each="account : ${userAccounts}">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${account.getCard.getName}"></h5>
+                            <h5 class="card-title">
+                                <span th:text="${account.getCard.getName}"></span>
+                                <small class="text-muted font-italic" th:text="' (' + ${account.getAccountNumber} + ')'"></small>
+                            </h5>
                             <p class="card-text">Номер карты: <span class="card-number font-weight-bold" th:text="${account.getCard.getCardNumber}"></span></p>
                             <p class="card-text">Баланс: <span class="card-balance font-weight-bold" th:text="${account.getBalance} + ' ' + ${account.getCurrency}"></span></p>
                             <button th:id="'toggle-button-card-' + ${account.getCard.getId}" class="btn btn-link toggle-button">

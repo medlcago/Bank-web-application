@@ -1,6 +1,8 @@
 package org.backend.bankwebapplication.config;
 
-import org.backend.bankwebapplication.services.impl.UserDetailsServiceImpl;
+import org.backend.bankwebapplication.security.auth.CustomAuthenticationFailureHandler;
+import org.backend.bankwebapplication.security.auth.CustomAuthenticationProvider;
+import org.backend.bankwebapplication.security.user.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

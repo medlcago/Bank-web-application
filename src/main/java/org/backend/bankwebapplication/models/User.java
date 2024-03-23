@@ -46,6 +46,9 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
+    @Column(name = "is_blocked")
+    private Boolean isBlocked = false;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Account> accounts;
 }

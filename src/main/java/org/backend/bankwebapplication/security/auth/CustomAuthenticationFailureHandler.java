@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.config;
+package org.backend.bankwebapplication.security.auth;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import java.io.IOException;
 
 
-class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         String authErrorMessage = exception.getMessage();

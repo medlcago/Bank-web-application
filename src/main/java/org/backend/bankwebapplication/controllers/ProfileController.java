@@ -2,7 +2,7 @@ package org.backend.bankwebapplication.controllers;
 
 import org.backend.bankwebapplication.models.Account;
 import org.backend.bankwebapplication.repository.AccountRepository;
-import org.backend.bankwebapplication.services.impl.UserDetailsImpl;
+import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

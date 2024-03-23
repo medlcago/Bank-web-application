@@ -1,5 +1,6 @@
 package org.backend.bankwebapplication.validators;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.UserRegistrationForm;
 import org.backend.bankwebapplication.repository.UserRepository;
@@ -21,12 +22,12 @@ public class RegistrationValidator implements Validator {
     }
 
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(@NonNull Class<?> clazz) {
         return UserRegistrationForm.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(@NonNull Object target, @NonNull Errors errors) {
         UserRegistrationForm formToValidate = (UserRegistrationForm) target;
 
         String username = formToValidate.getUsername();

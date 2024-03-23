@@ -1,6 +1,6 @@
 package org.backend.bankwebapplication.controllers;
 
-import org.backend.bankwebapplication.services.impl.UserDetailsImpl;
+import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;

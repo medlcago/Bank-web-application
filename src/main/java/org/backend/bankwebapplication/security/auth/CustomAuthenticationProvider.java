@@ -1,12 +1,9 @@
-package org.backend.bankwebapplication.config;
+package org.backend.bankwebapplication.security.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,7 +30,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
 
         if (!userDetails.isEnabled()) {
-            throw new DisabledException("Учетная запись заблокирована");
+            throw new DisabledException("Учетная запись отключена администратором");
+        }
+
+        if (!userDetails.isAccountNonLocked()) {
+            throw new LockedException("Учетная запись заблокирована");
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
