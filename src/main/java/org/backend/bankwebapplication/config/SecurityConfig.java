@@ -33,6 +33,8 @@ class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/registration").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/forgot-password").permitAll()
+                        .requestMatchers("/reset-password/**","/reset-password").permitAll()
                         .anyRequest().authenticated()
                 ).formLogin(form ->
                         form.loginPage("/login")

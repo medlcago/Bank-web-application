@@ -6,6 +6,7 @@ import org.backend.bankwebapplication.models.Card;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.UserService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +61,24 @@ public class UserServiceImpl implements UserService {
         user.setEmail(form.getEmail());
         user.setPassword(form.getPassword());
         return createUser(user);
+    }
+
+    @Override
+    public User updateResetPasswordToken(String token, String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Почта " + email + " не используется на сайте"));
+        user.setResetPasswordToken(token);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getByResetPasswordToken(String token) {
+        return userRepository.findByResetPasswordToken(token);
+    }
+
+    @Override
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
     }
 }

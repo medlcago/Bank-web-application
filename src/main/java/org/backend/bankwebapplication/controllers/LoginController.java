@@ -15,10 +15,23 @@ public class LoginController {
             return "redirect:/profile";
         }
 
+        String registrationSuccess = (String) session.getAttribute("registrationSuccess");
         String authErrorMessage = (String) session.getAttribute("authErrorMessage");
+        String resetPasswordSuccess = (String) session.getAttribute("resetPasswordSuccess");
+
         if (authErrorMessage != null) {
             session.removeAttribute("authErrorMessage");
             model.addAttribute("authErrorMessage", authErrorMessage);
+        }
+
+        if (resetPasswordSuccess != null) {
+            session.removeAttribute("resetPasswordSuccess");
+            model.addAttribute("resetPasswordSuccess", resetPasswordSuccess);
+        }
+
+        if (registrationSuccess != null) {
+            session.removeAttribute("registrationSuccess");
+            model.addAttribute("registrationSuccess", registrationSuccess);
         }
 
         model.addAttribute("title", "Вход");

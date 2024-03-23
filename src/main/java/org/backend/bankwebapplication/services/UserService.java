@@ -10,4 +10,10 @@ public interface UserService {
     User createUser(User user);
 
     User createUser(UserRegistrationForm form);
+
+    User updateResetPasswordToken(String token, String email);
+
+    User getByResetPasswordToken(String token);
+
+    void updatePassword(User user, String newPassword);
 }

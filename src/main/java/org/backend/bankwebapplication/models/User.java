@@ -49,6 +49,9 @@ public class User {
     @Column(name = "is_blocked")
     private Boolean isBlocked = false;
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Account> accounts;
 }

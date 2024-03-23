@@ -1,5 +1,6 @@
 package org.backend.bankwebapplication.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.UserRegistrationForm;
@@ -37,7 +38,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String processRegistrationForm(@Valid @ModelAttribute("UserRegistrationForm") UserRegistrationForm form, BindingResult bindingResult, Model model) {
+    public String processRegistrationForm(@Valid @ModelAttribute("UserRegistrationForm") UserRegistrationForm form, BindingResult bindingResult, Model model, HttpSession session) {
         model.addAttribute("title", "Регистрация");
 
         validator.validate(form, bindingResult);
@@ -48,6 +49,7 @@ public class RegistrationController {
 
         User user = userService.createUser(form);
         userService.createCardAndAccount(user, "Debit", "Дебетовая карта", "USD");
-        return "redirect:/login?registrationSuccess";
+        session.setAttribute("registrationSuccess", "Регистрация успешна. Пожалуйста, войдите.");
+        return "redirect:/login";
     }
 }

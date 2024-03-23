@@ -24,9 +24,14 @@
                 </div>
             </div>
 
-            <div th:if="${param.registrationSuccess}">
-                <div class="text-center alert alert-success mt-3">Регистрация успешна. Пожалуйста, войдите.</div>
+            <div th:if="${registrationSuccess}">
+                <div class="text-center alert alert-success mt-3"><span th:text="${registrationSuccess}"></span></div>
             </div>
+
+            <div th:if="${resetPasswordSuccess}">
+                <div class="text-center alert alert-success mt-3"><span th:text="${resetPasswordSuccess}"></span></div>
+            </div>
+
             <div class="card mt-5">
                 <div class="card-header">
                     <h3 class="text-center">Вход</h3>
@@ -46,9 +51,18 @@
                                 <small class="text-danger" th:text="${authErrorMessage}"></small>
                             </div>
                         </div>
-                        <div class="form-group form-check d-flex align-items-center">
-                            <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
-                            <label class="form-check-label mb-0" for="remember-me">Запомнить меня</label>
+                        <div class="form-group">
+                            <div class="row justify-content-end">
+                                <div class="col">
+                                    <div class="form-group form-check d-flex align-items-center">
+                                        <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                                        <label class="form-check-label mb-0" for="remember-me">Запомнить меня</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <a th:href="@{/forgot-password}">Забыли пароль?</a>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block login">Войти</button>
                     </form>

@@ -19,4 +19,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE LOWER(u.username) = LOWER(:username) OR LOWER(u.email) = LOWER(:email)")
     Optional<User> findByUsernameOrEmail(String username, String email);
 
+    User findByResetPasswordToken(String token);
 }
