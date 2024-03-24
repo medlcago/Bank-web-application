@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="~{blocks/head :: head}"></head>
+<head>
+    <th:block th:insert="~{blocks/head :: head}"></th:block>
+</head>
+
 <body>
 <header th:replace="~{blocks/header :: header}"></header>
 
@@ -15,7 +18,8 @@
             <h5 class="card-title">Персональная информация</h5>
             <p class="card-text">Полное имя: <span th:text="${user.getFullName}" class="font-weight-bold"></span></p>
             <p class="card-text">Почта: <span th:text="${user.getEmail}" class="font-weight-bold"></span></p>
-            <p class="card-text">Дата регистрации: <span th:text="${user.getCreatedAt}" class="font-weight-bold"></span></p>
+            <p class="card-text">Дата регистрации: <span th:text="${user.getCreatedAt}" class="font-weight-bold"></span>
+            </p>
         </div>
     </div>
 
@@ -45,11 +49,17 @@
                         <div class="card-body">
                             <h5 class="card-title">
                                 <span th:text="${account.getCard.getName}"></span>
-                                <small class="text-muted font-italic" th:text="' (' + ${account.getAccountNumber} + ')'"></small>
+                                <small class="text-muted font-italic"
+                                       th:text="' (' + ${account.getAccountNumber} + ')'"></small>
                             </h5>
-                            <p class="card-text">Номер карты: <span class="card-number font-weight-bold" th:text="${account.getCard.getCardNumber}"></span></p>
-                            <p class="card-text">Баланс: <span class="card-balance font-weight-bold" th:text="${account.getBalance} + ' ' + ${account.getCurrency}"></span></p>
-                            <button th:id="'toggle-button-card-' + ${account.getCard.getId}" class="btn btn-link toggle-button">
+                            <p class="card-text">Номер карты: <span class="card-number font-weight-bold"
+                                                                    th:text="${account.getCard.getCardNumber}"></span>
+                            </p>
+                            <p class="card-text">Баланс: <span class="card-balance font-weight-bold"
+                                                               th:text="${account.getBalance} + ' ' + ${account.getCurrency}"></span>
+                            </p>
+                            <button th:id="'toggle-button-card-' + ${account.getCard.getId}"
+                                    class="btn btn-link toggle-button">
                                 <i class="fas fa-eye-slash"></i> Скрыть
                             </button>
                         </div>
@@ -62,17 +72,22 @@
         <div id="transfers" class="tab-pane fade">
             <div class="mt-3">
                 <h5>Перевод средств</h5>
-                <form>
+                <form method="post" th:action="@{/transfer-money}">
                     <div class="form-group">
                         <label for="recipient-username">Имя пользователя получателя</label>
-                        <input type="text" class="form-control" id="recipient-username" placeholder="@medlcago">
+                        <input type="text" class="form-control" id="recipient-username" name="recipient"
+                               placeholder="@medlcago">
                     </div>
                     <div class="form-group">
                         <label for="amount">Сумма</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" id="amount" min="1" maxlength="6" placeholder="500">
+                            <input type="number" class="form-control" id="amount" name="amount" min="1" maxlength="6"
+                                   placeholder="500">
                             <div class="input-group-append">
-                                <span class="input-group-text">USD</span>
+                                <select class="custom-select" id="currency" name="currency">
+                                    <option th:each="account : ${userAccounts}" th:name="${account.getCurrency}"
+                                            th:text="${account.getCurrency}"></option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -97,7 +112,7 @@
         button.innerHTML = isHidden ? '<i class="fas fa-eye"></i> Показать' : '<i class="fas fa-eye-slash"></i> Скрыть';
 
 
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const isHidden = cardNumber.style.display === 'none';
             cardNumber.style.display = isHidden ? 'inline' : 'none';
             cardBalance.style.display = isHidden ? 'inline' : 'none';

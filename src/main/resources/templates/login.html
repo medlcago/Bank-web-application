@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{blocks/head :: head}"></head>
+<head>
+    <th:block th:insert="~{blocks/head :: head}"></th:block>
+</head>
 
 <body>
 <header th:replace="~{blocks/header :: header}"></header>
