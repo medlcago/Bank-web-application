@@ -59,7 +59,7 @@
                                                                th:text="${account.getBalance} + ' ' + ${account.getCurrency}"></span>
                             </p>
                             <button th:id="'toggle-button-card-' + ${account.getCard.getId}"
-                                    class="btn btn-link toggle-button">
+                                    class="btn btn-link toggle-button-card">
                                 <i class="fas fa-eye-slash"></i> Скрыть
                             </button>
                         </div>
@@ -72,7 +72,7 @@
         <div id="transfers" class="tab-pane fade">
             <div class="mt-3">
                 <h5>Перевод средств</h5>
-                <form method="post" th:action="@{/transfer-money}">
+                <form method="post" th:action="@{/transfer-money}" id="transferForm">
                     <div class="form-group">
                         <label for="recipient-username">Имя пользователя получателя</label>
                         <input type="text" class="form-control" id="recipient-username" name="recipient"
@@ -98,30 +98,7 @@
     </div>
 </div>
 
-<script>
-    const toggleButtons = document.querySelectorAll('.toggle-button');
+<script type="text/javascript" th:src="@{js/profile.js}"></script>
 
-    toggleButtons.forEach(button => {
-        const cardBody = button.closest('.card-body');
-        const cardNumber = cardBody.querySelector('.card-number');
-        const cardBalance = cardBody.querySelector('.card-balance');
-
-        const isHidden = localStorage.getItem(button.id) === 'hidden';
-        cardNumber.style.display = isHidden ? 'none' : 'inline';
-        cardBalance.style.display = isHidden ? 'none' : 'inline';
-        button.innerHTML = isHidden ? '<i class="fas fa-eye"></i> Показать' : '<i class="fas fa-eye-slash"></i> Скрыть';
-
-
-        button.addEventListener('click', function () {
-            const isHidden = cardNumber.style.display === 'none';
-            cardNumber.style.display = isHidden ? 'inline' : 'none';
-            cardBalance.style.display = isHidden ? 'inline' : 'none';
-
-            button.innerHTML = isHidden ? '<i class="fas fa-eye-slash"></i> Скрыть' : '<i class="fas fa-eye"></i> Показать';
-
-            localStorage.setItem(button.id, isHidden ? 'visible' : 'hidden');
-        });
-    });
-</script>
 </body>
 </html>
