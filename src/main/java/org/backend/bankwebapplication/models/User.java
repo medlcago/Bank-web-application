@@ -2,8 +2,7 @@ package org.backend.bankwebapplication.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
@@ -17,26 +16,33 @@ import java.util.List;
                 @UniqueConstraint(columnNames = "email")
         })
 @Data
+@RequiredArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = {"id", "username", "email"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Length(min = 5, max = 16)
+    @NonNull
     private String username;
 
     @Length(min = 2, max = 64)
+    @NonNull
     private String firstName;
 
     @Length(min = 2, max = 64)
+    @NonNull
     private String lastName;
 
     @Length(max = 128)
     @Email
+    @NonNull
     private String email;
 
     @Length(min = 6)
+    @NonNull
     private String password;
 
     @Column(name = "created_at")

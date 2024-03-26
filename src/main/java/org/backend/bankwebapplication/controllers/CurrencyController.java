@@ -16,7 +16,7 @@ public class CurrencyController {
     @GetMapping(value = "/currency")
     public String getCurrency(Model model) {
         model.addAttribute("title", "Курс валют");
-        model.addAttribute("valutes", currencyService.getDailyCurs().getValutes());
+        model.addAttribute("valutes", currencyService.getDailyCurs().valutes());
         return "currency";
     }
 }
