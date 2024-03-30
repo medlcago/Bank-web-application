@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FeedbackForm {
+    @Size(min = 5, max = 16, message = "username должен быть от 5 до 16 символов")
+    @NotNull(message  = "Пожалуйста, введите username")
+    private String username;
+
     @Email(message = "Введите корректный email")
     @Size(min = 5, max = 128, message = "Email должен быть от 5 до 128 символов")
     @NotNull(message  = "Пожалуйста, введите email")

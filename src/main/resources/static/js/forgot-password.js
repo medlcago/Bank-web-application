@@ -49,15 +49,16 @@ class ForgotPasswordForm {
                     if (data.errors.hasOwnProperty(key)) {
                         let errorMessage = data.errors[key];
                         let errorElement = document.getElementById(key + "Error");
-                        if (errorElement) {
+                        let inputElement = document.getElementById(key);
+                        if (errorElement && inputElement) {
                             errorElement.textContent = errorMessage;
+                            inputElement.classList.add("is-invalid");
                         }
                     }
                 }
             } else if (data.message) {
                 console.log(data);
                 this.showSuccessMessage(data.message);
-                this.form.reset();
             }
             this.removeDangerMessage();
 
@@ -71,6 +72,12 @@ class ForgotPasswordForm {
         this.warningMessageContainer.style.display = "block";
         this.errorMessagesContainer.forEach(element => {
             element.textContent = "";
+        });
+
+        const inputElements = this.form.querySelectorAll('input[name="email"]');
+        inputElements.forEach(element => {
+            element.classList.remove("is-invalid");
+            element.classList.add("is-valid");
         });
     }
 
@@ -87,7 +94,7 @@ class ForgotPasswordForm {
 }
 
 const passwordResetForm = new ForgotPasswordForm("passwordResetForm", {
-    error: ".error",
+    error: ".invalid-feedback",
     warning: "warningMessageContainer",
     closeButton: "closeAlertButton"
 });

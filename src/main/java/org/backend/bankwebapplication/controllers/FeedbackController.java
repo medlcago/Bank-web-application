@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
 import java.util.Map;
 
 @RestController
@@ -19,10 +18,10 @@ public class FeedbackController {
     private final EmailServiceImpl emailService;
 
     @PostMapping(value = "feedback")
-    public ResponseEntity<?> feedback(@Valid FeedbackForm form, Principal principal) {
+    public ResponseEntity<?> feedback(@Valid FeedbackForm form) {
         try {
             log.info(form.toString());
-            emailService.sendFeedbackEmail(form.getEmail(), principal.getName(), form.getMessage());
+            emailService.sendFeedbackEmail(form.getEmail(), form.getUsername(), form.getMessage());
             return ResponseEntity.ok(Map.of("message", "Спасибо! Ваше сообщение принято"));
         } catch (Exception ex) {
             log.error(ex.getMessage());

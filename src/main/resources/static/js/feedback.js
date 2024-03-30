@@ -23,8 +23,10 @@ document.getElementById("feedbackForm").addEventListener("submit", event => {
                         if (data.errors.hasOwnProperty(key)) {
                             let errorMessage = data.errors[key];
                             let errorElement = document.getElementById(key + "Error");
-                            if (errorElement) {
+                            let inputElement = document.getElementById(key);
+                            if (errorElement && inputElement) {
                                 errorElement.textContent = errorMessage;
+                                inputElement.classList.add("is-invalid");
                             }
                         }
                     }

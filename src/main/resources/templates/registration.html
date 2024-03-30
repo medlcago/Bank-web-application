@@ -22,45 +22,50 @@
                     <h3 class="text-center">Регистрация</h3>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/registration}" th:object="${UserRegistrationForm}" method="post">
+                    <form th:action="@{/registration}" th:object="${UserRegistrationForm}" method="post" novalidate>
                         <div class="form-group">
                             <label for="username">Логин:</label>
                             <input type="text" class="form-control" id="username" th:field="*{username}"
-                                   placeholder="durov" required minlength="5" maxlength="16">
-                            <small class="text-danger" th:errors="*{username}"></small>
+                                   placeholder="durov" required minlength="5" maxlength="16"
+                                   th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'">
+                            <small class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
                         </div>
                         <div class="form-row">
                             <div class="col">
                                 <label for="firstName">Имя:</label>
                                 <input type="text" class="form-control" id="firstName" th:field="*{firstName}"
-                                       placeholder="Павел" required minlength="2" maxlength="64">
-                                <small class="text-danger" th:errors="*{firstName}"></small>
+                                       placeholder="Павел" required minlength="2" maxlength="64"
+                                       th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'">
+                                <small class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
                             </div>
                             <div class="col">
                                 <label for="lastName">Фамилия:</label>
                                 <input type="text" class="form-control" id="lastName" th:field="*{lastName}"
-                                       placeholder="Дуров" required minlength="2" maxlength="64">
-                                <small class="text-danger" th:errors="*{lastName}"></small>
+                                       placeholder="Дуров" required minlength="2" maxlength="64"
+                                       th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'">
+                                <small class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
                             </div>
                         </div>
                         <div class="form-group mt-2">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" id="email" th:field="*{email}"
-                                   placeholder="durov@example.com" required maxlength="128">
-                            <small class="text-danger" th:errors="*{email}"></small>
+                                   placeholder="durov@example.com" required maxlength="128"
+                                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                            <small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
                         </div>
                         <div class="form-group">
                             <label for="password">Пароль:</label>
                             <input type="password" class="form-control" id="password" th:field="*{password}"
-                                   placeholder="Введите пароль" required minlength="6" maxlength="32">
-                            <small class="text-danger" th:errors="*{password}"></small>
+                                   placeholder="Введите пароль" required minlength="6" maxlength="32"
+                                   th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                            <small class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
                         </div>
                         <div class="form-group">
                             <label for="confirmPassword">Подтверждение пароля:</label>
-                            <input type="password" class="form-control" id="confirmPassword"
-                                   th:field="*{confirmPassword}"
-                                   placeholder="Подтвердите пароль" required minlength="6" maxlength="32">
-                            <small class="text-danger" th:errors="*{confirmPassword}"></small>
+                            <input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}"
+                                   placeholder="Подтвердите пароль" required minlength="6" maxlength="32"
+                                   th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'">
+                            <small class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block register">Зарегистрироваться</button>
                     </form>
