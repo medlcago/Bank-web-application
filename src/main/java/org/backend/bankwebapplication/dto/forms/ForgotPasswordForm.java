@@ -10,13 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FeedbackForm {
+public class ForgotPasswordForm {
     @Email(message = "Введите корректный email")
     @Size(min = 5, max = 128, message = "Email должен быть от 5 до 128 символов")
-    @NotNull(message  = "Пожалуйста, введите email")
+    @NotNull(message = "Пожалуйста, введите email")
     private String email;
-
-    @Size(min = 20, max = 1024, message = "Сообщение должно быть от 20 до 1024 символов")
-    @NotNull(message = "Пожалуйста, введите сообщение")
-    private String message;
 }

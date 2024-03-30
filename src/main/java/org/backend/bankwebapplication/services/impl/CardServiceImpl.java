@@ -8,7 +8,7 @@ import java.util.Random;
 @Service
 public class CardServiceImpl implements CardService {
     @Override
-    public String generateCardNumber(boolean formatted) {
+    public String generateCardNumber(boolean formatted, String delimiter) {
         Random random = new Random();
         String issuerIdentificationNumber = "4"; // Идентификационный номер эмитента карты
         StringBuilder cardNumberBuilder = new StringBuilder(issuerIdentificationNumber);
@@ -23,16 +23,19 @@ public class CardServiceImpl implements CardService {
         cardNumberBuilder.setCharAt(cardNumberBuilder.length() - 1, Character.forDigit(lastDigit, 10));
 
         if (formatted) {
-            return formatCardNumber(cardNumberBuilder.toString());
+            if (delimiter == null || (!delimiter.equals("-") && !delimiter.equals(" "))) {
+                throw new IllegalArgumentException("Разделитель должен быть либо '-' либо ' '");
+            }
+            return formatCardNumber(cardNumberBuilder.toString(), delimiter);
         }
         return cardNumberBuilder.toString();
     }
 
-    private String formatCardNumber(String cardNumber) {
+    private String formatCardNumber(String cardNumber, String delimiter) {
         StringBuilder formattedCardNumber = new StringBuilder();
         for (int i = 0; i < cardNumber.length(); i++) {
             if (i > 0 && i % 4 == 0) {
-                formattedCardNumber.append("-");
+                formattedCardNumber.append(delimiter);
             }
             formattedCardNumber.append(cardNumber.charAt(i));
         }

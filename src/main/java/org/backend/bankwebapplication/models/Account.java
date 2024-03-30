@@ -28,6 +28,7 @@ public class Account {
     private User user;
 
     @Column(nullable = false)
+    @Builder.Default
     private Integer balance = 0;
 
     @Column(nullable = false)

@@ -35,5 +35,6 @@ forgot-password:
   <p>Пожалуйста, проигнорируйте это письмо, если вы его не запрашивали</p>"
 
 dadata:
+  url: https://cleaner.dadata.ru/api/v1/clean/email
   token: ${DADATA_TOKEN}
   secret: ${DADATA_SECRET}

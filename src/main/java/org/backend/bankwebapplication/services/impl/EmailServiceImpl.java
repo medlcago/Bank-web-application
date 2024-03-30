@@ -19,24 +19,32 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
     @Value("${dadata.token}")
-    private String token;
+    private String dadataToken;
 
     @Value("${dadata.secret}")
-    private String secret;
+    private String dadataSecret;
+
+    @Value("${dadata.url}")
+    private String dadataUrl;
+
+    @Value("${forgot-password.resetPasswordMessage}")
+    private String resetPasswordMessage;
+
+    @Value("${spring.mail.username}")
+    private String feedbackRecipient;
 
     private final JavaMailSender mailSender;
 
     @Override
     public EmailCleanResponse cleanEmail(String email) throws RuntimeException {
-        String url = "https://cleaner.dadata.ru/api/v1/clean/email";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Token " + token);
-        headers.set("X-Secret", secret);
+        headers.set("Authorization", "Token " + dadataToken);
+        headers.set("X-Secret", dadataSecret);
 
         HttpEntity<String[]> requestEntity = new HttpEntity<>(new String[]{email}, headers);
-        ResponseEntity<EmailCleanResponse[]> responseEntity = restTemplate.postForEntity(url, requestEntity, EmailCleanResponse[].class);
+        ResponseEntity<EmailCleanResponse[]> responseEntity = restTemplate.postForEntity(dadataUrl, requestEntity, EmailCleanResponse[].class);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             EmailCleanResponse[] response = responseEntity.getBody();
             if (response != null && response.length > 0) {
@@ -61,6 +69,23 @@ public class EmailServiceImpl implements EmailService {
         }
 
         mailSender.send(mimeMessage);
+    }
+
+    public void sendResetPasswordEmail(String to, String username, String resetPasswordLink) throws MessagingException {
+        String subject = "Восстановление пароля | %s".formatted(username);
+        String message = String.format(resetPasswordMessage, username, resetPasswordLink);
+        sendEmail(to, subject, message, true);
+    }
+
+    public void sendFeedbackEmail(String to, String username, String message) throws MessagingException {
+        String emailContent = "<h1>Форма обратной связи</h1>"
+                + "<p>Сообщение от: " + to + "</p>"
+                + "<p>" + message + "</p>";
+        sendEmail(feedbackRecipient, "Форма обратной связи | %s".formatted(username), emailContent, true);
+
+        String confirmationContent = "<h1>Форма обратной связи</h1>"
+                + "<p>Спасибо, что воспользовались формой обратной связи. Ваше сообщение принято.</p>";
+        sendEmail(to, "Форма обратной связи | %s".formatted(username), confirmationContent, true);
     }
 }
 

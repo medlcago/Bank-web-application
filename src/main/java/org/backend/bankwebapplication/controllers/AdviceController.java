@@ -1,22 +1,19 @@
 package org.backend.bankwebapplication.controllers;
 
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class AdviceController {
@@ -55,23 +52,18 @@ public class AdviceController {
      * @return Ответ с ошибками в формате JSON.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
     public ResponseEntity<?> handleValidationException(MethodArgumentNotValidException ex) {
         BindingResult bindingResult = ex.getBindingResult();
-        Map<String, String> errors = new HashMap<>();
+        Map<String, String> errors = bindingResult.getFieldErrors()
+                .stream()
+                .collect(Collectors.toMap(FieldError::getField,
+                        fieldError -> Optional.ofNullable(fieldError.getDefaultMessage())
+                                .orElse("Произошла неизвестная ошибка")));
 
-        for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
+        Map<String, Map<String, String>> response = Map.of("errors", errors);
 
-        Map<String, Map<String, String>> response = new HashMap<>();
-        response.put("errors", errors);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .headers(headers)
-                .body(response);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     /**

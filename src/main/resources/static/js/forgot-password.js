@@ -1,13 +1,13 @@
 class ForgotPasswordForm {
     constructor(formId, messageContainers = {}) {
         this.form = document.getElementById(formId);
-        this.errorMessageContainer = document.getElementById(messageContainers.error || "errorMessageContainer");
-        this.warningMessageContainer = document.getElementById(messageContainers.warning || "warningMessageContainer");
+        this.errorMessagesContainer = document.querySelectorAll(messageContainers.error);
+        this.warningMessageContainer = document.getElementById(messageContainers.warning);
         this.warningMessageText = document.getElementById("warningMessageText");
         this.fetchUrl = 'forgot-password';
 
         this.form.addEventListener("submit", this.handleSubmit.bind(this));
-        const closeAlertButton = document.getElementById(messageContainers.closeButton || "closeAlertButton");
+        const closeAlertButton = document.getElementById(messageContainers.closeButton);
         closeAlertButton.addEventListener("click", this.handleCloseAlert.bind(this));
     }
 
@@ -42,24 +42,36 @@ class ForgotPasswordForm {
 
             const data = await response.json();
 
-            if (data.error) {
-                this.errorMessageContainer.textContent = data.error;
+
+            if (data.errors) {
+                console.log(data.errors);
+                for (let key in data.errors) {
+                    if (data.errors.hasOwnProperty(key)) {
+                        let errorMessage = data.errors[key];
+                        let errorElement = document.getElementById(key + "Error");
+                        if (errorElement) {
+                            errorElement.textContent = errorMessage;
+                        }
+                    }
+                }
             } else if (data.message) {
+                console.log(data);
                 this.showSuccessMessage(data.message);
                 this.form.reset();
             }
-
             this.removeDangerMessage();
+
         } catch (error) {
-            console.error(error);
-            this.errorMessageContainer.textContent = error.message;
+            console.error("Ошибка при отправке формы:", error);
         }
     }
 
     showSuccessMessage(message) {
         this.warningMessageText.textContent = message;
         this.warningMessageContainer.style.display = "block";
-        this.errorMessageContainer.textContent = "";
+        this.errorMessagesContainer.forEach(element => {
+            element.textContent = "";
+        });
     }
 
     handleCloseAlert() {
@@ -75,7 +87,7 @@ class ForgotPasswordForm {
 }
 
 const passwordResetForm = new ForgotPasswordForm("passwordResetForm", {
-    error: "errorMessageContainer",
+    error: ".error",
     warning: "warningMessageContainer",
     closeButton: "closeAlertButton"
 });

@@ -29,7 +29,7 @@ document.getElementById("feedbackForm").addEventListener("submit", event => {
                         }
                     }
                 }
-                if (data.message) {
+                else if (data.message) {
                     form.reset();
                     let errorElements = document.querySelectorAll(".error");
                     errorElements.forEach(element => {
@@ -41,7 +41,7 @@ document.getElementById("feedbackForm").addEventListener("submit", event => {
                 }
             }
         })
-        .catch(function (error) {
+        .catch(error => {
             console.error("Ошибка при отправке формы:", error);
         });
 });

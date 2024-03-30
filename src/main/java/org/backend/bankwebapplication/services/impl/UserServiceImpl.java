@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         Card card = Card.builder()
                 .type(cardType)
                 .name(cardName)
-                .cardNumber(cardService.generateCardNumber(true))
+                .cardNumber(cardService.generateCardNumber(true, "-"))
                 .build();
 
         // Создание счета и связь его с картой и пользователем
@@ -52,7 +52,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Override
     @Transactional
     public User createUser(UserRegistrationForm form) {
         User user = User.builder()

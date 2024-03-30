@@ -52,9 +52,11 @@ public class User {
     private LocalDateTime createdAt;
 
     @Column(name = "is_active")
+    @Builder.Default
     private Boolean isActive = true;
 
     @Column(name = "is_blocked")
+    @Builder.Default
     private Boolean isBlocked = false;
 
     @Column(name = "reset_password_token")
