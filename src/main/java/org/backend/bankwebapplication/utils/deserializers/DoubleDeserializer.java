@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.dto.rates;
+package org.backend.bankwebapplication.utils.deserializers;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;

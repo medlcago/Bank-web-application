@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-public record DailyCurs(
+public record DailyCursResponse(
         @JacksonXmlProperty(localName = "Date", isAttribute = true) @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy") LocalDate date,
-        @JacksonXmlProperty(localName = "Valute") @JacksonXmlElementWrapper(useWrapping = false) List<Valute> valutes) {
+        @JacksonXmlProperty(localName = "Valute") @JacksonXmlElementWrapper(useWrapping = false) List<ValuteResponse> valutes) {
 
 }

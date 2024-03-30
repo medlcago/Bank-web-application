@@ -1,62 +1,81 @@
-// Обрабатываем данные из формы
-const forgotPassword = (email) => {
-    const formData = new FormData();
-    formData.append('email', email);
+class ForgotPasswordForm {
+    constructor(formId, messageContainers = {}) {
+        this.form = document.getElementById(formId);
+        this.errorMessageContainer = document.getElementById(messageContainers.error || "errorMessageContainer");
+        this.warningMessageContainer = document.getElementById(messageContainers.warning || "warningMessageContainer");
+        this.warningMessageText = document.getElementById("warningMessageText");
+        this.fetchUrl = 'forgot-password';
 
-    const csrfToken = document.querySelector('input[name="_csrf"]').value;
+        this.form.addEventListener("submit", this.handleSubmit.bind(this));
+        const closeAlertButton = document.getElementById(messageContainers.closeButton || "closeAlertButton");
+        closeAlertButton.addEventListener("click", this.handleCloseAlert.bind(this));
+    }
 
-    fetch('forgot-password', {
-        method: 'POST',
-        headers: {
-            'X-XSRF-TOKEN': csrfToken
-        },
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
+    handleSubmit(event) {
+        event.preventDefault();
+
+        const email = this.form.querySelector('input[name="email"]').value;
+
+        this.sendRequest(email)
+            .then(() => {
+                console.log("Request successful");
+            })
+            .catch((error) => {
+                console.error('Request failed:', error);
+            });
+    }
+
+    async sendRequest(email) {
+        try {
+            const formData = new FormData();
+            formData.append("email", email);
+
+            const csrfToken = document.querySelector('input[name="_csrf"]').value;
+
+            const response = await fetch(this.fetchUrl, {
+                method: "POST",
+                headers: {
+                    "X-XSRF-TOKEN": csrfToken
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
             if (data.error) {
-                document.getElementById('errorMessageContainer').textContent = data.error;
+                this.errorMessageContainer.textContent = data.error;
             } else if (data.message) {
-                const warningMessageContainer = document.getElementById('warningMessageContainer');
-                const warningMessageText = document.getElementById('warningMessageText');
+                this.showSuccessMessage(data.message);
+                this.form.reset();
+            }
 
-                warningMessageText.textContent = data.message;
-                warningMessageContainer.style.display = 'block';
-                document.getElementById('errorMessageContainer').textContent = '';
-                form.reset();
-            }
-            const dangerMessageContainer = document.getElementById('dangerMessageContainer');
-            if (dangerMessageContainer) {
-                dangerMessageContainer.remove();
-            }
-        })
-        .catch(error => {
+            this.removeDangerMessage();
+        } catch (error) {
             console.error(error);
-            document.getElementById('errorMessageContainer').textContent = error.message;
-        });
-};
+            this.errorMessageContainer.textContent = error.message;
+        }
+    }
 
-// Скрываем алерт при нажатии на крестик
-const handleCloseAlert = () => {
-    const messageContainer = document.getElementById('warningMessageContainer');
-    messageContainer.style.display = 'none';
-};
+    showSuccessMessage(message) {
+        this.warningMessageText.textContent = message;
+        this.warningMessageContainer.style.display = "block";
+        this.errorMessageContainer.textContent = "";
+    }
 
-// Получаем данные из формы
-const handleSubmit = (event) => {
-    event.preventDefault();
+    handleCloseAlert() {
+        this.warningMessageContainer.style.display = "none";
+    }
 
-    const emailInput = document.getElementById('email');
-    const email = emailInput.value;
+    removeDangerMessage() {
+        const dangerMessageContainer = document.getElementById("dangerMessageContainer");
+        if (dangerMessageContainer) {
+            dangerMessageContainer.remove();
+        }
+    }
+}
 
-    forgotPassword(email);
-};
-
-// Прослушиваем событие нажатия на кнопку отправки формы
-const form = document.getElementById('passwordResetForm');
-form.addEventListener('submit', handleSubmit);
-
-// Прослушиваем событие нажатия на крестик
-const closeAlertButton = document.getElementById('closeAlertButton');
-closeAlertButton.addEventListener('click', handleCloseAlert);
+const passwordResetForm = new ForgotPasswordForm("passwordResetForm", {
+    error: "errorMessageContainer",
+    warning: "warningMessageContainer",
+    closeButton: "closeAlertButton"
+});

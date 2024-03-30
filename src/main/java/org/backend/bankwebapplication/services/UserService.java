@@ -1,6 +1,6 @@
 package org.backend.bankwebapplication.services;
 
-import org.backend.bankwebapplication.dto.UserRegistrationForm;
+import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
 import org.backend.bankwebapplication.models.User;
 
 public interface UserService {

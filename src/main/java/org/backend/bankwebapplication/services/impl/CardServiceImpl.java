@@ -8,7 +8,7 @@ import java.util.Random;
 @Service
 public class CardServiceImpl implements CardService {
     @Override
-    public String generateCardNumber() {
+    public String generateCardNumber(boolean formatted) {
         Random random = new Random();
         String issuerIdentificationNumber = "4"; // Идентификационный номер эмитента карты
         StringBuilder cardNumberBuilder = new StringBuilder(issuerIdentificationNumber);
@@ -22,15 +22,23 @@ public class CardServiceImpl implements CardService {
         int lastDigit = (Integer.parseInt(String.valueOf(cardNumberBuilder.charAt(cardNumberBuilder.length() - 1))) + checksum) % 10;
         cardNumberBuilder.setCharAt(cardNumberBuilder.length() - 1, Character.forDigit(lastDigit, 10));
 
+        if (formatted) {
+            return formatCardNumber(cardNumberBuilder.toString());
+        }
+        return cardNumberBuilder.toString();
+    }
+
+    private String formatCardNumber(String cardNumber) {
         StringBuilder formattedCardNumber = new StringBuilder();
-        for (int i = 0; i < cardNumberBuilder.length(); i++) {
+        for (int i = 0; i < cardNumber.length(); i++) {
             if (i > 0 && i % 4 == 0) {
                 formattedCardNumber.append("-");
             }
-            formattedCardNumber.append(cardNumberBuilder.charAt(i));
+            formattedCardNumber.append(cardNumber.charAt(i));
         }
         return formattedCardNumber.toString();
     }
+
 
     @Override
     public int calculateLuhnChecksum(String number) {

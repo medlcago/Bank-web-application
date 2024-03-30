@@ -1,8 +1,9 @@
 package org.backend.bankwebapplication.validators;
 
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.backend.bankwebapplication.dto.UserRegistrationForm;
+import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.EmailService;
 import org.springframework.stereotype.Component;
@@ -10,16 +11,12 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class RegistrationValidator implements Validator {
     private final UserRepository repository;
 
     private final EmailService emailService;
-
-    public RegistrationValidator(UserRepository repository, EmailService emailService) {
-        this.repository = repository;
-        this.emailService = emailService;
-    }
 
     @Override
     public boolean supports(@NonNull Class<?> clazz) {

@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.services;
 
 public interface CardService {
-    String generateCardNumber();
+    String generateCardNumber(boolean formatted);
 
     int calculateLuhnChecksum(String number);
 

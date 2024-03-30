@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.dto;
+package org.backend.bankwebapplication.dto.forms;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;

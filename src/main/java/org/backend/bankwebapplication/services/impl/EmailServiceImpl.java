@@ -2,9 +2,10 @@ package org.backend.bankwebapplication.services.impl;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.dto.email.EmailCleanResponse;
 import org.backend.bankwebapplication.services.EmailService;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,21 +16,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
-    private final Environment environment;
-    private final JavaMailSender mailSender;
+    @Value("${dadata.token}")
+    private String token;
 
-    public EmailServiceImpl(Environment environment, JavaMailSender mailSender) {
-        this.environment = environment;
-        this.mailSender = mailSender;
-    }
+    @Value("${dadata.secret}")
+    private String secret;
+
+    private final JavaMailSender mailSender;
 
     @Override
     public EmailCleanResponse cleanEmail(String email) throws RuntimeException {
         String url = "https://cleaner.dadata.ru/api/v1/clean/email";
-        String token = environment.getRequiredProperty("DADATA_TOKEN");
-        String secret = environment.getRequiredProperty("DADATA_SECRET");
-
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

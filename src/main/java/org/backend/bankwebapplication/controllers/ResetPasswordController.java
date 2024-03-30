@@ -2,6 +2,7 @@ package org.backend.bankwebapplication.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -11,12 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class ResetPasswordController {
     private final UserServiceImpl userService;
-
-    public ResetPasswordController(UserServiceImpl userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/reset-password")
     public String showResetPasswordForm(@RequestParam(value = "token", required = false) String token, Model model, HttpSession session) {

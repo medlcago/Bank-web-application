@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.services;
 
-import org.backend.bankwebapplication.dto.rates.DailyCurs;
+import org.backend.bankwebapplication.dto.rates.DailyCursResponse;
 
 public interface CurrencyService {
-    DailyCurs getDailyCurs();
+    DailyCursResponse getDailyCurs();
 }

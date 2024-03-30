@@ -1,5 +1,6 @@
 package org.backend.bankwebapplication.config;
 
+import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.security.auth.CustomAuthenticationFailureHandler;
 import org.backend.bankwebapplication.security.auth.CustomAuthenticationProvider;
 import org.backend.bankwebapplication.security.user.UserDetailsServiceImpl;
@@ -18,13 +19,9 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 class SecurityConfig {
-    UserDetailsServiceImpl userDetailsService;
-
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Bean
     SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
@@ -34,7 +31,7 @@ class SecurityConfig {
                         .requestMatchers("/registration").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/forgot-password").permitAll()
-                        .requestMatchers("/reset-password/**","/reset-password").permitAll()
+                        .requestMatchers("/reset-password/**", "/reset-password").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .anyRequest().authenticated()
                 ).formLogin(form ->

@@ -1,5 +1,6 @@
 package org.backend.bankwebapplication.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.models.Account;
 import org.backend.bankwebapplication.repository.AccountRepository;
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
@@ -12,12 +13,9 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class ProfileController {
     private final AccountRepository accountRepository;
-
-    public ProfileController(AccountRepository userRepository) {
-        this.accountRepository = userRepository;
-    }
 
     @GetMapping(value = "/profile")
     public String getProfile(Model model, Principal principal) {

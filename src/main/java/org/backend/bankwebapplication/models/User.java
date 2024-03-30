@@ -18,6 +18,8 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @EqualsAndHashCode(of = {"id", "username", "email"})
 public class User {
     @Id

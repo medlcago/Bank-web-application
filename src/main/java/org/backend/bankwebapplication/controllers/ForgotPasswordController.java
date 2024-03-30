@@ -3,9 +3,12 @@ package org.backend.bankwebapplication.controllers;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.services.impl.EmailServiceImpl;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
+import org.backend.bankwebapplication.utils.URLUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,14 +22,14 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
+@RequiredArgsConstructor
 public class ForgotPasswordController {
+    @Value("${forgot-password.resetPasswordMessage}")
+    private String resetPasswordMessage;
+
     private final UserServiceImpl userService;
     private final EmailServiceImpl emailService;
 
-    public ForgotPasswordController(UserServiceImpl userService, EmailServiceImpl emailService) {
-        this.userService = userService;
-        this.emailService = emailService;
-    }
 
     @GetMapping(value = "forgot-password")
     public String showForgotPasswordForm(Model model, HttpSession session) {
@@ -48,7 +51,7 @@ public class ForgotPasswordController {
         try {
             User user = userService.updateResetPasswordToken(token, email);
             String username = user.getUsername();
-            String resetPasswordLink = getSiteURL(request) + "/reset-password?token=" + token;
+            String resetPasswordLink = URLUtils.getSiteURL(request) + "/reset-password?token=" + token;
             String resetPasswordMessage = getResetPasswordMessage(resetPasswordLink, username);
             emailService.sendEmail(email, "Восстановление пароля | " + username, resetPasswordMessage, true);
             return ResponseEntity.ok(Map.of("message", "Мы отправили ссылку для сброса пароля на вашу электронную почту"));
@@ -59,17 +62,7 @@ public class ForgotPasswordController {
         }
     }
 
-    private static String getSiteURL(HttpServletRequest request) {
-        String siteURL = request.getRequestURL().toString();
-        return siteURL.replace(request.getServletPath(), "");
-    }
-
-    private static String getResetPasswordMessage(String resetPasswordLink, String username) {
-        return "<p>Привет, " + username + "!</p>"
-                + "<p>Вы запросили сброс пароля.</p>"
-                + "<p>Перейдите по ссылке ниже, чтобы изменить свой пароль:</p>"
-                + "<p><a href=\"" + resetPasswordLink + "\">Изменить мой пароль</a></p>"
-                + "<br>"
-                + "<p>Пожалуйста, проигнорируйте это письмо, если вы его не запрашивали</p>";
+    private String getResetPasswordMessage(String resetPasswordLink, String username) {
+        return String.format(resetPasswordMessage, username, resetPasswordLink);
     }
 }

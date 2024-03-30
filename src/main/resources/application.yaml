@@ -28,3 +28,12 @@ spring:
       dialect: org.hibernate.dialect.PostgreSQLDialect
       show_sql: true
     show-sql: true
+
+forgot-password:
+  resetPasswordMessage: "<p>Привет, %s!</p><p>Вы запросили сброс пароля.</p>
+  <p>Перейдите по ссылке ниже, чтобы изменить свой пароль:</p><p><a href=\"%s\">Изменить мой пароль</a></p><br>
+  <p>Пожалуйста, проигнорируйте это письмо, если вы его не запрашивали</p>"
+
+dadata:
+  token: ${DADATA_TOKEN}
+  secret: ${DADATA_SECRET}

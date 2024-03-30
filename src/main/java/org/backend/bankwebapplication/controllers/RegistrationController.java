@@ -2,8 +2,9 @@ package org.backend.bankwebapplication.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.backend.bankwebapplication.dto.UserRegistrationForm;
+import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
 import org.backend.bankwebapplication.validators.RegistrationValidator;
@@ -17,15 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.security.Principal;
 
 @Controller
+@RequiredArgsConstructor
 @Slf4j
 public class RegistrationController {
     private final UserServiceImpl userService;
     private final RegistrationValidator validator;
-
-    public RegistrationController(UserServiceImpl userService, RegistrationValidator validator) {
-        this.userService = userService;
-        this.validator = validator;
-    }
 
     @GetMapping("/registration")
     public String showRegistrationForm(Principal principal, Model model) {
