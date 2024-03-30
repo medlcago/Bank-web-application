@@ -2,53 +2,75 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:insert="~{blocks/head :: head}"></th:block>
-</head>
-
-<body>
-<header th:replace="~{blocks/header :: header}"></header>
-
-<div class="container mt-5">
     <style>
         .form-control,
         .send-message {
             border-radius: 10px;
         }
-    </style>
 
+        .contact-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .send-message {
+            background-color: #007bff;
+        }
+
+        .send-message:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<header th:replace="~{blocks/header :: header}"></header>
+
+<div class="container mt-5">
     <h1>Контакты</h1>
 
     <div class="row mt-4">
         <div class="col-md-6">
-            <h4>Контактная информация</h4>
-            <address>
-                <p><strong>Адрес:</strong> Москва, ул. Стромынка, 20</p>
-                <p><strong>Телефон:</strong> +7 123 456-7890</p>
-                <p><strong>Email:</strong> bank@mirea.ru</p>
-            </address>
+            <div class="card contact-card">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Контактная информация</h4>
+                    <address>
+                        <p class="card-text"><strong>Адрес:</strong> Москва, ул. Стромынка, 20</p>
+                        <p class="card-text"><strong>Телефон:</strong> +7 123 456-7890</p>
+                        <p class="card-text"><strong>Email:</strong> bank@mirea.ru</p>
+                    </address>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
-            <h4>Форма обратной связи</h4>
-            <form>
-                <div class="form-group">
-                    <label for="name">Имя</label>
-                    <input type="text" class="form-control" id="name" name="username" placeholder="Введите имя" required
-                           maxlength="64">
+            <div class="card contact-card">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Форма обратной связи</h4>
+                    <form id="feedbackForm" method="post">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Введите email"
+                                   required maxlength="64">
+                            <small class="text-danger error" id="emailError"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Сообщение</label>
+                            <textarea class="form-control" id="message" name="message" rows="4" style="resize: none"
+                                      placeholder="Введите сообщение" required minlength="20"
+                                      maxlength="1024"></textarea>
+                            <small class="text-danger error" id="messageError"></small>
+                        </div>
+                        <div id="successAlert" class="alert alert-success text-center" style="display: none;"></div>
+                        <button type="submit" class="btn btn-primary send-message">Отправить</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Введите email"
-                           required
-                           maxlength="64">
-                </div>
-                <div class="form-group">
-                    <label for="message">Сообщение</label>
-                    <textarea class="form-control" id="message" name="message" rows="4" style="resize: none"
-                              placeholder="Введите сообщение" required maxlength="1024"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary send-message">Отправить</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript" th:src="@{js/feedback.js}"></script>
+
 </body>
 </html>
