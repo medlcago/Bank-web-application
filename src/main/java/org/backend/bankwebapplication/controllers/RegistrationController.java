@@ -5,7 +5,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
-import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
 import org.backend.bankwebapplication.validators.RegistrationValidator;
 import org.springframework.stereotype.Controller;
@@ -44,8 +43,7 @@ public class RegistrationController {
             return "registration";
         }
 
-        User user = userService.createUser(form);
-        userService.createCardAndAccount(user, "Debit", "Дебетовая карта", "USD");
+        userService.createUser(form, "Debit", "Дебетовая карта", "USD");
         session.setAttribute("registrationSuccess", "Регистрация успешна. Пожалуйста, войдите.");
         return "redirect:/login";
     }

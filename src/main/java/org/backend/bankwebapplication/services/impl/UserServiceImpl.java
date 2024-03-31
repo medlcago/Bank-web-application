@@ -47,21 +47,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User createUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
-    @Transactional
-    public User createUser(UserRegistrationForm form) {
+    public void createUser(UserRegistrationForm form, String cardType, String cardName, String currency) {
         User user = User.builder()
                 .username(form.getUsername())
                 .firstName(form.getFirstName())
                 .lastName(form.getLastName())
                 .email(form.getEmail())
-                .password(form.getPassword())
+                .password(passwordEncoder.encode(form.getPassword()))
                 .build();
-        return createUser(user);
+        createCardAndAccount(user, cardType, cardName, currency);
     }
 
     @Override
