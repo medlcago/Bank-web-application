@@ -3,7 +3,6 @@ package org.backend.bankwebapplication.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.models.Account;
 import org.backend.bankwebapplication.models.User;
-import org.backend.bankwebapplication.repository.AccountRepository;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.TransferService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +15,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class TransferServiceImpl implements TransferService {
     private final UserRepository userRepository;
-    private final AccountRepository accountRepository;
+    private final AccountServiceImpl accountService;
 
     @Override
     @Transactional
@@ -32,33 +31,14 @@ public class TransferServiceImpl implements TransferService {
             throw new IllegalArgumentException("Максимальная сумма перевода не должна превышать 100 000 " + currency);
         }
 
-        Account senderAccount = getAccountByCurrency(sender, currency);
-        Account recipientAccount = getAccountByCurrency(recipient, currency);
+        Account senderAccount = accountService.getAccountByCurrency(sender, currency);
+        Account recipientAccount = accountService.getAccountByCurrency(recipient, currency);
 
         if (senderAccount.getBalance().compareTo(amount) < 0) {
             throw new IllegalArgumentException("На вашем счете недостаточно средств");
         }
 
-        updateRecipientAccountBalance(recipientAccount, amount);
-        updateSenderAccountBalance(senderAccount, amount);
-    }
-
-    private Account getAccountByCurrency(User user, String currency) {
-        return user.getAccounts().stream()
-                .filter(account -> account.getCurrency().equals(currency))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Счет с валютой " + currency + " не найден"));
-    }
-
-    private void updateRecipientAccountBalance(Account account, BigDecimal amount) {
-        BigDecimal newBalance = account.getBalance().add(amount);
-        account.setBalance(newBalance);
-        accountRepository.save(account);
-    }
-
-    private void updateSenderAccountBalance(Account account, BigDecimal amount) {
-        BigDecimal newBalance = account.getBalance().subtract(amount);
-        account.setBalance(newBalance);
-        accountRepository.save(account);
+        accountService.updateRecipientAccountBalance(recipientAccount, amount);
+        accountService.updateSenderAccountBalance(senderAccount, amount);
     }
 }
