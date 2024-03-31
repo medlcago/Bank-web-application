@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,7 +30,7 @@ public class Account {
 
     @Column(nullable = false)
     @Builder.Default
-    private Integer balance = 0;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @Column(nullable = false)
     private String currency;
@@ -40,11 +41,4 @@ public class Account {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "card_id")
     private Card card;
-
-    public void setBalance(Integer balance) {
-        if (balance == null || balance < 0) {
-            throw new IllegalArgumentException("Balance must not be null and must be greater than or equal to 0.");
-        }
-        this.balance = balance;
-    }
 }
