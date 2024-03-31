@@ -26,17 +26,24 @@ document.getElementById("feedbackForm").addEventListener("submit", event => {
                             let inputElement = document.getElementById(key);
                             if (errorElement && inputElement) {
                                 errorElement.textContent = errorMessage;
+                                inputElement.classList.remove("is-valid");
                                 inputElement.classList.add("is-invalid");
                             }
                         }
                     }
                 }
                 else if (data.message) {
-                    form.reset();
-                    let errorElements = document.querySelectorAll(".error");
-                    errorElements.forEach(element => {
-                        element.textContent = "";
+                    const errorMessages = document.querySelectorAll(".invalid-feedback");
+                    errorMessages.forEach(error => {
+                        error.textContent = "";
                     });
+
+                    const inputElements = document.querySelectorAll('input.feedback, textarea.feedback');
+                    inputElements.forEach(element => {
+                        element.classList.remove("is-invalid");
+                        element.classList.add("is-valid");
+                    });
+
                     let successAlert = document.getElementById("successAlert")
                     successAlert.style.display = "block";
                     successAlert.textContent = data.message;

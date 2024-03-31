@@ -74,15 +74,17 @@
                 <h5>Перевод средств</h5>
                 <form method="post" th:action="@{/transfer-money}" id="transferForm">
                     <div class="form-group">
-                        <label for="recipient-username">Имя получателя</label>
-                        <input type="text" class="form-control" id="recipient-username" name="recipient"
+                        <label for="recipient">Имя получателя</label>
+                        <input type="text" class="form-control transfer-input" id="recipient" name="recipient"
                                placeholder="@medlcago">
+                        <small class="invalid-feedback" id="recipientError"></small>
                     </div>
                     <div class="form-group">
                         <label for="amount">Сумма</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" id="amount" name="amount" min="1" maxlength="6"
+                            <input type="number" class="form-control transfer-input" id="amount" name="amount" min="1" max="100000" maxlength="6"
                                    placeholder="500">
+                            <small class="invalid-feedback" id="amountError"></small>
                             <div class="input-group-append">
                                 <select class="custom-select" id="currency" name="currency">
                                     <option th:each="account : ${userAccounts}" th:name="${account.getCurrency}"

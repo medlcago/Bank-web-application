@@ -52,6 +52,7 @@ class ForgotPasswordForm {
                         let inputElement = document.getElementById(key);
                         if (errorElement && inputElement) {
                             errorElement.textContent = errorMessage;
+                            inputElement.classList.remove("is-valid");
                             inputElement.classList.add("is-invalid");
                         }
                     }
@@ -74,7 +75,7 @@ class ForgotPasswordForm {
             element.textContent = "";
         });
 
-        const inputElements = this.form.querySelectorAll('input[name="email"]');
+        const inputElements = this.form.querySelectorAll('input.forgot-password');
         inputElements.forEach(element => {
             element.classList.remove("is-invalid");
             element.classList.add("is-valid");
