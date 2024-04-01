@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.forms.ForgotPasswordForm;
+import org.backend.bankwebapplication.dto.response.ErrorResponse;
+import org.backend.bankwebapplication.dto.response.SuccessResponse;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.services.impl.EmailServiceImpl;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
@@ -53,12 +55,12 @@ public class ForgotPasswordController {
             String username = user.getUsername();
             String resetPasswordLink = URLUtils.getSiteURL(request) + "/reset-password?token=" + token;
             emailService.sendResetPasswordEmail(email, username, resetPasswordLink);
-            return ResponseEntity.ok(Map.of("message", "Мы отправили ссылку для сброса пароля на вашу электронную почту"));
+            return ResponseEntity.ok(new SuccessResponse("Мы отправили ссылку для сброса пароля на вашу электронную почту"));
         } catch (UsernameNotFoundException ex) {
-            return ResponseEntity.badRequest().body(Map.of("errors", Map.of("email", ex.getMessage())));
+            return ResponseEntity.badRequest().body(new ErrorResponse(Map.of("email", ex.getMessage())));
         } catch (Exception ex) {
             log.error(ex.getMessage());
-            return ResponseEntity.internalServerError().body(Map.of("errors", Map.of("email", "Произошла ошибка при отправке письма")));
+            return ResponseEntity.internalServerError().body(new ErrorResponse(Map.of("email", "Произошла ошибка при отправке письма")));
         }
     }
 }

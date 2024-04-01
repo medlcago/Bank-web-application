@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.services;
 
 import jakarta.mail.MessagingException;
-import org.backend.bankwebapplication.dto.email.EmailCleanResponse;
+import org.backend.bankwebapplication.dto.response.EmailCleanResponse;
 
 public interface EmailService {
     EmailCleanResponse cleanEmail(String email);

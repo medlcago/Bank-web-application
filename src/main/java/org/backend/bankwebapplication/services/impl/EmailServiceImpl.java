@@ -3,7 +3,7 @@ package org.backend.bankwebapplication.services.impl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.email.EmailCleanResponse;
+import org.backend.bankwebapplication.dto.response.EmailCleanResponse;
 import org.backend.bankwebapplication.services.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
