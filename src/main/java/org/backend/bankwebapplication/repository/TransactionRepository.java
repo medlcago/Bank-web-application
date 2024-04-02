@@ -1,7 +1,11 @@
 package org.backend.bankwebapplication.repository;
 
 import org.backend.bankwebapplication.models.Transaction;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TransactionRepository extends CrudRepository<Transaction, Long> {
+import java.util.List;
+
+
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+    List<Transaction> findBySenderIdOrReceiverId(Long senderId, Long receiverId);
 }

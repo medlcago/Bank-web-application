@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,5 +27,11 @@ public class TransactionServiceImpl implements TransactionService {
                 .type(type)
                 .build();
         transactionRepository.save(transaction);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Transaction> findTransactionsByUserId(Long userId) {
+        return transactionRepository.findBySenderIdOrReceiverId(userId, userId);
     }
 }
