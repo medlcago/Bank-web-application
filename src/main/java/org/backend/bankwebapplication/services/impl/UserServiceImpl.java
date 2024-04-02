@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
                 .email(form.getEmail())
                 .password(passwordEncoder.encode(form.getPassword()))
                 .build();
+        userRepository.save(user);
         accountService.createCardAndAccount(user, cardType, cardName, currency);
     }
 
