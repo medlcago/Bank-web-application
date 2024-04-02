@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
     <th:block th:insert="~{blocks/head :: head}"></th:block>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.20.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/extensions/addrbar/bootstrap-table-addrbar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <style>
+        .form-control {
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,13 +35,16 @@
         </div>
     </div>
 
-    <!-- Tabs for Cards and Accounts -->
+    <!-- Tabs -->
     <ul class="nav nav-tabs mt-4">
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#cards">Карты</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#transfers">Переводы</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#transactions">История</a>
         </li>
     </ul>
 
@@ -98,6 +113,49 @@
                     <button type="submit" class="btn btn-primary">Перевести</button>
                 </form>
             </div>
+        </div>
+
+        <!-- Transactions Tab -->
+        <div id="transactions" class="tab-pane fade">
+            <style>
+                /* Стилизация выпадающего списка */
+                .bootstrap-table .filter-control {
+                    width: 100%;
+                    padding: 6px;
+                    background-color: #fff;
+                }
+
+                /* Перенастройка разметки фильтра */
+                .bootstrap-table .fixed-table-container .fixed-table-body th[data-field="type"] {
+                    position: relative;
+                }
+
+                .bootstrap-table .fixed-table-container .fixed-table-body th[data-field="type"] .filter-control {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    margin: 5px;
+                }
+            </style>
+
+            <table id="transaction-table" data-pagination="true" data-page-size="10"
+                   data-toggle="table" data-sortable="true"
+                   data-classes="table table-striped table-hover" data-search-field="code" data-addrbar="true"
+                   data-filter-control="true" data-alignment-select-control-options="auto">
+                <thead>
+                <tr>
+                    <th data-field="id" data-sortable="true">№</th>
+                    <th data-field="sender">Отправитель</th>
+                    <th data-field="receiver">Получатель</th>
+                    <th data-field="amount" data-sortable="true">Сумма</th>
+                    <th data-field="currency">Валюта</th>
+                    <th data-field="type" data-filter-control="select" data-filter-control-placeholder="Тип">Тип</th>
+                    <th data-field="date">Дата</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
