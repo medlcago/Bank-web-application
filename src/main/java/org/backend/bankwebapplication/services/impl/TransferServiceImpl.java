@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 public class TransferServiceImpl implements TransferService {
     private final UserRepository userRepository;
     private final AccountServiceImpl accountService;
+    private final TransactionServiceImpl transactionService;
 
     @Override
     @Transactional
@@ -38,6 +39,7 @@ public class TransferServiceImpl implements TransferService {
             throw new IllegalArgumentException("На вашем счете недостаточно средств");
         }
 
+        transactionService.createTransaction(sender, recipient, amount, currency, "Перевод средств");
         accountService.updateRecipientAccountBalance(recipientAccount, amount);
         accountService.updateSenderAccountBalance(senderAccount, amount);
     }
