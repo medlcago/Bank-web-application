@@ -2,8 +2,6 @@ package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
-import org.backend.bankwebapplication.models.Account;
-import org.backend.bankwebapplication.models.Card;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.UserService;
@@ -12,38 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final CardServiceImpl cardService;
     private final AccountServiceImpl accountService;
-
-    @Override
-    @Transactional
-    public void createCardAndAccount(User user, String cardType, String cardName, String currency) {
-        // Создание карты
-        Card card = Card.builder()
-                .type(cardType)
-                .name(cardName)
-                .cardNumber(cardService.generateCardNumber(true, "-"))
-                .build();
-
-        // Создание счета и связь его с картой и пользователем
-        Account account = Account.builder()
-                .accountNumber(accountService.generateAccountNumber())
-                .currency(currency.toUpperCase())
-                .card(card)
-                .user(user)
-                .build();
-
-        user.setAccounts(Stream.of(account).collect(Collectors.toList()));
-        userRepository.save(user);
-    }
 
     @Override
     @Transactional
@@ -55,7 +27,7 @@ public class UserServiceImpl implements UserService {
                 .email(form.getEmail())
                 .password(passwordEncoder.encode(form.getPassword()))
                 .build();
-        createCardAndAccount(user, cardType, cardName, currency);
+        accountService.createCardAndAccount(user, cardType, cardName, currency);
     }
 
     @Override

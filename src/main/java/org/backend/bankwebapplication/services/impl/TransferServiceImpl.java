@@ -31,8 +31,8 @@ public class TransferServiceImpl implements TransferService {
             throw new IllegalArgumentException("Максимальная сумма перевода не должна превышать 100 000 " + currency);
         }
 
-        Account senderAccount = accountService.getAccountByCurrency(sender, currency);
-        Account recipientAccount = accountService.getAccountByCurrency(recipient, currency);
+        Account senderAccount = accountService.getUserAccountByCurrency(sender, currency);
+        Account recipientAccount = accountService.getUserAccountByCurrency(recipient, currency);
 
         if (senderAccount.getBalance().compareTo(amount) < 0) {
             throw new IllegalArgumentException("На вашем счете недостаточно средств");
