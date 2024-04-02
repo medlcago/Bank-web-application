@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -70,4 +71,8 @@ public class User {
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> receivedTransactions;
+
+    public String getCreatedAt() {
+        return createdAt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss"));
+    }
 }

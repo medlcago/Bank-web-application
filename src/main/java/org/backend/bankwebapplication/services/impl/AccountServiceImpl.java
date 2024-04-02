@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -59,5 +60,11 @@ public class AccountServiceImpl implements AccountService {
                 .build();
 
         accountRepository.save(account);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Account> findByUserId(Long userId) {
+        return accountRepository.findByUserId(userId);
     }
 }

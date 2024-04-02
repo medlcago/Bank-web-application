@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "transactios")
@@ -40,5 +41,9 @@ public class Transaction {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    public String getCreatedAt() {
+        return createdAt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+    }
 
 }

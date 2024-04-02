@@ -3,7 +3,6 @@ package org.backend.bankwebapplication.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.models.Account;
 import org.backend.bankwebapplication.models.User;
-import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.TransferService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -14,15 +13,15 @@ import java.math.BigDecimal;
 @Service
 @RequiredArgsConstructor
 public class TransferServiceImpl implements TransferService {
-    private final UserRepository userRepository;
+    private final UserServiceImpl userService;
     private final AccountServiceImpl accountService;
     private final TransactionServiceImpl transactionService;
 
     @Override
     @Transactional
     public void transferFunds(String senderUsername, String recipientUsername, BigDecimal amount, String currency) {
-        User sender = userRepository.findByUsername(senderUsername).orElseThrow(() -> new UsernameNotFoundException("Отправитель не найден"));
-        User recipient = userRepository.findByUsername(recipientUsername).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
+        User sender = userService.findByUsername(senderUsername).orElseThrow(() -> new UsernameNotFoundException("Отправитель не найден"));
+        User recipient = userService.findByUsername(recipientUsername).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
 
         if (recipient.getUsername().equals(senderUsername)) {
             throw new IllegalArgumentException("Нельзя переводить деньги самому себе");

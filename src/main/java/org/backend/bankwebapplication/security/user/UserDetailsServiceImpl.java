@@ -1,6 +1,7 @@
 package org.backend.bankwebapplication.security.user;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,12 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    UserRepository userRepository;
-
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     @Transactional
     public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {

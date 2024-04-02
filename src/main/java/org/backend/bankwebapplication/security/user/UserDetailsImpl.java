@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -27,7 +26,7 @@ public class UserDetailsImpl implements UserDetails, Serializable {
         return new UserDetailsImpl(user);
     }
 
-    public Long getID() {
+    public Long getId() {
         return user.getId();
     }
 
@@ -44,7 +43,7 @@ public class UserDetailsImpl implements UserDetails, Serializable {
     }
 
     public String getCreatedAt() {
-        return user.getCreatedAt().format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss"));
+        return user.getCreatedAt();
     }
 
     public String getFullName() {

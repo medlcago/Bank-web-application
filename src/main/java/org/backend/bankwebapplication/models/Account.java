@@ -25,7 +25,7 @@ public class Account {
     private String accountNumber;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     @Column(nullable = false)
