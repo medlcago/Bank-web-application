@@ -1,0 +1,38 @@
+<style>
+    .form-control {
+        border-radius: 10px;
+    }
+</style>
+
+<div id="transfers" class="tab-pane fade">
+    <div class="mt-3">
+        <h5>Перевод средств</h5>
+        <form method="post" th:action="@{/transfer-money}" id="transferForm">
+            <div class="form-group">
+                <label for="recipient">Имя получателя</label>
+                <input type="text" class="form-control transfer-input" id="recipient" name="recipient"
+                       placeholder="medlcago">
+                <small class="invalid-feedback" id="recipientError"></small>
+            </div>
+            <div class="form-group">
+                <label for="amount">Сумма</label>
+                <div class="input-group">
+                    <input type="number" step="any" class="form-control transfer-input" id="amount"
+                           name="amount" min="1"
+                           max="100000" placeholder="500">
+                    <div class="input-group-append">
+                        <select class="custom-select" id="currency" name="currency">
+                            <option th:each="account : ${userAccounts}" th:name="${account.getCurrency}"
+                                    th:text="${account.getCurrency}"></option>
+                        </select>
+                    </div>
+                    <small class="invalid-feedback" id="amountError"></small>
+                </div>
+            </div>
+            <div id="successTransferAlert" class="alert alert-success text-center" style="display: none;"></div>
+            <button type="submit" class="btn btn-primary">Перевести</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{js/transfer-funds.js}"></script>
