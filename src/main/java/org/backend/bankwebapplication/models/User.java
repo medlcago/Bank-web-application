@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -22,45 +23,41 @@ import java.util.List;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @EqualsAndHashCode(of = {"id", "username", "email"})
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Length(min = 5, max = 16)
+    @Length(min = 5, max = 16, message = "Имя пользователя должно содержать от 5 до 16 символов")
     @NonNull
     private String username;
 
-    @Length(min = 2, max = 64)
+    @Length(min = 2, max = 64, message = "Имя должно содержать от 2 до 64 символов")
     @NonNull
     private String firstName;
 
-    @Length(min = 2, max = 64)
+    @Length(min = 2, max = 64, message = "Фамилия должна содержать от 2 до 64 символов.")
     @NonNull
     private String lastName;
 
-    @Length(max = 128)
-    @Email
+    @Length(max = 128, message = "Электронная почта должна содержать не более 128 символов")
+    @Email(message = "Электронная почта должна быть действующей")
     @NonNull
     private String email;
 
-    @Length(min = 6)
+    @Length(min = 6, message = "Пароль должен быть не менее 6 символов")
     @NonNull
     private String password;
 
-    @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name = "is_active")
     @Builder.Default
     private Boolean isActive = true;
 
-    @Column(name = "is_blocked")
     @Builder.Default
     private Boolean isBlocked = false;
 
-    @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

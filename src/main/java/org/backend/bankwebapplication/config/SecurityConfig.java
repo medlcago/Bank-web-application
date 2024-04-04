@@ -10,6 +10,8 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -42,6 +44,14 @@ class SecurityConfig {
                 )
                 .rememberMe(remember ->
                         remember.tokenValiditySeconds(7 * 24 * 60 * 60) // 7 дней в секундах
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .invalidSessionUrl("/login?expired")
+                        .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false)
+                        .expiredUrl("/login?expired")
+
                 )
                 .logout(logout ->
                         logout.permitAll()
