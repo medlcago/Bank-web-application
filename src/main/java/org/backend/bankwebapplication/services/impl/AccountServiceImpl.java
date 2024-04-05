@@ -1,6 +1,8 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.dto.AccountDTO;
+import org.backend.bankwebapplication.mappers.AccountMapper;
 import org.backend.bankwebapplication.models.Account;
 import org.backend.bankwebapplication.models.Card;
 import org.backend.bankwebapplication.models.User;
@@ -66,5 +68,15 @@ public class AccountServiceImpl implements AccountService {
     @Transactional(readOnly = true)
     public List<Account> findByUserId(Long userId) {
         return accountRepository.findByUserId(userId);
+    }
+
+    @Override
+    public AccountDTO toDTO(Account account) {
+        return AccountMapper.INSTANCE.accountToAccountDTO(account);
+    }
+
+    @Override
+    public List<AccountDTO> toDTOList(List<Account> accounts) {
+        return AccountMapper.INSTANCE.accountsToAccountDTOList(accounts);
     }
 }

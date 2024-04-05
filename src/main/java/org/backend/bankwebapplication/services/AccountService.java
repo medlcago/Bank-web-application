@@ -1,5 +1,6 @@
 package org.backend.bankwebapplication.services;
 
+import org.backend.bankwebapplication.dto.AccountDTO;
 import org.backend.bankwebapplication.models.Account;
 import org.backend.bankwebapplication.models.User;
 
@@ -11,4 +12,8 @@ public interface AccountService {
     void createCardAndAccount(User user, String cardType, String cardName, String currency);
 
     List<Account> findByUserId(Long userId);
+
+    AccountDTO toDTO(Account account);
+
+    List<AccountDTO> toDTOList(List<Account> accounts);
 }

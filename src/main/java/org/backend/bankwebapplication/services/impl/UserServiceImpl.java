@@ -1,7 +1,9 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.dto.UserDTO;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
+import org.backend.bankwebapplication.mappers.UserMapper;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.UserService;
@@ -77,5 +79,10 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public Optional<User> findByUsernameOrEmail(String username, String email) {
         return userRepository.findByUsernameOrEmail(username, email);
+    }
+
+    @Override
+    public UserDTO toDTO(User user) {
+        return UserMapper.INSTANCE.userToUserDTO(user);
     }
 }
