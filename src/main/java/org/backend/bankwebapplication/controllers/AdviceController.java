@@ -4,6 +4,7 @@ import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,18 +32,12 @@ public class AdviceController {
     /**
      * Получает данные пользователя из объекта Authentication и добавляет их в модель с атрибутом "user".
      *
-     * @param authentication Объект Authentication, содержащий информацию о текущей аутентификации пользователя.
+     * @param userDetails Объект UserDetailsImpl, содержащий информацию о текущем пользователе.
      * @return Объект UserDetailsImpl, содержащий информацию о пользователе, или null, если аутентификация не выполнена.
      */
     @ModelAttribute("user")
-    public UserDetailsImpl getPrincipal(Authentication authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object principal = authentication.getPrincipal();
-            if (principal instanceof UserDetailsImpl) {
-                return (UserDetailsImpl) principal;
-            }
-        }
-        return null;
+    public UserDetailsImpl getPrincipal(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userDetails;
     }
 
     /**

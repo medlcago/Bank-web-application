@@ -1,10 +1,17 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.dto.TransactionDTO;
+import org.backend.bankwebapplication.mappers.TransactionMapper;
 import org.backend.bankwebapplication.models.Transaction;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.TransactionRepository;
 import org.backend.bankwebapplication.services.TransactionService;
+import org.backend.bankwebapplication.utils.SortUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +38,15 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Transaction> findTransactionsByUserId(Long userId) {
-        return transactionRepository.findBySenderIdOrReceiverId(userId, userId);
+    public Page<Transaction> findByUserId(Long userId, int limit, int offset, String sort, String order) {
+        int pageNumber = offset / limit;
+        Sort sortCriteria = SortUtils.buildSort(sort, order);
+
+        Pageable pageable = PageRequest.of(pageNumber, limit, sortCriteria);
+        return transactionRepository.findBySenderIdOrReceiverId(userId, userId, pageable);
+    }
+
+    public List<TransactionDTO> toDTOList(List<Transaction> transactions) {
+        return TransactionMapper.INSTANCE.toDTOList(transactions);
     }
 }

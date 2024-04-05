@@ -14,26 +14,18 @@
 
 <div class="container mt-5 mb-5">
     <table id="currency-table" data-pagination="true" data-page-list="[10, 20, 50, 100]" data-page-size="10"
-           data-toggle="table" data-sortable="true" data-search="true"
-           data-classes="table table-striped table-hover" data-search-field="code" data-addrbar="true">
+           data-toggle="table" data-sortable="true" data-search="true" data-search-highlight="true"
+           data-show-columns="true" data-show-columns-toggle-all="true"
+           data-classes="table table-striped table-hover" data-addrbar="true" data-url="api/v1/daily-curs">
         <thead>
         <tr>
-            <th data-field="id" data-sortable="true">Код</th>
-            <th data-field="code">Символьный код</th>
+            <th data-field="numCode" data-sortable="true">Код</th>
+            <th data-field="charCode">Символьный код</th>
             <th data-field="nominal">Номинал</th>
             <th data-field="name">Название</th>
             <th data-field="value" data-sortable="true">Значение</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="valute : ${valutes}">
-            <td th:text="${valute.numCode}"></td>
-            <td th:text="${valute.charCode}"></td>
-            <td th:text="${valute.nominal}"></td>
-            <td th:text="${valute.name}"></td>
-            <td th:text="${valute.value + ' ₽'}"></td>
-        </tr>
-        </tbody>
     </table>
 </div>
 </body>

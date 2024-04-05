@@ -1,50 +1,18 @@
 <div id="transactions" class="tab-pane fade">
-    <style>
-        /* Стилизация выпадающего списка */
-        .bootstrap-table .filter-control {
-            width: 100%;
-            padding: 6px;
-            background-color: #fff;
-        }
-
-        /* Перенастройка разметки фильтра */
-        .bootstrap-table .fixed-table-container .fixed-table-body th[data-field="type"] {
-            position: relative;
-        }
-
-        .bootstrap-table .fixed-table-container .fixed-table-body th[data-field="type"] .filter-control {
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin: 5px;
-        }
-    </style>
-
-    <table id="transaction-table" data-pagination="true" data-page-size="10"
-           data-toggle="table" data-sortable="true"
-           data-classes="table table-striped table-hover" data-addrbar="true"
-           data-filter-control="true" data-alignment-select-control-options="auto">
+    <table id="transaction-table" data-pagination="true"
+           data-toggle="table" data-sortable="true" data-side-pagination="server" data-url="api/v1/transactions"
+           data-classes="table table-striped table-hover">
         <thead>
         <tr>
             <th data-field="id" data-sortable="true">№</th>
-            <th data-field="sender">Отправитель</th>
-            <th data-field="receiver">Получатель</th>
+            <th data-field="senderUsername">Отправитель</th>
+            <th data-field="receiverUsername">Получатель</th>
             <th data-field="amount" data-sortable="true">Сумма</th>
             <th data-field="currency">Валюта</th>
-            <th data-field="type" data-filter-control="select" data-filter-control-placeholder="Тип">Тип</th>
-            <th data-field="date" data-sortable="true">Дата</th>
+            <th data-field="type">Тип</th>
+            <th data-field="createdAt" data-sortable="true">Дата</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="transaction : ${userTransactions}">
-            <td th:text="${transaction.id}"></td>
-            <td th:text="${transaction.sender.username}"></td>
-            <td th:text="${transaction.receiver.username}"></td>
-            <td th:text="${transaction.amount}"></td>
-            <td th:text="${transaction.currency}"></td>
-            <td th:text="${transaction.type}"></td>
-            <td th:text="${transaction.createdAt}"></td>
-        </tr>
-        </tbody>
     </table>
 </div>
