@@ -5,6 +5,8 @@ import org.backend.bankwebapplication.dto.AboutMeDTO;
 import org.backend.bankwebapplication.dto.UserDTO;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
 import org.backend.bankwebapplication.mappers.UserMapper;
+import org.backend.bankwebapplication.models.Role;
+import org.backend.bankwebapplication.models.Roles;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.UserService;
@@ -13,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -21,16 +25,19 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AccountServiceImpl accountService;
+    private final RoleServiceImpl roleService;
 
     @Override
     @Transactional
     public void createUser(UserRegistrationForm form, String cardType, String cardName, String currency) {
+        Role roleUser = roleService.findByRole(Roles.ROLE_USER);
         User user = User.builder()
                 .username(form.getUsername())
                 .firstName(form.getFirstName())
                 .lastName(form.getLastName())
                 .email(form.getEmail())
                 .password(passwordEncoder.encode(form.getPassword()))
+                .roles(new ArrayList<>(Arrays.asList(roleUser)))
                 .build();
         userRepository.save(user);
         accountService.createCardAndAccount(user, cardType, cardName, currency);

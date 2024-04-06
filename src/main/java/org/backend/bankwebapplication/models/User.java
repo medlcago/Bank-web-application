@@ -69,6 +69,12 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> receivedTransactions;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
+
     public String getCreatedAt() {
         return createdAt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss"));
     }
