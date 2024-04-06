@@ -1,5 +1,6 @@
 package org.backend.bankwebapplication.services;
 
+import org.backend.bankwebapplication.dto.AboutMeDTO;
 import org.backend.bankwebapplication.dto.UserDTO;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
 import org.backend.bankwebapplication.models.User;
@@ -23,5 +24,7 @@ public interface UserService {
 
     void updatePassword(User user, String newPassword);
 
-    UserDTO toDTO(User user);
+    AboutMeDTO toAboutMeDTO(User user);
+
+    UserDTO toUserDTO(User user);
 }

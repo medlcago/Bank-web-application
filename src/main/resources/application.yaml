@@ -43,3 +43,10 @@ dadata:
   url: https://cleaner.dadata.ru/api/v1/clean/email
   token: ${DADATA_TOKEN}
   secret: ${DADATA_SECRET}
+
+cbr:
+  url: "https://www.cbr-xml-daily.ru/daily_utf8.xml"
+
+api:
+  v1:
+    prefix: /api/v1

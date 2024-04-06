@@ -2,7 +2,8 @@ package org.backend.bankwebapplication.dto;
 
 import java.math.BigDecimal;
 
-public record TransactionDTO(Long id, String senderUsername, String receiverUsername, BigDecimal amount, String currency, String type,
+public record TransactionDTO(Long id, String senderUsername, String receiverUsername, BigDecimal amount,
+                             String currency, String amountWithCurrency, String type,
                              String createdAt) {
 
 }

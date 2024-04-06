@@ -32,7 +32,7 @@ class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/registration").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/forgot-password").permitAll()
+                        .requestMatchers("/forgot-password", "api/v1/forgot-password").permitAll()
                         .requestMatchers("/reset-password/**", "/reset-password").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .anyRequest().authenticated()

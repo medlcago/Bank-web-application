@@ -4,7 +4,7 @@ class ForgotPasswordForm {
         this.errorMessagesContainer = document.querySelectorAll(messageContainers.error);
         this.warningMessageContainer = document.getElementById(messageContainers.warning);
         this.warningMessageText = document.getElementById("warningMessageText");
-        this.fetchUrl = 'forgot-password';
+        this.fetchUrl = 'api/v1/forgot-password';
 
         this.form.addEventListener("submit", this.handleSubmit.bind(this));
         const closeAlertButton = document.getElementById(messageContainers.closeButton);

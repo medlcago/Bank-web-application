@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.controllers;
+package org.backend.bankwebapplication.controllers.html;
 
 import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.services.CurrencyService;

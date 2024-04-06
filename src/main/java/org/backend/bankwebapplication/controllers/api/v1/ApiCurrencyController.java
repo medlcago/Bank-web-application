@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/", produces = "application/json")
+@RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
 public class ApiCurrencyController {
     private final CurrencyService currencyService;
