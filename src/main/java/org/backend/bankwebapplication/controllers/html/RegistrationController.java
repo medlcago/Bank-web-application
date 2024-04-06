@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.controllers;
+package org.backend.bankwebapplication.controllers.html;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

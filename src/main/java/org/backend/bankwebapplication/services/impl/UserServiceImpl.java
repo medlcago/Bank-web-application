@@ -1,6 +1,7 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.dto.AboutMeDTO;
 import org.backend.bankwebapplication.dto.UserDTO;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
 import org.backend.bankwebapplication.mappers.UserMapper;
@@ -82,7 +83,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO toDTO(User user) {
+    public AboutMeDTO toAboutMeDTO(User user) {
+        return UserMapper.INSTANCE.userToAboutMeDTO(user);
+    }
+
+    @Override
+    public UserDTO toUserDTO(User user) {
         return UserMapper.INSTANCE.userToUserDTO(user);
     }
 }

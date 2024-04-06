@@ -32,7 +32,9 @@
 </style>
 
 <script>
-    document.querySelector("form").addEventListener("submit", function () {
-        document.getElementById("loading-overlay").classList.remove("d-none");
+    $(document).ready(function() {
+        $("form").submit(function() {
+            $("#loading-overlay").removeClass("d-none");
+        });
     });
 </script>

@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class TransferMoneyForm {
     @Size(min = 5, max = 16, message = "Имя получателя должно содержать от 5 до 16 символов")
     @NotNull(message = "Имя получателя не может быть пустым")
-    private String recipient;
+    private String receiver;
 
     @Min(value = 1, message = "Некорректная сумма")
     @NotNull(message = "Сумма не может быть пустой")

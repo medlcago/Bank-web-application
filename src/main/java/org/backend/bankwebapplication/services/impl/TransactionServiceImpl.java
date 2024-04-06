@@ -9,7 +9,6 @@ import org.backend.bankwebapplication.repository.TransactionRepository;
 import org.backend.bankwebapplication.services.TransactionService;
 import org.backend.bankwebapplication.utils.SortUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -41,12 +40,13 @@ public class TransactionServiceImpl implements TransactionService {
     public Page<Transaction> findByUserId(Long userId, int limit, int offset, String sort, String order) {
         int pageNumber = offset / limit;
         Sort sortCriteria = SortUtils.buildSort(sort, order);
+        Pageable pageable = SortUtils.buildPageable(pageNumber, limit, sortCriteria);
 
-        Pageable pageable = PageRequest.of(pageNumber, limit, sortCriteria);
         return transactionRepository.findBySenderIdOrReceiverId(userId, userId, pageable);
     }
 
+    @Override
     public List<TransactionDTO> toDTOList(List<Transaction> transactions) {
-        return TransactionMapper.INSTANCE.toDTOList(transactions);
+        return TransactionMapper.INSTANCE.transactionsToTransactionDTOList(transactions);
     }
 }

@@ -48,13 +48,13 @@
                 <div class="card-body">
                     <h4 class="card-title text-center">Форма обратной связи</h4>
                     <form id="feedbackForm" method="post" novalidate>
-                        <div class="form-group">
+                        <div class="form-group" hidden="hidden">
                             <label for="username">Имя пользователя</label>
                             <input type="text" class="form-control feedback" id="username" name="username" placeholder="Введите username"
                                    required maxlength="16" th:value="${user.getUsername}" readonly>
                             <small class="invalid-feedback" id="usernameError"></small>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" hidden="hidden">
                             <label for="email">Email</label>
                             <input type="email" class="form-control feedback" id="email" name="email" placeholder="Введите email"
                                    required maxlength="64" th:value="${user.getEmail}" readonly>

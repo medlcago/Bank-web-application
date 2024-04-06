@@ -1,5 +1,7 @@
 package org.backend.bankwebapplication.utils;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 public class SortUtils {
@@ -17,5 +19,17 @@ public class SortUtils {
         }
         String[] sortProperties = {sort != null ? sort : "id"};
         return Sort.by(direction, sortProperties);
+    }
+
+    /**
+     * Создает объект Pageable для постраничного запроса с указанными параметрами.
+     *
+     * @param pageNumber   номер страницы (начиная с 0)
+     * @param limit        количество элементов на странице
+     * @param sortCriteria критерии сортировки
+     * @return объект Pageable для постраничного запроса
+     */
+    public static Pageable buildPageable(int pageNumber, int limit, Sort sortCriteria) {
+        return PageRequest.of(pageNumber, limit, sortCriteria);
     }
 }

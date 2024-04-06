@@ -19,11 +19,11 @@ public class TransferServiceImpl implements TransferService {
 
     @Override
     @Transactional
-    public void transferFunds(String senderUsername, String recipientUsername, BigDecimal amount, String currency) {
+    public void transferFunds(String senderUsername, String receiverUsername, BigDecimal amount, String currency) {
         User sender = userService.findByUsername(senderUsername).orElseThrow(() -> new UsernameNotFoundException("Отправитель не найден"));
-        User recipient = userService.findByUsername(recipientUsername).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
+        User receiver = userService.findByUsername(receiverUsername).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
 
-        if (recipient.getUsername().equals(senderUsername)) {
+        if (receiver.getUsername().equals(senderUsername)) {
             throw new IllegalArgumentException("Нельзя переводить деньги самому себе");
         }
 
@@ -32,13 +32,13 @@ public class TransferServiceImpl implements TransferService {
         }
 
         Account senderAccount = accountService.getUserAccountByCurrency(sender, currency);
-        Account recipientAccount = accountService.getUserAccountByCurrency(recipient, currency);
+        Account recipientAccount = accountService.getUserAccountByCurrency(receiver, currency);
 
         if (senderAccount.getBalance().compareTo(amount) < 0) {
             throw new IllegalArgumentException("На вашем счете недостаточно средств");
         }
 
-        transactionService.createTransaction(sender, recipient, amount, currency, "Перевод средств");
+        transactionService.createTransaction(sender, receiver, amount, currency, "Перевод средств");
         accountService.updateRecipientAccountBalance(recipientAccount, amount);
         accountService.updateSenderAccountBalance(senderAccount, amount);
     }

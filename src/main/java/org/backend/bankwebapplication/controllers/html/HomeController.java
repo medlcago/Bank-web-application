@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.controllers;
+package org.backend.bankwebapplication.controllers.html;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

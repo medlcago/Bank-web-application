@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/", produces = "application/json")
+@RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
 public class ApiTransactionHistoryController {
     private final TransactionServiceImpl transactionService;

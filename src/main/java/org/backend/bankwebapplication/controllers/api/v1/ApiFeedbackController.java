@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.controllers;
+package org.backend.bankwebapplication.controllers.api.v1;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,17 +9,19 @@ import org.backend.bankwebapplication.dto.response.SuccessResponse;
 import org.backend.bankwebapplication.services.impl.EmailServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
 @RestController
+@RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
 @Slf4j
-public class FeedbackController {
+public class ApiFeedbackController {
     private final EmailServiceImpl emailService;
 
-    @PostMapping(value = "feedback")
+    @PostMapping(value = "/feedback")
     public ResponseEntity<?> feedback(@Valid FeedbackForm form) {
         try {
             log.info(form.toString());
