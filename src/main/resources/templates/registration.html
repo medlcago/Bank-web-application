@@ -17,6 +17,16 @@
     </style>
     <div class="row justify-content-center">
         <div class="col-md-6">
+            <div th:if="${registrationError}">
+                <div class="text-center alert alert-danger alert-dismissible mt-3 fade show" role="alert">
+                    <h4 class="alert-heading">Ошибка регистрации</h4>
+                    <th:block th:text="${registrationError}"></th:block>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+
             <div class="card mt-5">
                 <div class="card-header">
                     <h3 class="text-center">Регистрация</h3>
@@ -28,7 +38,8 @@
                             <input type="text" class="form-control" id="username" th:field="*{username}"
                                    placeholder="durov" required minlength="5" maxlength="16"
                                    th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'">
-                            <small class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+                            <small class="text-danger" th:if="${#fields.hasErrors('username')}"
+                                   th:errors="*{username}"></small>
                         </div>
                         <div class="form-row">
                             <div class="col">
@@ -36,14 +47,16 @@
                                 <input type="text" class="form-control" id="firstName" th:field="*{firstName}"
                                        placeholder="Павел" required minlength="2" maxlength="64"
                                        th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'">
-                                <small class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
+                                <small class="text-danger" th:if="${#fields.hasErrors('firstName')}"
+                                       th:errors="*{firstName}"></small>
                             </div>
                             <div class="col">
                                 <label for="lastName">Фамилия:</label>
                                 <input type="text" class="form-control" id="lastName" th:field="*{lastName}"
                                        placeholder="Дуров" required minlength="2" maxlength="64"
                                        th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'">
-                                <small class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+                                <small class="text-danger" th:if="${#fields.hasErrors('lastName')}"
+                                       th:errors="*{lastName}"></small>
                             </div>
                         </div>
                         <div class="form-group mt-2">
@@ -51,21 +64,25 @@
                             <input type="email" class="form-control" id="email" th:field="*{email}"
                                    placeholder="durov@example.com" required maxlength="128"
                                    th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
-                            <small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                            <small class="text-danger" th:if="${#fields.hasErrors('email')}"
+                                   th:errors="*{email}"></small>
                         </div>
                         <div class="form-group">
                             <label for="password">Пароль:</label>
                             <input type="password" class="form-control" id="password" th:field="*{password}"
                                    placeholder="Введите пароль" required minlength="6" maxlength="32"
                                    th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
-                            <small class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                            <small class="text-danger" th:if="${#fields.hasErrors('password')}"
+                                   th:errors="*{password}"></small>
                         </div>
                         <div class="form-group">
                             <label for="confirmPassword">Подтверждение пароля:</label>
-                            <input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}"
+                            <input type="password" class="form-control" id="confirmPassword"
+                                   th:field="*{confirmPassword}"
                                    placeholder="Подтвердите пароль" required minlength="6" maxlength="32"
                                    th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'">
-                            <small class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
+                            <small class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}"
+                                   th:errors="*{confirmPassword}"></small>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block register">Зарегистрироваться</button>
                     </form>

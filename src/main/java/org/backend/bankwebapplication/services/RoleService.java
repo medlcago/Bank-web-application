@@ -1,10 +1,10 @@
 package org.backend.bankwebapplication.services;
 
+import org.backend.bankwebapplication.models.ERole;
 import org.backend.bankwebapplication.models.Role;
-import org.backend.bankwebapplication.models.Roles;
+
+import java.util.Optional;
 
 public interface RoleService {
-    Role findByName(String name);
-
-    Role findByRole(Roles role);
+    Optional<Role> findByName(ERole name);
 }

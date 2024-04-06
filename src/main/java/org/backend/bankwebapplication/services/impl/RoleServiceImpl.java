@@ -1,11 +1,13 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.models.ERole;
 import org.backend.bankwebapplication.models.Role;
-import org.backend.bankwebapplication.models.Roles;
 import org.backend.bankwebapplication.repository.RoleRepository;
 import org.backend.bankwebapplication.services.RoleService;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,13 +15,7 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
     @Override
-    public Role findByName(String name) {
+    public Optional<Role> findByName(ERole name) {
         return roleRepository.findByName(name);
-    }
-
-    @Override
-    public Role findByRole(Roles role) {
-        String roleName = role.name();
-        return findByName(roleName);
     }
 }

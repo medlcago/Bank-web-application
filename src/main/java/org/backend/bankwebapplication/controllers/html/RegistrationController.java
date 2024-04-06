@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
+import org.backend.bankwebapplication.exceptions.RoleNotFoundException;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
 import org.backend.bankwebapplication.validators.RegistrationValidator;
 import org.springframework.stereotype.Controller;
@@ -43,8 +44,19 @@ public class RegistrationController {
             return "registration";
         }
 
-        userService.createUser(form, "Debit", "Дебетовая карта", "USD");
-        session.setAttribute("registrationSuccess", "Регистрация успешна. Пожалуйста, войдите.");
-        return "redirect:/login";
+        try {
+            userService.createUser(form, "Debit", "Дебетовая карта", "USD");
+            session.setAttribute("registrationSuccess", "Регистрация успешна. Пожалуйста, войдите.");
+            return "redirect:/login";
+        } catch (RoleNotFoundException ex) {
+            log.error("Registration error: {}", ex.getMessage());
+            model.addAttribute("registrationError", ex.getMessage());
+            return "registration";
+        } catch (Exception ex) {
+            log.error("Registration error: {}", ex.getMessage());
+            model.addAttribute("registrationError", "Произошла ошибка при регистрации. Пожалуйста, обратитесь к администратору.");
+            return "registration";
+        }
+
     }
 }

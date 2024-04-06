@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.dto.AboutMeDTO;
 import org.backend.bankwebapplication.dto.UserDTO;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
+import org.backend.bankwebapplication.exceptions.RoleNotFoundException;
 import org.backend.bankwebapplication.mappers.UserMapper;
+import org.backend.bankwebapplication.models.ERole;
 import org.backend.bankwebapplication.models.Role;
-import org.backend.bankwebapplication.models.Roles;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.UserService;
@@ -15,9 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -30,14 +31,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void createUser(UserRegistrationForm form, String cardType, String cardName, String currency) {
-        Role roleUser = roleService.findByRole(Roles.ROLE_USER);
+        Role roleUser = roleService.findByName(ERole.ROLE_USER).orElseThrow(() -> new RoleNotFoundException("Роль " + ERole.ROLE_USER.name() + " не найдена"));
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleUser);
         User user = User.builder()
                 .username(form.getUsername())
                 .firstName(form.getFirstName())
                 .lastName(form.getLastName())
                 .email(form.getEmail())
                 .password(passwordEncoder.encode(form.getPassword()))
-                .roles(new ArrayList<>(Arrays.asList(roleUser)))
+                .roles(roles)
                 .build();
         userRepository.save(user);
         accountService.createCardAndAccount(user, cardType, cardName, currency);
