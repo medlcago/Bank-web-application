@@ -16,7 +16,7 @@ public interface RoleMapper {
         return role.getName().name();
     }
 
-    default List<String> rolesToStringList(Set<Role> roles) {
+    default List<String> roleSetToStringList(Set<Role> roles) {
         return roles.stream()
                 .map(role -> role.getName().name())
                 .collect(Collectors.toList());

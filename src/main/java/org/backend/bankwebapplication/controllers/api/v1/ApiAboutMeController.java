@@ -2,6 +2,7 @@ package org.backend.bankwebapplication.controllers.api.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.dto.AboutMeDTO;
+import org.backend.bankwebapplication.dto.MeDTO;
 import org.backend.bankwebapplication.dto.UserDTO;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
@@ -31,7 +32,7 @@ public class ApiAboutMeController {
         return ResponseEntity.ok(aboutMeDTO);
     }
 
-    @GetMapping(value = "/me")
+    @GetMapping(value = "/me/")
     public ResponseEntity<?> aboutUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
         Optional<User> user = userService.findById(userId);
@@ -39,6 +40,6 @@ public class ApiAboutMeController {
             return ResponseEntity.notFound().build();
         }
         UserDTO userDTO = userService.toUserDTO(user.get());
-        return ResponseEntity.ok(userDTO);
+        return ResponseEntity.ok(new MeDTO(userDTO));
     }
 }

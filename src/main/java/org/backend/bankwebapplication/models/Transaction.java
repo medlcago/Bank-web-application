@@ -37,7 +37,8 @@ public class Transaction {
     private String currency;
 
     @Column(nullable = false)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

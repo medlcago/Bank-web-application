@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.forms.FeedbackForm;
-import org.backend.bankwebapplication.dto.response.ErrorResponse;
+import org.backend.bankwebapplication.dto.response.ErrorListResponse;
 import org.backend.bankwebapplication.dto.response.SuccessResponse;
 import org.backend.bankwebapplication.services.impl.EmailServiceImpl;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class ApiFeedbackController {
             return ResponseEntity.ok(new SuccessResponse("Спасибо! Ваше сообщение принято"));
         } catch (Exception ex) {
             log.error(ex.getMessage());
-            return ResponseEntity.internalServerError().body(new ErrorResponse(Map.of("email", "Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз")));
+            return ResponseEntity.internalServerError().body(new ErrorListResponse(Map.of("email", "Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз")));
         }
     }
 }

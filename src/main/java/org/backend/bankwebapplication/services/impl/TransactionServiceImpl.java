@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.dto.TransactionDTO;
 import org.backend.bankwebapplication.mappers.TransactionMapper;
 import org.backend.bankwebapplication.models.Transaction;
+import org.backend.bankwebapplication.models.TransactionType;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.TransactionRepository;
 import org.backend.bankwebapplication.services.TransactionService;
@@ -24,7 +25,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public void createTransaction(User sender, User receiver, BigDecimal amount, String currency, String type) {
+    public void createTransaction(User sender, User receiver, BigDecimal amount, String currency, TransactionType type) {
         Transaction transaction = Transaction.builder()
                 .sender(sender)
                 .receiver(receiver)

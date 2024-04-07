@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User getByResetPasswordToken(String token) {
+    public Optional<User> findByResetPasswordToken(String token) {
         return userRepository.findByResetPasswordToken(token);
     }
 

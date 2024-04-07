@@ -20,7 +20,7 @@ public interface UserService {
 
     User updateResetPasswordToken(String token, String email);
 
-    User getByResetPasswordToken(String token);
+    Optional<User> findByResetPasswordToken(String token);
 
     void updatePassword(User user, String newPassword);
 

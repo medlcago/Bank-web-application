@@ -2,6 +2,7 @@ package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.dto.AccountDTO;
+import org.backend.bankwebapplication.exceptions.AccountNotFoundException;
 import org.backend.bankwebapplication.mappers.AccountMapper;
 import org.backend.bankwebapplication.models.Account;
 import org.backend.bankwebapplication.models.Card;
@@ -26,11 +27,11 @@ public class AccountServiceImpl implements AccountService {
         return user.getAccounts().stream()
                 .filter(account -> account.getCurrency().equals(currency))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Счет с валютой " + currency + " не найден"));
+                .orElseThrow(() -> new AccountNotFoundException("Пользователь " + user.getUsername() + " не имеет счета с валютой " + currency));
     }
 
     @Transactional
-    public void updateRecipientAccountBalance(Account account, BigDecimal amount) {
+    public void updateReceiverAccountBalance(Account account, BigDecimal amount) {
         BigDecimal newBalance = account.getBalance().add(amount);
         account.setBalance(newBalance);
         accountRepository.save(account);

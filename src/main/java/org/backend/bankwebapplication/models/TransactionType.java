@@ -5,10 +5,11 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ERole {
-    ROLE_ADMIN("Администратор"),
-    ROLE_USER("Пользователь"),
-    ROLE_MODERATOR("Модератор");
+public enum TransactionType {
+    DEPOSIT("Депозит"),
+    WITHDRAWAL("Снятие средств"),
+    TRANSFER("Перевод средств"),
+    OTHER("Другое");
 
     private final String description;
 }

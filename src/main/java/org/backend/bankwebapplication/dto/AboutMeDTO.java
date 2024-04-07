@@ -2,7 +2,5 @@ package org.backend.bankwebapplication.dto;
 
 import java.util.List;
 
-public record AboutMeDTO(Long id, String username, String firstName, String lastName, String fullName, String email,
-                         String createdAt,
-                         Boolean isActive, Boolean isBlocked, List<String> roles, List<AccountDTO> accounts) {
+public record AboutMeDTO(UserDTO user, List<AccountDTO> accounts) {
 }

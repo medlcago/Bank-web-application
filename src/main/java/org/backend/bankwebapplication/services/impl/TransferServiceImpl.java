@@ -1,7 +1,11 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.exceptions.InsufficientFundsException;
+import org.backend.bankwebapplication.exceptions.MaxTransferAmountExceededException;
+import org.backend.bankwebapplication.exceptions.SelfTransferException;
 import org.backend.bankwebapplication.models.Account;
+import org.backend.bankwebapplication.models.TransactionType;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.services.TransferService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,22 +28,22 @@ public class TransferServiceImpl implements TransferService {
         User receiver = userService.findByUsername(receiverUsername).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
 
         if (receiver.getUsername().equals(senderUsername)) {
-            throw new IllegalArgumentException("Нельзя переводить деньги самому себе");
+            throw new SelfTransferException("Нельзя переводить деньги самому себе");
         }
 
         if (amount.compareTo(new BigDecimal("100000")) > 0) {
-            throw new IllegalArgumentException("Максимальная сумма перевода не должна превышать 100 000 " + currency);
+            throw new MaxTransferAmountExceededException("Максимальная сумма перевода не должна превышать 100 000 " + currency);
         }
 
         Account senderAccount = accountService.getUserAccountByCurrency(sender, currency);
         Account recipientAccount = accountService.getUserAccountByCurrency(receiver, currency);
 
         if (senderAccount.getBalance().compareTo(amount) < 0) {
-            throw new IllegalArgumentException("На вашем счете недостаточно средств");
+            throw new InsufficientFundsException("На вашем счете недостаточно средств");
         }
 
-        transactionService.createTransaction(sender, receiver, amount, currency, "Перевод средств");
-        accountService.updateRecipientAccountBalance(recipientAccount, amount);
+        transactionService.createTransaction(sender, receiver, amount, currency, TransactionType.TRANSFER);
+        accountService.updateReceiverAccountBalance(recipientAccount, amount);
         accountService.updateSenderAccountBalance(senderAccount, amount);
     }
 }
