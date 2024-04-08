@@ -10,7 +10,7 @@ import org.backend.bankwebapplication.dto.response.SuccessResponse;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.services.impl.EmailServiceImpl;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
-import org.backend.bankwebapplication.utils.URLUtils;
+import org.backend.bankwebapplication.utils.WebUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +27,7 @@ import java.util.UUID;
 public class ApiForgotPasswordController {
     private final UserServiceImpl userService;
     private final EmailServiceImpl emailService;
+    private final WebUtils webUtils;
 
     @PostMapping(value = "/forgot-password")
     public ResponseEntity<?> processForgotPassword(@Valid ForgotPasswordForm form, HttpServletRequest request) {
@@ -38,7 +39,7 @@ public class ApiForgotPasswordController {
         try {
             User user = userService.updateResetPasswordToken(token, email);
             String username = user.getUsername();
-            String resetPasswordLink = URLUtils.getSiteURL(request) + "/reset-password?token=" + token;
+            String resetPasswordLink = webUtils.getSiteURL(request) + "/reset-password?token=" + token;
             emailService.sendResetPasswordEmail(email, username, resetPasswordLink);
             return ResponseEntity.ok(new SuccessResponse("Мы отправили ссылку для сброса пароля на вашу электронную почту"));
         } catch (UsernameNotFoundException ex) {

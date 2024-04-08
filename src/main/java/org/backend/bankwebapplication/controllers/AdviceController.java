@@ -3,6 +3,7 @@ package org.backend.bankwebapplication.controllers;
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -70,5 +71,17 @@ public class AdviceController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ModelAndView pageNotFound() {
         return new ModelAndView("errors/404");
+    }
+
+    /**
+     * Обрабатывает ошибку 403 (Доступ запрещен) и возвращает шаблон "errors/403".
+     *
+     * @return Модель и представление для отображения страницы ошибки 403.
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ModelAndView pageAccessDenied() {
+        return new ModelAndView("errors/403");
     }
 }

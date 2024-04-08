@@ -17,7 +17,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
@@ -28,6 +27,11 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtRequestsFilter jwtRequestFilter;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final ApiRequestMatcher apiRequestMatcher;
+    private final AnyRequestMatcherExceptApi anyRequestMatcherExceptApi;
+    private final ApiAuthenticationEntryPoint apiAuthenticationEntryPoint;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Bean
     SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
@@ -38,16 +42,23 @@ class SecurityConfig {
                         ))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth").permitAll()
+                        .requestMatchers("/api/v1/daily-curs", "/api/v1/transfer-funds", "/api/v1/transactions", "/api/v1/feedback").authenticated()
                         .requestMatchers("/registration").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/forgot-password", "api/v1/forgot-password").permitAll()
                         .requestMatchers("/reset-password/**", "/reset-password").permitAll()
                         .requestMatchers("/js/**").permitAll()
-                        .anyRequest().authenticated()
-                ).formLogin(form ->
+                        .requestMatchers(apiRequestMatcher).authenticated()
+                        .requestMatchers(anyRequestMatcherExceptApi).authenticated()
+                ).
+                exceptionHandling(exceptionHandling ->
+                        exceptionHandling.accessDeniedHandler(accessDeniedHandler)
+                                .authenticationEntryPoint(apiAuthenticationEntryPoint)
+                )
+                .formLogin(form ->
                         form.loginPage("/login")
                                 .defaultSuccessUrl("/profile", true)
-                                .failureHandler(customAuthenticationFailureHandler())
+                                .failureHandler(customAuthenticationFailureHandler)
                                 .permitAll()
                 )
                 .rememberMe(remember ->
@@ -79,10 +90,6 @@ class SecurityConfig {
         return provider;
     }
 
-    @Bean
-    public AuthenticationFailureHandler customAuthenticationFailureHandler() {
-        return new CustomAuthenticationFailureHandler();
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
