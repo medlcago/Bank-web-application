@@ -22,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
+    private final SortUtils sortUtils;
 
     @Override
     @Transactional
@@ -40,8 +41,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional(readOnly = true)
     public Page<Transaction> findByUserId(Long userId, int limit, int offset, String sort, String order) {
         int pageNumber = offset / limit;
-        Sort sortCriteria = SortUtils.buildSort(sort, order);
-        Pageable pageable = SortUtils.buildPageable(pageNumber, limit, sortCriteria);
+        Sort sortCriteria = sortUtils.buildSort(sort, order);
+        Pageable pageable = sortUtils.buildPageable(pageNumber, limit, sortCriteria);
 
         return transactionRepository.findBySenderIdOrReceiverId(userId, userId, pageable);
     }

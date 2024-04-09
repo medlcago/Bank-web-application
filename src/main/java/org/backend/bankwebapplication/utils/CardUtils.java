@@ -1,7 +1,10 @@
 package org.backend.bankwebapplication.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Random;
 
+@Component
 public class CardUtils {
     /**
      * Генерирует случайный номер карты.
@@ -12,7 +15,7 @@ public class CardUtils {
      * @throws IllegalArgumentException если разделитель не является '-' или ' '
      */
 
-    public static String generateCardNumber(boolean formatted, String delimiter) {
+    public String generateCardNumber(boolean formatted, String delimiter) {
         Random random = new Random();
         String issuerIdentificationNumber = "4"; // Идентификационный номер эмитента карты
         StringBuilder cardNumberBuilder = new StringBuilder(issuerIdentificationNumber);
@@ -42,7 +45,7 @@ public class CardUtils {
      * @param delimiter  разделитель, используемый для форматирования номера карты
      * @return отформатированный номер карты
      */
-    public static String formatCardNumber(String cardNumber, String delimiter) {
+    public String formatCardNumber(String cardNumber, String delimiter) {
         StringBuilder formattedCardNumber = new StringBuilder();
         for (int i = 0; i < cardNumber.length(); i++) {
             if (i > 0 && i % 4 == 0) {
@@ -59,7 +62,7 @@ public class CardUtils {
      * @param number номер, для которого нужно вычислить контрольную сумму
      * @return контрольная сумма по алгоритму Луна
      */
-    public static int calculateLuhnChecksum(String number) {
+    public int calculateLuhnChecksum(String number) {
         int sum = 0;
         boolean alternate = false;
         for (int i = number.length() - 1; i >= 0; i--) {
@@ -82,7 +85,7 @@ public class CardUtils {
      * @param cardNumber номер карты, который нужно проверить
      * @return true, если номер карты валиден, иначе false
      */
-    public static boolean validateCardNumber(String cardNumber) {
+    public boolean validateCardNumber(String cardNumber) {
         cardNumber = cardNumber.replaceAll("\\D", "");
         if (cardNumber.length() != 16) {
             return false;

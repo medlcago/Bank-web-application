@@ -21,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
+    private final AccountUtils accountUtils;
+    private final CardUtils cardUtils;
 
     @Override
     public Account getUserAccountByCurrency(User user, String currency) {
@@ -51,12 +53,12 @@ public class AccountServiceImpl implements AccountService {
         Card card = Card.builder()
                 .type(cardType)
                 .name(cardName)
-                .cardNumber(CardUtils.generateCardNumber(true, "-"))
+                .cardNumber(cardUtils.generateCardNumber(true, "-"))
                 .build();
 
         // Создание счета и связь его с картой и пользователем
         Account account = Account.builder()
-                .accountNumber(AccountUtils.generateAccountNumber())
+                .accountNumber(accountUtils.generateAccountNumber())
                 .currency(currency.toUpperCase())
                 .card(card)
                 .user(user)
