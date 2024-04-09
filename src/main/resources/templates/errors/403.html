@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Forbidden</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .btn-403 {
+            border-radius: 10px;
+        }
+        .custom-message {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="d-flex flex-column justify-content-center align-items-center vh-100">
+    <h1 class="display-4">403</h1>
+    <p class="lead">Access Forbidden</p>
+    <p>Oops! You don't have permission to access this page.</p>
+    <a th:href="@{/profile}" class="btn btn-primary btn-403">Вернуться на сайт</a>
+    <p class="custom-message">If you believe this is a mistake, please contact the administrator.</p>
+</div>
+</body>
+</html>
