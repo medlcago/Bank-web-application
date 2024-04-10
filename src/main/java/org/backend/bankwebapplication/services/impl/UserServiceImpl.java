@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.dto.AboutMeDTO;
 import org.backend.bankwebapplication.dto.UserDTO;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
+import org.backend.bankwebapplication.enums.ECurrency;
+import org.backend.bankwebapplication.enums.ERole;
+import org.backend.bankwebapplication.exceptions.CurrencyNotFoundException;
 import org.backend.bankwebapplication.exceptions.RoleNotFoundException;
 import org.backend.bankwebapplication.mappers.UserMapper;
-import org.backend.bankwebapplication.models.ERole;
-import org.backend.bankwebapplication.models.Role;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.models.*;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.UserService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,13 +28,19 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final AccountServiceImpl accountService;
     private final RoleServiceImpl roleService;
+    private final CurrencyServiceImpl currencyService;
 
     @Override
     @Transactional
-    public void createUser(UserRegistrationForm form, String cardType, String cardName, String currency) {
+    public void createUser(UserRegistrationForm form, String cardType, String cardName, ECurrency currency) throws RoleNotFoundException, CurrencyNotFoundException {
+        // Проверяем, существует ли роль в БД
         Role roleUser = roleService.findByName(ERole.ROLE_USER).orElseThrow(() -> new RoleNotFoundException("Роль " + ERole.ROLE_USER.name() + " не найдена"));
         Set<Role> roles = new HashSet<>();
         roles.add(roleUser);
+
+        // Проверяем, существует ли валюта в БД
+        Currency currencyUser = currencyService.findByName(currency).orElseThrow(() -> new CurrencyNotFoundException("Валюта " + currency.name() + " не найдена"));
+
         User user = User.builder()
                 .username(form.getUsername())
                 .firstName(form.getFirstName())
@@ -43,12 +50,12 @@ public class UserServiceImpl implements UserService {
                 .roles(roles)
                 .build();
         userRepository.save(user);
-        accountService.createCardAndAccount(user, cardType, cardName, currency);
+        accountService.createCardAndAccount(user, cardType, cardName, currencyUser);
     }
 
     @Override
     @Transactional
-    public User updateResetPasswordToken(String token, String email) {
+    public User updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Почта " + email + " не используется на сайте"));
         user.setResetPasswordToken(token);
         return userRepository.save(user);

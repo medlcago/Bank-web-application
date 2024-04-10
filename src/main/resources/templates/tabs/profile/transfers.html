@@ -22,8 +22,8 @@
                            max="100000" placeholder="500">
                     <div class="input-group-append">
                         <select class="custom-select" id="currency" name="currency">
-                            <option th:each="account : ${userAccounts}" th:name="${account.getCurrency}"
-                                    th:text="${account.getCurrency}"></option>
+                            <option th:each="account : ${userAccounts}" th:name="${account.getCurrency.getName.name}"
+                                    th:text="${account.getCurrency.getName.name}"></option>
                         </select>
                     </div>
                     <small class="invalid-feedback" id="amountError"></small>

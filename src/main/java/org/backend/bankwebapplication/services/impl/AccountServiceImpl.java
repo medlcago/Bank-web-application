@@ -6,6 +6,7 @@ import org.backend.bankwebapplication.exceptions.AccountNotFoundException;
 import org.backend.bankwebapplication.mappers.AccountMapper;
 import org.backend.bankwebapplication.models.Account;
 import org.backend.bankwebapplication.models.Card;
+import org.backend.bankwebapplication.models.Currency;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.AccountRepository;
 import org.backend.bankwebapplication.services.AccountService;
@@ -25,11 +26,11 @@ public class AccountServiceImpl implements AccountService {
     private final CardUtils cardUtils;
 
     @Override
-    public Account getUserAccountByCurrency(User user, String currency) {
+    public Account getUserAccountByCurrency(User user, Currency currency) throws AccountNotFoundException {
         return user.getAccounts().stream()
                 .filter(account -> account.getCurrency().equals(currency))
                 .findFirst()
-                .orElseThrow(() -> new AccountNotFoundException("Пользователь " + user.getUsername() + " не имеет счета с валютой " + currency));
+                .orElseThrow(() -> new AccountNotFoundException("Пользователь " + user.getUsername() + " не имеет счета с валютой " + currency.getName().name()));
     }
 
     @Transactional
@@ -48,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public void createCardAndAccount(User user, String cardType, String cardName, String currency) {
+    public void createCardAndAccount(User user, String cardType, String cardName, Currency currency) {
         // Создание карты
         Card card = Card.builder()
                 .type(cardType)
@@ -59,7 +60,7 @@ public class AccountServiceImpl implements AccountService {
         // Создание счета и связь его с картой и пользователем
         Account account = Account.builder()
                 .accountNumber(accountUtils.generateAccountNumber())
-                .currency(currency.toUpperCase())
+                .currency(currency)
                 .card(card)
                 .user(user)
                 .build();

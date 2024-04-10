@@ -2,7 +2,7 @@ package org.backend.bankwebapplication.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.backend.bankwebapplication.models.ERole;
+import org.backend.bankwebapplication.enums.ERole;
 import org.backend.bankwebapplication.models.Role;
 import org.backend.bankwebapplication.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;

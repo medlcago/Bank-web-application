@@ -2,10 +2,9 @@ package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.backend.bankwebapplication.dto.TransactionDTO;
+import org.backend.bankwebapplication.enums.TransactionType;
 import org.backend.bankwebapplication.mappers.TransactionMapper;
-import org.backend.bankwebapplication.models.Transaction;
-import org.backend.bankwebapplication.models.TransactionType;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.models.*;
 import org.backend.bankwebapplication.repository.TransactionRepository;
 import org.backend.bankwebapplication.services.TransactionService;
 import org.backend.bankwebapplication.utils.SortUtils;
@@ -26,7 +25,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public void createTransaction(User sender, User receiver, BigDecimal amount, String currency, TransactionType type) {
+    public void createTransaction(User sender, User receiver, BigDecimal amount, Currency currency, TransactionType type) {
         Transaction transaction = Transaction.builder()
                 .sender(sender)
                 .receiver(receiver)

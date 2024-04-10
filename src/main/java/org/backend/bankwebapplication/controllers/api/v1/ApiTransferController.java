@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.forms.TransferMoneyForm;
 import org.backend.bankwebapplication.dto.response.ErrorListResponse;
 import org.backend.bankwebapplication.dto.response.SuccessResponse;
+import org.backend.bankwebapplication.enums.ECurrency;
 import org.backend.bankwebapplication.exceptions.AccountNotFoundException;
 import org.backend.bankwebapplication.exceptions.InsufficientFundsException;
 import org.backend.bankwebapplication.exceptions.MaxTransferAmountExceededException;
@@ -31,7 +32,8 @@ public class ApiTransferController {
     @PostMapping(value = "/transfer-funds")
     public ResponseEntity<?> transferFunds(@Valid TransferMoneyForm form, Principal principal) {
         try {
-            transferService.transferFunds(principal.getName(), form.getReceiver(), form.getAmount(), form.getCurrency());
+            ECurrency currency = ECurrency.valueOf(form.getCurrency().toUpperCase());
+            transferService.transferFunds(principal.getName(), form.getReceiver(), form.getAmount(), currency);
             return ResponseEntity.ok(new SuccessResponse("Вы успешно перевели " + form.getAmount() + " " + form.getCurrency() + " пользователю " + form.getReceiver()));
         } catch (UsernameNotFoundException ex) {
             log.error(ex.getMessage());

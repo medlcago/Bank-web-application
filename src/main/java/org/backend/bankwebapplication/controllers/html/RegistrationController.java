@@ -5,7 +5,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
+import org.backend.bankwebapplication.exceptions.CurrencyNotFoundException;
 import org.backend.bankwebapplication.exceptions.RoleNotFoundException;
+import org.backend.bankwebapplication.enums.CardType;
+import org.backend.bankwebapplication.enums.ECurrency;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
 import org.backend.bankwebapplication.validators.RegistrationValidator;
 import org.springframework.stereotype.Controller;
@@ -45,11 +48,10 @@ public class RegistrationController {
         }
 
         try {
-            userService.createUser(form, "Debit", "Дебетовая карта", "USD");
+            userService.createUser(form, CardType.DEBIT.name(), CardType.DEBIT.getDescription(), ECurrency.USD);
             session.setAttribute("registrationSuccess", "Регистрация успешна. Пожалуйста, войдите.");
             return "redirect:/login";
-        } catch (RoleNotFoundException ex) {
-            log.error("Registration error: {}", ex.getMessage());
+        } catch (RoleNotFoundException | CurrencyNotFoundException ex) {
             model.addAttribute("registrationError", ex.getMessage());
             return "registration";
         } catch (Exception ex) {

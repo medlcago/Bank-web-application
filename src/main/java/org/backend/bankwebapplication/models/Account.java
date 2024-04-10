@@ -10,8 +10,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+
 @Entity
-@Table(name = "accounts")
+@Table(name = "accounts", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "currency_id"})
+})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,15 +28,16 @@ public class Account {
     private String accountNumber;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(nullable = false)
     @Builder.Default
     private BigDecimal balance = BigDecimal.ZERO;
 
-    @Column(nullable = false)
-    private String currency;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "currency_id")
+    private Currency currency;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

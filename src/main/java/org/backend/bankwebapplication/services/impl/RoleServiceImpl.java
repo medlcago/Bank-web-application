@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.models.ERole;
+import org.backend.bankwebapplication.enums.ERole;
 import org.backend.bankwebapplication.models.Role;
 import org.backend.bankwebapplication.repository.RoleRepository;
 import org.backend.bankwebapplication.services.RoleService;

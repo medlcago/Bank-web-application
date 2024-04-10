@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.models;
+package org.backend.bankwebapplication.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
