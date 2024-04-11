@@ -28,12 +28,12 @@ public class ProfileController {
         List<Account> userAccounts = accountService.findByUserId(userId);
 
         // Получаем все валюты пользователя
-        List<Currency> UserCurrencies = userAccounts.stream().map(Account::getCurrency).toList();
+        List<Currency> userCurrencies = userAccounts.stream().map(Account::getCurrency).toList();
         // Получаем все доступные валюты
         List<Currency> currencies = currencyService.findAll();
         // Оставляем только те валюты, которых нет у пользователя
         List<Currency> missingCurrencies = new ArrayList<>(currencies);
-        missingCurrencies.removeAll(UserCurrencies);
+        missingCurrencies.removeAll(userCurrencies);
 
         // Получаем все доступные типы карт
         CardType[] cardTypes = CardType.values();

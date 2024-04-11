@@ -1,6 +1,11 @@
-package org.backend.bankwebapplication.config;
+package org.backend.bankwebapplication.config.secuirity;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.config.filters.JwtRequestsFilter;
+import org.backend.bankwebapplication.config.matchers.AnyRequestMatcherExceptApi;
+import org.backend.bankwebapplication.config.matchers.ApiRequestMatcher;
+import org.backend.bankwebapplication.config.misc.ApiAuthenticationEntryPoint;
+import org.backend.bankwebapplication.config.misc.CustomAccessDeniedHandler;
 import org.backend.bankwebapplication.security.auth.CustomAuthenticationFailureHandler;
 import org.backend.bankwebapplication.security.auth.CustomAuthenticationProvider;
 import org.backend.bankwebapplication.security.user.UserDetailsServiceImpl;
@@ -45,7 +50,7 @@ class SecurityConfig {
                         .requestMatchers("/api/v1/daily-curs", "/api/v1/transfer-funds", "/api/v1/transactions", "/api/v1/feedback", "/api/v1/create-account").authenticated()
                         .requestMatchers("/registration").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/forgot-password", "api/v1/forgot-password").permitAll()
+                        .requestMatchers("/forgot-password", "/api/v1/forgot-password").permitAll()
                         .requestMatchers("/reset-password/**", "/reset-password").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers(apiRequestMatcher).authenticated()

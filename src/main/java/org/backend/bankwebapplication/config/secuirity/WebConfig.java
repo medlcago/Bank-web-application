@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.config;
+package org.backend.bankwebapplication.config.secuirity;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

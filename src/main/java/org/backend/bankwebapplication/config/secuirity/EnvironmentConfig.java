@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.config;
+package org.backend.bankwebapplication.config.secuirity;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

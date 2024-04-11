@@ -29,7 +29,10 @@
                 <div class="alert alert-success text-center" role="alert" id="createAccountSuccessAlert" style="display: none">
                 </div>
 
-                <div class="alert alert-danger text-center" role="alert" th:unless="${missingCurrencies.size}">
+                <div class="alert alert-danger text-center" role="alert" id="createAccountErrorAlert" style="display: none">
+                </div>
+
+                <div class="alert alert-danger text-center" role="alert" id="limitAccountErrorAlert" th:unless="${missingCurrencies.size}">
                     Вы создали максимальное количество счетов<br>Создание нового счета невозможно :(
                 </div>
 

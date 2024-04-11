@@ -1,47 +1,20 @@
-class CardToggler {
-    constructor(button) {
-        this.button = button;
-        this.cardBody = button.closest('.card-body');
-        this.cardNumber = this.cardBody.querySelector('.card-number');
-        this.cardBalance = this.cardBody.querySelector('.card-balance');
-        this.localStorageKey = button.id;
+$(".toggle-button-card").each(function () {
+    let button = $(this)
+    let cardBody = button.closest(".card-body");
+    let cardNumber = cardBody.find(".card-number");
+    let cardBalance = cardBody.find(".card-balance");
 
-        this.initToggleState();
-        this.button.addEventListener("click", this.toggleCardInfo.bind(this));
-    }
+    let isHidden = localStorage.getItem(button.attr("id")) === "hidden";
+    cardNumber.css("display", isHidden ? "none" : "inline");
+    cardBalance.css("display", isHidden ? "none" : 'inline');
+    button.html(isHidden ? '<i class="fas fa-eye"></i> Показать' : '<i class="fas fa-eye-slash"></i> Скрыть');
 
-    initToggleState() {
-        const isHidden = localStorage.getItem(this.localStorageKey) === "hidden";
-        this.toggleCardVisibility(isHidden);
-        this.showButtonText(isHidden);
-    }
+    button.click(() => {
+        let isHidden = cardNumber.css("display") === "none";
+        cardNumber.css("display", isHidden ? "inline" : "none");
+        cardBalance.css('display', isHidden ? "inline" : 'none');
+        button.html(isHidden ? '<i class="fas fa-eye-slash"></i> Скрыть' : '<i class="fas fa-eye"></i> Показать');
 
-    toggleCard(isHidden) {
-        this.cardNumber.style.display = isHidden ? "inline" : "none";
-        this.cardBalance.style.display = isHidden ? "inline" : "none";
-
-    }
-
-    toggleCardVisibility(isHidden) {
-        this.cardNumber.style.display = isHidden ? "none" : "inline";
-        this.cardBalance.style.display = isHidden ? "none" : 'inline';
-    }
-
-    showButtonText(isHidden) {
-        this.button.innerHTML = isHidden ? '<i class="fas fa-eye"></i> Показать' : '<i class="fas fa-eye-slash"></i> Скрыть';
-    }
-
-    hideButtonText(isHidden) {
-        this.button.innerHTML = isHidden ? '<i class="fas fa-eye-slash"></i> Скрыть' : '<i class="fas fa-eye"></i> Показать';
-    }
-
-    toggleCardInfo() {
-        const isHidden = this.cardNumber.style.display === "none";
-        this.toggleCard(isHidden);
-        this.hideButtonText(isHidden);
-        localStorage.setItem(this.localStorageKey, isHidden ? "visible" : "hidden");
-    }
-}
-
-const toggleButtons = document.querySelectorAll(".toggle-button-card");
-toggleButtons.forEach(button => new CardToggler(button));
+        localStorage.setItem(button.attr("id"), isHidden ? "visible" : "hidden");
+    });
+});

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
-public class AuthController {
+public class ApiAuthController {
     private final AuthServiceImpl authService;
 
     @PostMapping("/auth")

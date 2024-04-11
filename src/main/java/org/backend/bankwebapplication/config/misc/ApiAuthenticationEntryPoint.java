@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.config;
+package org.backend.bankwebapplication.config.misc;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.config;
+package org.backend.bankwebapplication.config.matchers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ApiRequestMatcher implements RequestMatcher {
+public class AnyRequestMatcherExceptApi implements RequestMatcher {
     private final WebUtils webUtils;
 
     @Override
     public boolean matches(HttpServletRequest request) {
-        return webUtils.apiRequestMatcher(request);
+        return webUtils.anyRequestMatcherExceptApi(request);
     }
 }

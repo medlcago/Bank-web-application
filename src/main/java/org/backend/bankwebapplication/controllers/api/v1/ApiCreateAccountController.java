@@ -51,7 +51,7 @@ public class ApiCreateAccountController {
             return ResponseEntity.status(201).body(new SuccessResponse("Счет был успешно создан"));
         } catch (Exception ex) {
             log.error(ex.getMessage());
-            return ResponseEntity.badRequest().body(new ErrorResponse(404, "Произошла неизвестная ошибка"));
+            return ResponseEntity.badRequest().body(new ErrorResponse(400, "Произошла неизвестная ошибка"));
         }
     }
 }

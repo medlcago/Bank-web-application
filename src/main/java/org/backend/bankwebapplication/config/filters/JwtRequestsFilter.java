@@ -1,4 +1,4 @@
-package org.backend.bankwebapplication.config;
+package org.backend.bankwebapplication.config.filters;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,6 +36,7 @@ public class JwtRequestsFilter extends OncePerRequestFilter {
             boolean isValid = jwtTokenUtils.validateToken(jwt);
             if (!isValid) {
                 webUtils.sendJsonResponse(response, 401, new ErrorResponse(401, "Invalid token"));
+                log.info("Invalid token: {}", jwt);
                 return;
             }
             username = jwtTokenUtils.getUsername(jwt);
