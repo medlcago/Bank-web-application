@@ -13,7 +13,7 @@ public interface AccountMapper {
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
     @Mapping(target = "balanceWithCurrency", expression = "java(account.getBalance() + \" \" + account.getCurrency())")
-    @Mapping(target = "currency", expression = "java(account.getCurrency().getName().name())")
+    @Mapping(target = "currency", expression = "java(account.getCurrency().getCode().name())")
     AccountDTO accountToAccountDTO(Account account);
 
     List<AccountDTO> accountsToAccountDTOList(List<Account> accounts);

@@ -30,14 +30,14 @@ public class TransferServiceImpl implements TransferService {
     public void transferFunds(String senderUsername, String receiverUsername, BigDecimal amount, ECurrency currency) {
         User sender = userService.findByUsername(senderUsername).orElseThrow(() -> new UsernameNotFoundException("Отправитель не найден"));
         User receiver = userService.findByUsername(receiverUsername).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
-        Currency currencyObj = currencyService.findByName(currency).orElseThrow(() -> new CurrencyNotFoundException("Валюта не найдена"));
+        Currency currencyObj = currencyService.findByCode(currency).orElseThrow(() -> new CurrencyNotFoundException("Валюта не найдена"));
 
         if (receiver.getUsername().equals(senderUsername)) {
             throw new SelfTransferException("Нельзя переводить деньги самому себе");
         }
 
         if (amount.compareTo(new BigDecimal("100000")) > 0) {
-            throw new MaxTransferAmountExceededException("Максимальная сумма перевода не должна превышать 100 000 " + currencyObj.getName());
+            throw new MaxTransferAmountExceededException("Максимальная сумма перевода не должна превышать 100 000 " + currencyObj.getCode());
         }
 
         Account senderAccount = accountService.getUserAccountByCurrency(sender, currencyObj);

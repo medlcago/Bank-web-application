@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         roles.add(roleUser);
 
         // Проверяем, существует ли валюта в БД
-        Currency currencyUser = currencyService.findByName(currency).orElseThrow(() -> new CurrencyNotFoundException("Валюта " + currency.name() + " не найдена"));
+        Currency currencyUser = currencyService.findByCode(currency).orElseThrow(() -> new CurrencyNotFoundException("Валюта " + currency.name() + " не найдена"));
 
         User user = User.builder()
                 .username(form.getUsername())

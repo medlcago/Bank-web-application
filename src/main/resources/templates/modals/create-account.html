@@ -1,0 +1,47 @@
+<div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="createAccountModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createAccountModalLabel">Создание нового счета</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="createAccountForm" th:if="${missingCurrencies.size}">
+                    <div class="form-group">
+                        <label for="cardType">Тип карты:</label>
+                        <select class="form-control" id="cardType" name="cardType">
+                            <option th:each="cardType : ${cardTypes}" th:name="${cardType.name}"
+                                    th:text="${cardType.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="currencyType">Тип валюты:</label>
+                        <select class="form-control" id="currencyType" name="currencyType">
+                            <option th:each="currency : ${missingCurrencies}" th:name="${currency.getCode.name}"
+                                    th:text="${currency.getCode.name}"></option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="alert alert-success text-center" role="alert" id="createAccountSuccessAlert" style="display: none">
+                </div>
+
+                <div class="alert alert-danger text-center" role="alert" th:unless="${missingCurrencies.size}">
+                    Вы создали максимальное количество счетов<br>Создание нового счета невозможно :(
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCreateAccountModal">Закрыть</button>
+                <button th:if="${missingCurrencies.size}" type="button" class="btn btn-primary" id="createAccountBtn">
+                    Создать
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{js/create-account.js}"></script>

@@ -18,7 +18,7 @@
                                                             th:text="${account.getCard.getCardNumber}"></span>
                     </p>
                     <p class="card-text">Баланс: <span class="card-balance font-weight-bold"
-                                                       th:text="${account.getBalance} + ' ' + ${account.getCurrency.getName.name}"></span>
+                                                       th:text="${account.getBalance} + ' ' + ${account.getCurrency.getCode.name}"></span>
                     </p>
                     <button th:id="'toggle-button-card-' + ${account.getCard.getId}"
                             class="btn btn-link toggle-button-card">

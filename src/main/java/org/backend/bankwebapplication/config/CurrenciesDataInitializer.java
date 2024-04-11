@@ -15,9 +15,9 @@ public class CurrenciesDataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         for (ECurrency eCurrency : ECurrency.values()) {
-            if (currencyRepository.findByName(eCurrency).isEmpty()) {
+            if (currencyRepository.findByCode(eCurrency).isEmpty()) {
                 Currency currency = Currency.builder()
-                        .name(eCurrency)
+                        .code(eCurrency)
                         .build();
                 currencyRepository.save(currency);
             }

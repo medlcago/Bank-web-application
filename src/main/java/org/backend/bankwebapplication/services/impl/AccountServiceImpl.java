@@ -30,7 +30,7 @@ public class AccountServiceImpl implements AccountService {
         return user.getAccounts().stream()
                 .filter(account -> account.getCurrency().equals(currency))
                 .findFirst()
-                .orElseThrow(() -> new AccountNotFoundException("Пользователь " + user.getUsername() + " не имеет счета с валютой " + currency.getName().name()));
+                .orElseThrow(() -> new AccountNotFoundException("Пользователь " + user.getUsername() + " не имеет счета с валютой " + currency.getCode().name()));
     }
 
     @Transactional

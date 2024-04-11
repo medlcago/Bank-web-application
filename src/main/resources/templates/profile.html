@@ -9,6 +9,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/extensions/addrbar/bootstrap-table-addrbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-table/dist/bootstrap-table.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <style>
+        .create-account{
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,8 +30,8 @@
             <h5 class="card-title">Персональная информация</h5>
             <p class="card-text">Полное имя: <span th:text="${user.getFullName}" class="font-weight-bold"></span></p>
             <p class="card-text">Почта: <span th:text="${user.getEmail}" class="font-weight-bold"></span></p>
-            <p class="card-text">Дата регистрации: <span th:text="${user.getCreatedAt}" class="font-weight-bold"></span>
-            </p>
+            <p class="card-text">Дата регистрации: <span th:text="${user.getCreatedAt}" class="font-weight-bold"></span></p>
+            <a href="#" class="btn btn-primary create-account" data-toggle="modal" data-target="#createAccountModal">Создать новый счет</a>
         </div>
     </div>
 
@@ -54,6 +59,9 @@
         <!-- Transactions Tab -->
         <th:block th:insert="~{tabs/profile/transactions.html}"></th:block>
     </div>
+
+    <!-- Modals -->
+    <th:block th:insert="~{modals/create-account.html}"></th:block>
 </div>
 
 </body>

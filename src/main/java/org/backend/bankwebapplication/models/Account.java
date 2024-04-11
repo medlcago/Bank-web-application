@@ -35,7 +35,7 @@ public class Account {
     @Builder.Default
     private BigDecimal balance = BigDecimal.ZERO;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "currency_id")
     private Currency currency;
 

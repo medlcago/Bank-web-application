@@ -20,5 +20,5 @@ public class Currency {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private ECurrency name;
+    private ECurrency code;
 }
