@@ -1,6 +1,7 @@
 volumes:
   database-data:
   pgadmin-data:
+  redis-data:
 
 services:
   database:
@@ -38,3 +39,13 @@ services:
       - "127.0.0.1:5050:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+  redis:
+    restart: always
+    image: redis:7.2-rc-alpine
+    container_name: redis_container
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-data:/data
+    command:
+      redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}

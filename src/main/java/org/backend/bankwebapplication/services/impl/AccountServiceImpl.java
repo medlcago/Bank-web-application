@@ -12,6 +12,8 @@ import org.backend.bankwebapplication.repository.AccountRepository;
 import org.backend.bankwebapplication.services.AccountService;
 import org.backend.bankwebapplication.utils.AccountUtils;
 import org.backend.bankwebapplication.utils.CardUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Transactional
+    @CacheEvict(value = {"AccountService::findByUserId", "TransactionService::findByUserId"}, key = "#account.user.id")
     public void updateReceiverAccountBalance(Account account, BigDecimal amount) {
         BigDecimal newBalance = account.getBalance().add(amount);
         account.setBalance(newBalance);
@@ -41,6 +44,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Transactional
+    @CacheEvict(value = {"AccountService::findByUserId", "TransactionService::findByUserId"}, key = "#account.user.id")
     public void updateSenderAccountBalance(Account account, BigDecimal amount) {
         BigDecimal newBalance = account.getBalance().subtract(amount);
         account.setBalance(newBalance);
@@ -49,6 +53,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "AccountService::findByUserId", key = "#user.id")
     public void createCardAndAccount(User user, String cardType, String cardName, Currency currency) {
         // Создание карты
         Card card = Card.builder()
@@ -70,6 +75,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "AccountService::findByUserId", key = "#userId")
     public List<Account> findByUserId(Long userId) {
         return accountRepository.findByUserId(userId);
     }
