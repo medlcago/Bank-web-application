@@ -10,7 +10,7 @@ import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.repository.TransactionRepository;
 import org.backend.bankwebapplication.services.TransactionService;
 import org.backend.bankwebapplication.utils.SortUtils;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,7 +41,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "TransactionService::findByUserId", key = "#userId")
+    @CachePut(value = "TransactionService::findByUserId", key = "#userId")
     public Page<Transaction> findByUserId(Long userId, int limit, int offset, String sort, String order) {
         int pageNumber = offset / limit;
         Sort sortCriteria = sortUtils.buildSort(sort, order);
