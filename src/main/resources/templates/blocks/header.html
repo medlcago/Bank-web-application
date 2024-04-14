@@ -9,17 +9,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/currency}">Текущий курс валют<span
-                            class="badge badge-primary ml-1">Новое</span></a>
+                    <a class="nav-link" th:href="@{/currency}"><i class="fas fa-coins" style="color: #ffffff;"></i> Текущий курс валют</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">О нас</a>
+                    <a class="nav-link" th:href="@{/about}">О проекте</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Услуги</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/contacts}">Контакты</a>
+                    <a class="nav-link" th:href="@{/contacts}"><i class="far fa-id-card" style="color: #ffffff;"></i> Контакты</a>
                 </li>
                 <li th:if="${authenticated}" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -27,9 +23,13 @@
                         <span class="font-weight-bold text-white" th:text="${user.getUsername}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-dark-50" th:href="@{/profile}">Мой профиль</a>
+                        <a class="dropdown-item text-dark-50" th:href="@{/profile}">
+                            <i class="far fa-user"></i> Мой профиль
+                        </a>
                         <form action="/logout" method="post">
-                            <input type="submit" class="dropdown-item text-danger" value="Выйти">
+                            <button class="dropdown-item text-danger" type="submit">
+                                <i class="fas fa-sign-out-alt"></i> Выйти
+                            </button>
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                         </form>
                     </div>

@@ -31,20 +31,20 @@
             <p class="card-text">Полное имя: <span th:text="${user.getFullName}" class="font-weight-bold"></span></p>
             <p class="card-text">Почта: <span th:text="${user.getEmail}" class="font-weight-bold"></span></p>
             <p class="card-text">Дата регистрации: <span th:text="${user.getCreatedAt}" class="font-weight-bold"></span></p>
-            <a href="#" class="btn btn-primary create-account" data-toggle="modal" data-target="#createAccountModal">Создать новый счет</a>
+            <a href="#" class="btn btn-primary create-account" data-toggle="modal" data-target="#createAccountModal"><i class="fas fa-plus"></i> Создать новый счет</a>
         </div>
     </div>
 
     <!-- Tabs -->
     <ul class="nav nav-tabs mt-4">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#cards">Карты</a>
+            <a class="nav-link active" data-toggle="tab" href="#cards"><i class="far fa-credit-card" style="color: #061632;"></i> Карты</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#transfers">Переводы</a>
+            <a class="nav-link" data-toggle="tab" href="#transfers"><i class="fas fa-wallet" style="color: #061632;"></i> Переводы</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#transactions">История</a>
+            <a class="nav-link" data-toggle="tab" href="#transactions"><i class="fas fa-history" style="color: #061632;"></i> История</a>
         </li>
     </ul>
 
