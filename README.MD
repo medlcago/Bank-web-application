@@ -8,8 +8,6 @@
 | `DB_USERNAME`        | Имя пользователя базы данных              |
 | `DB_PASSWORD`        | Пароль от базы данных                     |
 | `DB_NAME`            | Имя базы данных                           |
-| `DADATA_TOKEN`       | API-ключ DaData                           |
-| `DADATA_SECRET`      | Секретный ключ DaData                     |
 | `EMAIL_USERNAME`     | Адрес электронной почты                   |
 | `EMAIL_PASSWORD`     | Пароль от электронной почты               |
 | `JWT_SECRET`         | Секретный ключ JWT                        |
@@ -17,5 +15,3 @@
 | `REDIS_PORT`         | Порт Redis                                |
 | `REDIS_USERNAME`     | Имя пользователя Redis (если требуется)   |
 | `REDIS_PASSWORD`     | Пароль от Redis (если требуется)          |
-
-P.S. Токен DaData можно получить на странице [профиля](https://dadata.ru/profile/).
