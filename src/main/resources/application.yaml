@@ -44,14 +44,12 @@ spring:
     show-sql: true
 
 forgot-password:
-  resetPasswordMessage: "<p>Привет, %s!</p><p>Вы запросили сброс пароля.</p>
+  reset-password-message: "<p>Привет, %s!</p><p>Вы запросили сброс пароля.</p>
   <p>Перейдите по ссылке ниже, чтобы изменить свой пароль:</p><p><a href=\"%s\">Изменить мой пароль</a></p><br>
   <p>Пожалуйста, проигнорируйте это письмо, если вы его не запрашивали</p>"
 
-dadata:
-  url: https://cleaner.dadata.ru/api/v1/clean/email
-  token: ${DADATA_TOKEN}
-  secret: ${DADATA_SECRET}
+email:
+  regex: "^[a-zA-Z0-9._\\-%]+@(?:gmail\\.com|mail\\.ru|yandex\\.ru|vk\\.com)$"
 
 cbr:
   url: "https://www.cbr-xml-daily.ru/daily_utf8.xml"

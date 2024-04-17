@@ -34,7 +34,7 @@ public class RegistrationValidator implements Validator {
 
         if (repository.findByUsername(username).isPresent()) {
             errors.rejectValue("username", "error.usernameTaken", "Имя пользователя уже используется");
-            log.error("Имя пользователя " + username + " уже используется!");
+            log.error("Имя пользователя {} уже используется!", username);
         }
 
         if (!password.equals(confirmPassword)) {
@@ -44,12 +44,12 @@ public class RegistrationValidator implements Validator {
 
         if (repository.findByEmail(email).isPresent()) {
             errors.rejectValue("email", "error.emailTaken", "Данный адрес уже используется");
-            log.error("Почта " + email + " уже используется!");
+            log.error("Почта {} уже используется!", email);
         }
 
-        if (!emailService.cleanEmail(email).isPersonal()) {
+        if (!emailService.isValidEmail(email)) {
             errors.rejectValue("email", "error.emailInvalid", "Данная почта запрещена для регистрации");
-            log.error("Почта " + email + " запрещена!");
+            log.error("Почта {} запрещена!", email);
         }
 
     }

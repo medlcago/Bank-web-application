@@ -3,55 +3,36 @@ package org.backend.bankwebapplication.services.impl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.response.EmailCleanResponse;
 import org.backend.bankwebapplication.services.EmailService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
-    @Value("${dadata.token}")
-    private String dadataToken;
-
-    @Value("${dadata.secret}")
-    private String dadataSecret;
-
-    @Value("${dadata.url}")
-    private String dadataUrl;
-
-    @Value("${forgot-password.resetPasswordMessage}")
+    @Value("${forgot-password.reset-password-message}")
     private String resetPasswordMessage;
 
     @Value("${spring.mail.username}")
     private String feedbackRecipient;
 
+    @Value("${email.regex}")
+    private String emailRegex;
+
     private final JavaMailSender mailSender;
 
-    @Override
-    public EmailCleanResponse cleanEmail(String email) throws RuntimeException {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Token " + dadataToken);
-        headers.set("X-Secret", dadataSecret);
 
-        HttpEntity<String[]> requestEntity = new HttpEntity<>(new String[]{email}, headers);
-        ResponseEntity<EmailCleanResponse[]> responseEntity = restTemplate.postForEntity(dadataUrl, requestEntity, EmailCleanResponse[].class);
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            EmailCleanResponse[] response = responseEntity.getBody();
-            if (response != null && response.length > 0) {
-                return response[0];
-            }
-        }
-        return null;
+    @Override
+    public boolean isValidEmail(String email) {
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     @Override
