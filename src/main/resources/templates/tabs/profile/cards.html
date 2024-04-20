@@ -13,7 +13,7 @@
                         <i class="far fa-credit-card" style="color: #2a5ab3;"></i>
                         <span th:text="${account.getCard.getName}"></span>
                         <small class="text-muted font-italic"
-                               th:text="' (' + ${account.getAccountNumber} + ')'"></small>
+                               th:text="' (' + ${account.getCurrency.getCode.name} + ')'"></small>
                     </h5>
                     <p class="card-text">Номер карты: <span class="card-number font-weight-bold"
                                                             th:text="${account.getCard.getCardNumber}"></span>
@@ -25,6 +25,7 @@
                             class="btn btn-link toggle-button-card">
                         <i class="fas fa-eye-slash"></i> Скрыть
                     </button>
+                    <a href="#" class="btn top-up-account" data-toggle="modal" data-target="#topUpAccountModal" th:data-currency="${account.getCurrency.getCode.name}"><i class="fas fa-money-bill-wave-alt"></i> Пополнить</a>
                 </div>
             </div>
         </div>

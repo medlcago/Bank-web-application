@@ -47,7 +47,7 @@ class SecurityConfig {
                         ))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth").permitAll()
-                        .requestMatchers("/api/v1/daily-curs", "/api/v1/transfer-funds", "/api/v1/transactions", "/api/v1/feedback", "/api/v1/create-account").authenticated()
+                        .requestMatchers("/api/v1/daily-curs", "/api/v1/transfer-funds", "/api/v1/transactions", "/api/v1/feedback", "/api/v1/create-account", "/api/v1/top-up-account").authenticated()
                         .requestMatchers("/registration").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/forgot-password", "/api/v1/forgot-password").permitAll()

@@ -1,0 +1,36 @@
+<div class="modal fade" id="topUpAccountModal" tabindex="-1" role="dialog" aria-labelledby="topUpAccountModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="topUpAccountModalLabel">Пополнение счета</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="topUpAccountForm">
+                    <div class="form-group">
+                        <label for="amountInput">Сумма пополнения:</label>
+                        <input class="form-control" id="amountInput" name="amount" required>
+                    </div>
+                </form>
+
+                <div class="alert alert-success text-center" role="alert" id="topUpAccountSuccessAlert" style="display: none">
+                </div>
+
+                <div class="alert alert-danger text-center" role="alert" id="topUpAccountErrorAlert" style="display: none">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeTopUpAccountModal">Закрыть</button>
+                <button type="button" class="btn btn-primary" id="topUpAccountBtn">
+                    Пополнить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{js/top-up-account.js}"></script>

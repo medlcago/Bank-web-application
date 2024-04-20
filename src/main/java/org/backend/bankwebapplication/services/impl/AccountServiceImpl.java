@@ -77,7 +77,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional(readOnly = true)
     @Cacheable(value = "AccountService::findByUserId", key = "#userId")
     public List<Account> findByUserId(Long userId) {
-        return accountRepository.findByUserId(userId);
+        return accountRepository.findByUserIdOrderById(userId);
     }
 
     @Override
