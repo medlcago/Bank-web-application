@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{blocks/head :: head}"></th:block>
+</head>
+
+<body>
+<header th:replace="~{blocks/header :: header}"></header>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>О проекте</h1>
+            <p>Проект был создан в рамках курсовой работы по дисциплине "Кроссплатформенная среда исполнения программного обеспечения".</p>
+            <p>Основная цель проекта заключалась в изучении и применении Spring и его составляющих для разработки веб-приложений.</p>
+            <p class="font-weight-bold">Проект включает в себя следующие технологии и инструменты:</p>
+            <ul class="font-italic">
+                <li>Spring Framework</li>
+                <li>Spring Security</li>
+                <li>Spring Boot</li>
+                <li>Spring Data</li>
+                <li>Thymeleaf (шаблонизатор)</li>
+                <li>Bootstrap</li>
+                <li>Redis</li>
+                <li>База данных PostgreSQL</li>
+                <li>Инструмент сборки проекта Maven</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
