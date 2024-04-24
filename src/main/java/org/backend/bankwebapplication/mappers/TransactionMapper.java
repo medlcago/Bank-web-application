@@ -14,7 +14,7 @@ public interface TransactionMapper {
 
     @Mapping(target = "senderUsername", source = "sender.username")
     @Mapping(target = "receiverUsername", source = "receiver.username")
-    @Mapping(target = "amountWithCurrency", expression = "java(transaction.getAmount() + \" \" + transaction.getCurrency())")
+    @Mapping(target = "amountWithCurrency", expression = "java(transaction.getAmount() + \" \" + transaction.getCurrency().getCode())")
     @Mapping(target = "type", expression = "java(transaction.getType().getDescription())")
     @Mapping (target="currency", expression = "java(transaction.getCurrency().getCode().name())")
     TransactionDTO transactionToTransactionDTO(Transaction transaction);

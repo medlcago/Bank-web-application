@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class CurrencyController {
+public class DailyCursController {
     private final CurrencyService currencyService;
 
-    @GetMapping(value = "/currency")
-    public String getCurrency(Model model) {
+    @GetMapping(value = "/daily-curs")
+    public String getDailyCurs(Model model) {
         model.addAttribute("title", "Курс валют");
         model.addAttribute("valutes", currencyService.getDailyCurs().valutes());
-        return "currency";
+        return "daily-curs";
     }
 }
