@@ -48,7 +48,7 @@ public class TransferServiceImpl implements TransferService {
         }
 
         transactionService.createTransaction(sender, receiver, amount, currencyObj, TransactionType.TRANSFER);
-        accountService.updateReceiverAccountBalance(receiverAccount, amount);
-        accountService.updateSenderAccountBalance(senderAccount, amount);
+        accountService.addBalanceToAccount(receiverAccount, amount);
+        accountService.subtractBalanceFromAccount(senderAccount, amount);
     }
 }

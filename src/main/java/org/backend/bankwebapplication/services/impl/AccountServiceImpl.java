@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Transactional
     @CacheEvict(value = {"AccountService::findByUserId", "TransactionService::findByUserId"}, key = "#account.user.id")
-    public void updateReceiverAccountBalance(Account account, BigDecimal amount) {
+        public void addBalanceToAccount(Account account, BigDecimal amount) {
         BigDecimal newBalance = account.getBalance().add(amount);
         account.setBalance(newBalance);
         accountRepository.save(account);
@@ -45,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Transactional
     @CacheEvict(value = {"AccountService::findByUserId", "TransactionService::findByUserId"}, key = "#account.user.id")
-    public void updateSenderAccountBalance(Account account, BigDecimal amount) {
+    public void subtractBalanceFromAccount(Account account, BigDecimal amount) {
         BigDecimal newBalance = account.getBalance().subtract(amount);
         account.setBalance(newBalance);
         accountRepository.save(account);

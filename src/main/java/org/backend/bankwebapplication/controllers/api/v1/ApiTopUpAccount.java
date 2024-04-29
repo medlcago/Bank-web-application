@@ -48,7 +48,7 @@ public class ApiTopUpAccount {
             }
             Account account = accountService.getUserAccountByCurrency(user.get(), currency.get());
 
-            accountService.updateReceiverAccountBalance(account, amount);
+            accountService.addBalanceToAccount(account, amount);
             return ResponseEntity.status(200).body(new SuccessResponse("Счет был успешно пополнен"));
         } catch (Exception ex) {
             log.error(ex.getMessage());
