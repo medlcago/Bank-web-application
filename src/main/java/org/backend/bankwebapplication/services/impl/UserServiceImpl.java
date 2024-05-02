@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final AccountServiceImpl accountService;
     private final RoleServiceImpl roleService;
     private final CurrencyServiceImpl currencyService;
+    private final CardServiceImpl cardService;
 
     @Override
     @Transactional
@@ -97,6 +98,11 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public Optional<User> findByUsernameOrEmail(String username, String email) {
         return userRepository.findByUsernameOrEmail(username, email);
+    }
+
+    public User findByCardNumber(String cardNumber) {
+        Card userCard = cardService.findByCardNumber(cardNumber).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
+        return userCard.getAccount().getUser();
     }
 
     @Override

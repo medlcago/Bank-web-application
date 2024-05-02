@@ -11,6 +11,7 @@ import org.backend.bankwebapplication.models.Account;
 import org.backend.bankwebapplication.models.Currency;
 import org.backend.bankwebapplication.models.User;
 import org.backend.bankwebapplication.services.TransferService;
+import org.backend.bankwebapplication.utils.CardUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,12 +25,19 @@ public class TransferServiceImpl implements TransferService {
     private final AccountServiceImpl accountService;
     private final TransactionServiceImpl transactionService;
     private final CurrencyServiceImpl currencyService;
+    private final CardUtils cardUtils;
 
     @Override
     @Transactional
     public void transferFunds(String senderUsername, String receiverUsername, BigDecimal amount, ECurrency currency) {
         User sender = userService.findByUsername(senderUsername).orElseThrow(() -> new UsernameNotFoundException("Отправитель не найден"));
-        User receiver = userService.findByUsername(receiverUsername).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
+        User receiver;
+
+        if (cardUtils.validateCardNumber(receiverUsername)) {
+            receiver = userService.findByCardNumber(receiverUsername);
+        } else {
+            receiver = userService.findByUsername(receiverUsername).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
+        }
         Currency currencyObj = currencyService.findByCode(currency).orElseThrow(() -> new CurrencyNotFoundException("Валюта не найдена"));
 
         if (receiver.getUsername().equals(senderUsername)) {
