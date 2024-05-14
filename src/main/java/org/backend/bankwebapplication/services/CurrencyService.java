@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.services;
 
-import org.backend.bankwebapplication.dto.response.DailyCursResponse;
-import org.backend.bankwebapplication.models.Currency;
+import org.backend.bankwebapplication.dto.responses.DailyCursResponse;
+import org.backend.bankwebapplication.entities.Currency;
 import org.backend.bankwebapplication.enums.ECurrency;
 
 import java.util.List;

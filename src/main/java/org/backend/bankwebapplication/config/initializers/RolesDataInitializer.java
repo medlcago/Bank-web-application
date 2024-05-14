@@ -3,7 +3,7 @@ package org.backend.bankwebapplication.config.initializers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.bankwebapplication.enums.ERole;
-import org.backend.bankwebapplication.models.Role;
+import org.backend.bankwebapplication.entities.Role;
 import org.backend.bankwebapplication.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

@@ -3,13 +3,13 @@ package org.backend.bankwebapplication.controllers.api.v1;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.backend.bankwebapplication.dto.TopUpAccountDTO;
-import org.backend.bankwebapplication.dto.response.ErrorResponse;
-import org.backend.bankwebapplication.dto.response.SuccessResponse;
+import org.backend.bankwebapplication.dto.forms.TopUpAccountForm;
+import org.backend.bankwebapplication.dto.responses.ErrorResponse;
+import org.backend.bankwebapplication.dto.responses.SuccessResponse;
 import org.backend.bankwebapplication.enums.ECurrency;
-import org.backend.bankwebapplication.models.Account;
-import org.backend.bankwebapplication.models.Currency;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.entities.Account;
+import org.backend.bankwebapplication.entities.Currency;
+import org.backend.bankwebapplication.entities.User;
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.backend.bankwebapplication.services.impl.AccountServiceImpl;
 import org.backend.bankwebapplication.services.impl.CurrencyServiceImpl;
@@ -33,13 +33,13 @@ public class ApiTopUpAccount {
     private final AccountServiceImpl accountService;
 
     @PostMapping(value = "/top-up-account")
-    public ResponseEntity<?> topUpAccount(@Valid TopUpAccountDTO topUpAccountDTO, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<?> topUpAccount(@Valid TopUpAccountForm topUpAccountForm, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
-            Optional<Currency> currency = currencyService.findByCode(ECurrency.valueOf(topUpAccountDTO.getCurrency()));
+            Optional<Currency> currency = currencyService.findByCode(ECurrency.valueOf(topUpAccountForm.getCurrency()));
             if (currency.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
-            BigDecimal amount = topUpAccountDTO.getAmount();
+            BigDecimal amount = topUpAccountForm.getAmount();
             Long userId = userDetails.getId();
 
             Optional<User> user = userService.findById(userId);

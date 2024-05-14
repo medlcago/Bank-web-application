@@ -1,9 +1,9 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.response.DailyCursResponse;
+import org.backend.bankwebapplication.dto.responses.DailyCursResponse;
 import org.backend.bankwebapplication.enums.ECurrency;
-import org.backend.bankwebapplication.models.Currency;
+import org.backend.bankwebapplication.entities.Currency;
 import org.backend.bankwebapplication.repository.CurrencyRepository;
 import org.backend.bankwebapplication.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Value;

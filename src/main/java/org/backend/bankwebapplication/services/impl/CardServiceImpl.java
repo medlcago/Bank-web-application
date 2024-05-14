@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.models.Card;
+import org.backend.bankwebapplication.entities.Card;
 import org.backend.bankwebapplication.repository.CardRepository;
 import org.backend.bankwebapplication.services.CardService;
 import org.springframework.stereotype.Service;

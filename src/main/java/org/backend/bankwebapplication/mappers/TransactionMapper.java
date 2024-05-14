@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.mappers;
 
-import org.backend.bankwebapplication.dto.TransactionDTO;
-import org.backend.bankwebapplication.models.Transaction;
+import org.backend.bankwebapplication.dto.responses.TransactionResponse;
+import org.backend.bankwebapplication.entities.Transaction;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -17,7 +17,7 @@ public interface TransactionMapper {
     @Mapping(target = "amountWithCurrency", expression = "java(transaction.getAmount() + \" \" + transaction.getCurrency().getCode())")
     @Mapping(target = "type", expression = "java(transaction.getType().getDescription())")
     @Mapping (target="currency", expression = "java(transaction.getCurrency().getCode().name())")
-    TransactionDTO transactionToTransactionDTO(Transaction transaction);
+    TransactionResponse transactionToTransactionResponse(Transaction transaction);
 
-    List<TransactionDTO> transactionsToTransactionDTOList(List<Transaction> transactions);
+    List<TransactionResponse> transactionsToTransactionResponseList(List<Transaction> transactions);
 }

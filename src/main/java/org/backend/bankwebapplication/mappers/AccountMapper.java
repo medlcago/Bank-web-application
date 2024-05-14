@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.mappers;
 
-import org.backend.bankwebapplication.dto.AccountDTO;
-import org.backend.bankwebapplication.models.Account;
+import org.backend.bankwebapplication.dto.responses.AccountResponse;
+import org.backend.bankwebapplication.entities.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -14,7 +14,7 @@ public interface AccountMapper {
 
     @Mapping(target = "balanceWithCurrency", expression = "java(account.getBalance() + \" \" + account.getCurrency().getCode())")
     @Mapping(target = "currency", expression = "java(account.getCurrency().getCode().name())")
-    AccountDTO accountToAccountDTO(Account account);
+    AccountResponse accountToAccountResponse(Account account);
 
-    List<AccountDTO> accountsToAccountDTOList(List<Account> accounts);
+    List<AccountResponse> accountsToAccountResponseList(List<Account> accounts);
 }

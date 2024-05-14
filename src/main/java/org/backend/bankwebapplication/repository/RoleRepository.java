@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.repository;
 
 import org.backend.bankwebapplication.enums.ERole;
-import org.backend.bankwebapplication.models.Role;
+import org.backend.bankwebapplication.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

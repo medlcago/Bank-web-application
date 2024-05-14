@@ -1,11 +1,11 @@
 package org.backend.bankwebapplication.mappers;
 
-import org.backend.bankwebapplication.dto.AboutMeDTO;
-import org.backend.bankwebapplication.dto.AccountDTO;
-import org.backend.bankwebapplication.dto.UserDTO;
-import org.backend.bankwebapplication.models.Account;
-import org.backend.bankwebapplication.models.Role;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.dto.responses.AccountResponse;
+import org.backend.bankwebapplication.dto.responses.AboutMeResponse;
+import org.backend.bankwebapplication.dto.responses.UserResponse;
+import org.backend.bankwebapplication.entities.Account;
+import org.backend.bankwebapplication.entities.Role;
+import org.backend.bankwebapplication.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -18,18 +18,18 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping(target = "fullName", expression = "java(user.getFirstName() + \" \" + user.getLastName())")
-    UserDTO userToUserDTO(User user);
+    UserResponse userToUserResponse(User user);
 
-    default AboutMeDTO userToAboutMeDTO(User user) {
-        UserDTO userDTO = userToUserDTO(user);
-        List<AccountDTO> accountDTOs = user.getAccounts().stream()
-                .map(this::accountToAccountDTO)
+    default AboutMeResponse userToAboutMeResponse(User user) {
+        UserResponse userResponse = userToUserResponse(user);
+        List<AccountResponse> accountResponses = user.getAccounts().stream()
+                .map(this::accountToAccountResponse)
                 .collect(Collectors.toList());
-        return new AboutMeDTO(userDTO, accountDTOs);
+        return new AboutMeResponse(userResponse, accountResponses);
     }
 
-    default AccountDTO accountToAccountDTO(Account account) {
-        return Mappers.getMapper(AccountMapper.class).accountToAccountDTO(account);
+    default AccountResponse accountToAccountResponse(Account account) {
+        return Mappers.getMapper(AccountMapper.class).accountToAccountResponse(account);
     }
 
     default String roleToString(Role role) {

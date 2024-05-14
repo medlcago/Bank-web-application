@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.backend.bankwebapplication.dto.response.ErrorResponse;
+import org.backend.bankwebapplication.dto.responses.ErrorResponse;
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.backend.bankwebapplication.security.user.UserDetailsServiceImpl;
 import org.backend.bankwebapplication.utils.JwtTokenUtils;

@@ -3,7 +3,7 @@ package org.backend.bankwebapplication.security.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

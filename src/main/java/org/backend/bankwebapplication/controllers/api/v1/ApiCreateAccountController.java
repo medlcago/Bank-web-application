@@ -2,13 +2,13 @@ package org.backend.bankwebapplication.controllers.api.v1;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.backend.bankwebapplication.dto.CreateAccountDTO;
-import org.backend.bankwebapplication.dto.response.ErrorResponse;
-import org.backend.bankwebapplication.dto.response.SuccessResponse;
+import org.backend.bankwebapplication.dto.requests.CreateAccountRequest;
+import org.backend.bankwebapplication.dto.responses.ErrorResponse;
+import org.backend.bankwebapplication.dto.responses.SuccessResponse;
 import org.backend.bankwebapplication.enums.CardType;
 import org.backend.bankwebapplication.enums.ECurrency;
-import org.backend.bankwebapplication.models.Currency;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.entities.Currency;
+import org.backend.bankwebapplication.entities.User;
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.backend.bankwebapplication.services.CurrencyService;
 import org.backend.bankwebapplication.services.UserService;
@@ -31,11 +31,11 @@ public class ApiCreateAccountController {
     private final AccountServiceImpl accountService;
 
     @PostMapping(value = "/create-account")
-    public ResponseEntity<?> createAccount(CreateAccountDTO createAccountDTO, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<?> createAccount(CreateAccountRequest createAccountRequest, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
             Long userId = userDetails.getId();
-            CardType cardType = createAccountDTO.cardType();
-            ECurrency currencyType = createAccountDTO.currencyType();
+            CardType cardType = createAccountRequest.cardType();
+            ECurrency currencyType = createAccountRequest.currencyType();
 
             Optional<User> user = userService.findById(userId);
             if (user.isEmpty()) {

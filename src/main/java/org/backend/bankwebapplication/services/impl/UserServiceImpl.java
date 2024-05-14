@@ -1,15 +1,15 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.AboutMeDTO;
-import org.backend.bankwebapplication.dto.UserDTO;
+import org.backend.bankwebapplication.dto.responses.UserResponse;
+import org.backend.bankwebapplication.dto.responses.AboutMeResponse;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
 import org.backend.bankwebapplication.enums.ECurrency;
 import org.backend.bankwebapplication.enums.ERole;
 import org.backend.bankwebapplication.exceptions.CurrencyNotFoundException;
 import org.backend.bankwebapplication.exceptions.RoleNotFoundException;
 import org.backend.bankwebapplication.mappers.UserMapper;
-import org.backend.bankwebapplication.models.*;
+import org.backend.bankwebapplication.entities.*;
 import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.UserService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -106,12 +106,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AboutMeDTO toAboutMeDTO(User user) {
-        return UserMapper.INSTANCE.userToAboutMeDTO(user);
+    public AboutMeResponse toAboutMeResponse(User user) {
+        return UserMapper.INSTANCE.userToAboutMeResponse(user);
     }
 
     @Override
-    public UserDTO toUserDTO(User user) {
-        return UserMapper.INSTANCE.userToUserDTO(user);
+    public UserResponse toUserResponse(User user) {
+        return UserMapper.INSTANCE.userToUserResponse(user);
     }
 }

@@ -1,10 +1,10 @@
 package org.backend.bankwebapplication.controllers.api.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.AboutMeDTO;
-import org.backend.bankwebapplication.dto.MeDTO;
-import org.backend.bankwebapplication.dto.UserDTO;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.dto.responses.AboutMeResponse;
+import org.backend.bankwebapplication.dto.responses.MeResponse;
+import org.backend.bankwebapplication.dto.responses.UserResponse;
+import org.backend.bankwebapplication.entities.User;
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.backend.bankwebapplication.services.impl.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +28,8 @@ public class ApiAboutMeController {
         if (user.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        AboutMeDTO aboutMeDTO = userService.toAboutMeDTO(user.get());
-        return ResponseEntity.ok(aboutMeDTO);
+        AboutMeResponse aboutMeResponse = userService.toAboutMeResponse(user.get());
+        return ResponseEntity.ok(aboutMeResponse);
     }
 
     @GetMapping(value = "/me/")
@@ -39,7 +39,7 @@ public class ApiAboutMeController {
         if (user.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        UserDTO userDTO = userService.toUserDTO(user.get());
-        return ResponseEntity.ok(new MeDTO(userDTO));
+        UserResponse userResponse = userService.toUserResponse(user.get());
+        return ResponseEntity.ok(new MeResponse(userResponse));
     }
 }

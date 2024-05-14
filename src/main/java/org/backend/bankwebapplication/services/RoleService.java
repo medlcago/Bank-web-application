@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.services;
 
 import org.backend.bankwebapplication.enums.ERole;
-import org.backend.bankwebapplication.models.Role;
+import org.backend.bankwebapplication.entities.Role;
 
 import java.util.Optional;
 

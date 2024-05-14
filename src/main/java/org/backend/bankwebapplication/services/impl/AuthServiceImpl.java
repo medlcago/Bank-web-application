@@ -1,10 +1,10 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.JwtRequest;
-import org.backend.bankwebapplication.dto.response.ErrorResponse;
-import org.backend.bankwebapplication.dto.response.JwtResponse;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.dto.requests.JwtRequest;
+import org.backend.bankwebapplication.dto.responses.ErrorResponse;
+import org.backend.bankwebapplication.dto.responses.JwtResponse;
+import org.backend.bankwebapplication.entities.User;
 import org.backend.bankwebapplication.services.AuthService;
 import org.backend.bankwebapplication.utils.JwtTokenUtils;
 import org.springframework.http.ResponseEntity;

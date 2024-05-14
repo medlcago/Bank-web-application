@@ -1,6 +1,6 @@
 package org.backend.bankwebapplication.repository;
 
-import org.backend.bankwebapplication.models.Account;
+import org.backend.bankwebapplication.entities.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

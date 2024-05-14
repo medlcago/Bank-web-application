@@ -1,6 +1,6 @@
 package org.backend.bankwebapplication.services;
 
-import org.backend.bankwebapplication.dto.JwtRequest;
+import org.backend.bankwebapplication.dto.requests.JwtRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 

@@ -1,6 +1,6 @@
 package org.backend.bankwebapplication.repository;
 
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

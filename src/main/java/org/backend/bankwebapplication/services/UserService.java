@@ -1,10 +1,10 @@
 package org.backend.bankwebapplication.services;
 
-import org.backend.bankwebapplication.dto.AboutMeDTO;
-import org.backend.bankwebapplication.dto.UserDTO;
+import org.backend.bankwebapplication.dto.responses.UserResponse;
+import org.backend.bankwebapplication.dto.responses.AboutMeResponse;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
 import org.backend.bankwebapplication.enums.ECurrency;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.entities.User;
 
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public interface UserService {
 
     void updatePassword(User user, String newPassword);
 
-    AboutMeDTO toAboutMeDTO(User user);
+    AboutMeResponse toAboutMeResponse(User user);
 
-    UserDTO toUserDTO(User user);
+    UserResponse toUserResponse(User user);
 }

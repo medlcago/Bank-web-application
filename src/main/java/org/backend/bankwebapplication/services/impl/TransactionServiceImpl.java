@@ -1,12 +1,12 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.TransactionDTO;
+import org.backend.bankwebapplication.dto.responses.TransactionResponse;
 import org.backend.bankwebapplication.enums.TransactionType;
 import org.backend.bankwebapplication.mappers.TransactionMapper;
-import org.backend.bankwebapplication.models.Currency;
-import org.backend.bankwebapplication.models.Transaction;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.entities.Currency;
+import org.backend.bankwebapplication.entities.Transaction;
+import org.backend.bankwebapplication.entities.User;
 import org.backend.bankwebapplication.repository.TransactionRepository;
 import org.backend.bankwebapplication.services.TransactionService;
 import org.backend.bankwebapplication.utils.SortUtils;
@@ -51,7 +51,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<TransactionDTO> toDTOList(List<Transaction> transactions) {
-        return TransactionMapper.INSTANCE.transactionsToTransactionDTOList(transactions);
+    public List<TransactionResponse> toTransactionResponseList(List<Transaction> transactions) {
+        return TransactionMapper.INSTANCE.transactionsToTransactionResponseList(transactions);
     }
 }

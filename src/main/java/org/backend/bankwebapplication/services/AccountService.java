@@ -1,9 +1,9 @@
 package org.backend.bankwebapplication.services;
 
-import org.backend.bankwebapplication.dto.AccountDTO;
-import org.backend.bankwebapplication.models.Account;
-import org.backend.bankwebapplication.models.Currency;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.dto.responses.AccountResponse;
+import org.backend.bankwebapplication.entities.Account;
+import org.backend.bankwebapplication.entities.Currency;
+import org.backend.bankwebapplication.entities.User;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface AccountService {
 
     List<Account> findByUserId(Long userId);
 
-    AccountDTO toDTO(Account account);
+    AccountResponse toAccountResponse(Account account);
 
-    List<AccountDTO> toDTOList(List<Account> accounts);
+    List<AccountResponse> toAccountResponseList(List<Account> accounts);
 }

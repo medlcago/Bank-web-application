@@ -1,6 +1,6 @@
 package org.backend.bankwebapplication.services;
 
-import org.backend.bankwebapplication.models.Card;
+import org.backend.bankwebapplication.entities.Card;
 
 import java.util.Optional;
 

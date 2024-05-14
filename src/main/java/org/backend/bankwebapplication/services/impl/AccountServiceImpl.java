@@ -1,13 +1,13 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.AccountDTO;
+import org.backend.bankwebapplication.dto.responses.AccountResponse;
 import org.backend.bankwebapplication.exceptions.AccountNotFoundException;
 import org.backend.bankwebapplication.mappers.AccountMapper;
-import org.backend.bankwebapplication.models.Account;
-import org.backend.bankwebapplication.models.Card;
-import org.backend.bankwebapplication.models.Currency;
-import org.backend.bankwebapplication.models.User;
+import org.backend.bankwebapplication.entities.Account;
+import org.backend.bankwebapplication.entities.Card;
+import org.backend.bankwebapplication.entities.Currency;
+import org.backend.bankwebapplication.entities.User;
 import org.backend.bankwebapplication.repository.AccountRepository;
 import org.backend.bankwebapplication.services.AccountService;
 import org.backend.bankwebapplication.utils.AccountUtils;
@@ -81,12 +81,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDTO toDTO(Account account) {
-        return AccountMapper.INSTANCE.accountToAccountDTO(account);
+    public AccountResponse toAccountResponse(Account account) {
+        return AccountMapper.INSTANCE.accountToAccountResponse(account);
     }
 
     @Override
-    public List<AccountDTO> toDTOList(List<Account> accounts) {
-        return AccountMapper.INSTANCE.accountsToAccountDTOList(accounts);
+    public List<AccountResponse> toAccountResponseList(List<Account> accounts) {
+        return AccountMapper.INSTANCE.accountsToAccountResponseList(accounts);
     }
 }

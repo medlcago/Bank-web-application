@@ -1,6 +1,6 @@
 package org.backend.bankwebapplication.mappers;
 
-import org.backend.bankwebapplication.models.Role;
+import org.backend.bankwebapplication.entities.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

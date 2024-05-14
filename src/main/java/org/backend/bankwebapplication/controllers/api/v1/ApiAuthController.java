@@ -1,7 +1,7 @@
 package org.backend.bankwebapplication.controllers.api.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.JwtRequest;
+import org.backend.bankwebapplication.dto.requests.JwtRequest;
 import org.backend.bankwebapplication.services.impl.AuthServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

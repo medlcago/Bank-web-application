@@ -1,9 +1,9 @@
 package org.backend.bankwebapplication.controllers.api.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.TransactionDTO;
-import org.backend.bankwebapplication.dto.response.TransactionHistoryResponse;
-import org.backend.bankwebapplication.models.Transaction;
+import org.backend.bankwebapplication.dto.responses.TransactionResponse;
+import org.backend.bankwebapplication.dto.responses.TransactionHistoryResponse;
+import org.backend.bankwebapplication.entities.Transaction;
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.backend.bankwebapplication.services.impl.TransactionServiceImpl;
 import org.springframework.data.domain.Page;
@@ -32,10 +32,10 @@ public class ApiTransactionHistoryController {
 
         Page<Transaction> transactions = transactionService.findByUserId(userId, limit, offset, sort, order);
 
-        List<TransactionDTO> transactionDTOs = transactionService.toDTOList(transactions.getContent());
+        List<TransactionResponse> transactionResponses = transactionService.toTransactionResponseList(transactions.getContent());
         return ResponseEntity.ok(new TransactionHistoryResponse(
                 transactions.getTotalElements(),
-                transactionDTOs
+                transactionResponses
         ));
     }
 }
