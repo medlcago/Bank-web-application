@@ -1,8 +1,8 @@
 ## Диаграмма базы данных
-![diagram.png](diagram.png)
+![diagram.png](img/diagram.png)
 ## Страница регистрации
-![registration.png](registration.png)
+![registration.png](img/registration.png)
 ## Страница входа
-![login.png](login.png)
+![login.png](img/login.png)
 ## Страница профиля
-![profile.png](profile.png)
+![profile.png](img/profile.png)
