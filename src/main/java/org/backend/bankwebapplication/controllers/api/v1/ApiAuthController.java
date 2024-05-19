@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
+@RequestMapping(value = "${api.v1.prefix}/auth", produces = "application/json")
 @RequiredArgsConstructor
 public class ApiAuthController {
     private final AuthServiceImpl authService;
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         return authService.createAuthToken(authRequest);
     }
