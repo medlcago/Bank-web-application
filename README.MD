@@ -97,12 +97,16 @@
 
 ### **Требуемые параметры в теле запроса:**
 
-* #### login: Логин пользователя
+* #### username: Имя пользователя
 * #### password: Пароль пользователя
 
 ### **Ответ**
 
-* #### Токен авторизации
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZWRsY2FnbyIsImlhdCI6MTcxNjE4ODM0MSwiZXhwIjoxNzE2MTg5MjQxfQ.NC9h1LlkYbNo4vIqwLn-X9q8NU5AyM-cbWSDR8V36cU"
+}
+```
 
 ### GET /api/v1/daily-curs
 
@@ -110,7 +114,42 @@
 
 ### **Ответ**
 
-* #### Список из курса валют
+```json
+[
+  {
+    "id": "R01010",
+    "numCode": "036",
+    "charCode": "AUD",
+    "nominal": 1,
+    "name": "Австралийский доллар",
+    "value": 60.7158
+  },
+  {
+    "id": "R01020A",
+    "numCode": "944",
+    "charCode": "AZN",
+    "nominal": 1,
+    "name": "Азербайджанский манат",
+    "value": 53.5219
+  },
+  {
+    "id": "R01035",
+    "numCode": "826",
+    "charCode": "GBP",
+    "nominal": 1,
+    "name": "Фунт стерлингов Соединенного королевства",
+    "value": 115.2627
+  },
+  {
+    "id": "R01060",
+    "numCode": "051",
+    "charCode": "AMD",
+    "nominal": 100,
+    "name": "Армянских драмов",
+    "value": 23.4745
+  }
+]
+```
 
 ### GET /api/v1/transactions
 
