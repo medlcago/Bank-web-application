@@ -5,7 +5,6 @@ import org.backend.bankwebapplication.dao.UserDao;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
 import org.backend.bankwebapplication.dto.responses.AboutMeResponse;
 import org.backend.bankwebapplication.dto.responses.UserResponse;
-import org.backend.bankwebapplication.entities.Card;
 import org.backend.bankwebapplication.entities.Currency;
 import org.backend.bankwebapplication.entities.Role;
 import org.backend.bankwebapplication.entities.User;
@@ -30,7 +29,6 @@ public class UserServiceImpl implements UserService {
     private final AccountServiceImpl accountService;
     private final RoleServiceImpl roleService;
     private final CurrencyServiceImpl currencyService;
-    private final CardServiceImpl cardService;
 
     @Override
     @Transactional
@@ -89,11 +87,6 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public Optional<User> findByUsernameOrEmail(String username, String email) {
         return userDao.findByUsernameOrEmail(username, email);
-    }
-
-    public User findByCardNumber(String cardNumber) {
-        Card userCard = cardService.findByCardNumber(cardNumber).orElseThrow(() -> new UsernameNotFoundException("Получатель не найден"));
-        return userCard.getAccount().getUser();
     }
 
     @Override

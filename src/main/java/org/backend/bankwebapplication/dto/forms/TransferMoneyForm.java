@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransferMoneyForm {
-    @Size(min = 5, max = 19, message = "Имя получателя должно содержать от 5 до 19 символов")
+    @Size(min = 5, max = 16, message = "Имя получателя должно содержать от 5 до 16 символов")
     @NotNull(message = "Имя получателя не может быть пустым")
     private String receiver;
 

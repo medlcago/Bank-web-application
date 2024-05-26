@@ -78,20 +78,4 @@ public class CardUtils {
         }
         return (10 - (sum % 10)) % 10;
     }
-
-    /**
-     * Проверяет валидность номера карты.
-     *
-     * @param cardNumber номер карты, который нужно проверить
-     * @return true, если номер карты валиден, иначе false
-     */
-    public boolean validateCardNumber(String cardNumber) {
-        cardNumber = cardNumber.replaceAll("\\D", "");
-        if (cardNumber.length() != 16) {
-            return false;
-        }
-
-        int checksum = calculateLuhnChecksum(cardNumber);
-        return checksum == 0;
-    }
 }
