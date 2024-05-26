@@ -1,10 +1,10 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.dao.CurrencyDao;
 import org.backend.bankwebapplication.dto.responses.DailyCursResponse;
-import org.backend.bankwebapplication.enums.ECurrency;
 import org.backend.bankwebapplication.entities.Currency;
-import org.backend.bankwebapplication.repository.CurrencyRepository;
+import org.backend.bankwebapplication.enums.ECurrency;
 import org.backend.bankwebapplication.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CurrencyServiceImpl implements CurrencyService {
-    private final CurrencyRepository currencyRepository;
+    private final CurrencyDao currencyDao;
 
     @Value("${cbr.url}")
     private String url;
@@ -31,11 +31,11 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public Optional<Currency> findByCode(ECurrency code) {
-        return currencyRepository.findByCode(code);
+        return currencyDao.findByCode(code);
     }
 
     @Override
     public List<Currency> findAll() {
-        return currencyRepository.findAll();
+        return currencyDao.findAll();
     }
 }

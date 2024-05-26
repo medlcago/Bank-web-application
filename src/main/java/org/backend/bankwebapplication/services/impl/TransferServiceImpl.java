@@ -1,15 +1,15 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.entities.Account;
+import org.backend.bankwebapplication.entities.Currency;
+import org.backend.bankwebapplication.entities.User;
 import org.backend.bankwebapplication.enums.ECurrency;
 import org.backend.bankwebapplication.enums.TransactionType;
 import org.backend.bankwebapplication.exceptions.CurrencyNotFoundException;
 import org.backend.bankwebapplication.exceptions.InsufficientFundsException;
 import org.backend.bankwebapplication.exceptions.MaxTransferAmountExceededException;
 import org.backend.bankwebapplication.exceptions.SelfTransferException;
-import org.backend.bankwebapplication.entities.Account;
-import org.backend.bankwebapplication.entities.Currency;
-import org.backend.bankwebapplication.entities.User;
 import org.backend.bankwebapplication.services.TransferService;
 import org.backend.bankwebapplication.utils.CardUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

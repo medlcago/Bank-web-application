@@ -1,19 +1,21 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.responses.UserResponse;
-import org.backend.bankwebapplication.dto.responses.AboutMeResponse;
+import org.backend.bankwebapplication.dao.UserDao;
 import org.backend.bankwebapplication.dto.forms.UserRegistrationForm;
+import org.backend.bankwebapplication.dto.responses.AboutMeResponse;
+import org.backend.bankwebapplication.dto.responses.UserResponse;
+import org.backend.bankwebapplication.entities.Card;
+import org.backend.bankwebapplication.entities.Currency;
+import org.backend.bankwebapplication.entities.Role;
+import org.backend.bankwebapplication.entities.User;
 import org.backend.bankwebapplication.enums.ECurrency;
 import org.backend.bankwebapplication.enums.ERole;
 import org.backend.bankwebapplication.exceptions.CurrencyNotFoundException;
 import org.backend.bankwebapplication.exceptions.RoleNotFoundException;
 import org.backend.bankwebapplication.mappers.UserMapper;
-import org.backend.bankwebapplication.entities.*;
-import org.backend.bankwebapplication.repository.UserRepository;
 import org.backend.bankwebapplication.services.UserService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +26,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserDao userDao;
     private final AccountServiceImpl accountService;
     private final RoleServiceImpl roleService;
     private final CurrencyServiceImpl currencyService;
@@ -42,62 +43,52 @@ public class UserServiceImpl implements UserService {
         // Проверяем, существует ли валюта в БД
         Currency currencyUser = currencyService.findByCode(currency).orElseThrow(() -> new CurrencyNotFoundException("Валюта " + currency.name() + " не найдена"));
 
-        User user = User.builder()
-                .username(form.getUsername())
-                .firstName(form.getFirstName())
-                .lastName(form.getLastName())
-                .email(form.getEmail())
-                .password(passwordEncoder.encode(form.getPassword()))
-                .roles(roles)
-                .build();
-        userRepository.save(user);
+        User user = userDao.create(form.getUsername(), form.getFirstName(), form.getLastName(), form.getEmail(), form.getPassword(), roles);
         accountService.createCardAndAccount(user, cardType, cardName, currencyUser);
     }
 
     @Override
     @Transactional
     public User updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Почта " + email + " не используется на сайте"));
+        User user = userDao.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Почта " + email + " не используется на сайте"));
         user.setResetPasswordToken(token);
-        return userRepository.save(user);
+        return userDao.save(user);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<User> findByResetPasswordToken(String token) {
-        return userRepository.findByResetPasswordToken(token);
+        return userDao.findByResetPasswordToken(token);
     }
 
     @Override
     @Transactional
     public void updatePassword(User user, String newPassword) {
-        user.setPassword(passwordEncoder.encode(newPassword));
-        user.setResetPasswordToken(null);
-        userRepository.save(user);
+        userDao.updatePassword(user, newPassword);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+        return userDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userDao.findByUsername(username);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userDao.findByEmail(email);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<User> findByUsernameOrEmail(String username, String email) {
-        return userRepository.findByUsernameOrEmail(username, email);
+        return userDao.findByUsernameOrEmail(username, email);
     }
 
     public User findByCardNumber(String cardNumber) {

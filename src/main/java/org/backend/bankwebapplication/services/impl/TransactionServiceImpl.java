@@ -1,13 +1,13 @@
 package org.backend.bankwebapplication.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.backend.bankwebapplication.dao.TransactionDao;
 import org.backend.bankwebapplication.dto.responses.TransactionResponse;
-import org.backend.bankwebapplication.enums.TransactionType;
-import org.backend.bankwebapplication.mappers.TransactionMapper;
 import org.backend.bankwebapplication.entities.Currency;
 import org.backend.bankwebapplication.entities.Transaction;
 import org.backend.bankwebapplication.entities.User;
-import org.backend.bankwebapplication.repository.TransactionRepository;
+import org.backend.bankwebapplication.enums.TransactionType;
+import org.backend.bankwebapplication.mappers.TransactionMapper;
 import org.backend.bankwebapplication.services.TransactionService;
 import org.backend.bankwebapplication.utils.SortUtils;
 import org.springframework.cache.annotation.CachePut;
@@ -23,20 +23,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
-    private final TransactionRepository transactionRepository;
     private final SortUtils sortUtils;
+    private final TransactionDao transactionDao;
 
     @Override
     @Transactional
     public void createTransaction(User sender, User receiver, BigDecimal amount, Currency currency, TransactionType type) {
-        Transaction transaction = Transaction.builder()
-                .sender(sender)
-                .receiver(receiver)
-                .amount(amount)
-                .currency(currency)
-                .type(type)
-                .build();
-        transactionRepository.save(transaction);
+        transactionDao.create(sender, receiver, amount, currency, type);
     }
 
     @Override
@@ -47,7 +40,7 @@ public class TransactionServiceImpl implements TransactionService {
         Sort sortCriteria = sortUtils.buildSort(sort, order);
         Pageable pageable = sortUtils.buildPageable(pageNumber, limit, sortCriteria);
 
-        return transactionRepository.findBySenderIdOrReceiverId(userId, userId, pageable);
+        return transactionDao.findByUserId(userId, pageable);
     }
 
     @Override
