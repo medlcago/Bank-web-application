@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController(value="ApiCurrencyController")
 @RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
-public class ApiCurrencyController {
+public class CurrencyController {
     private final CurrencyService currencyService;
 
     @GetMapping(value = "/daily-curs")

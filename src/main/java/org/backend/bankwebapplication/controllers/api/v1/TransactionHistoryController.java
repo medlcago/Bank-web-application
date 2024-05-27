@@ -1,8 +1,8 @@
 package org.backend.bankwebapplication.controllers.api.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.backend.bankwebapplication.dto.responses.TransactionResponse;
 import org.backend.bankwebapplication.dto.responses.TransactionHistoryResponse;
+import org.backend.bankwebapplication.dto.responses.TransactionResponse;
 import org.backend.bankwebapplication.entities.Transaction;
 import org.backend.bankwebapplication.security.user.UserDetailsImpl;
 import org.backend.bankwebapplication.services.impl.TransactionServiceImpl;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController(value = "ApiTransactionHistoryController")
 @RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
-public class ApiTransactionHistoryController {
+public class TransactionHistoryController {
     private final TransactionServiceImpl transactionService;
 
     @GetMapping(value = "/transactions")

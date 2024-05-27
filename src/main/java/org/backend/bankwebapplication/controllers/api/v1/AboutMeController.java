@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-@RestController
+@RestController(value = "ApiAboutMeController")
 @RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
-public class ApiAboutMeController {
+public class AboutMeController {
     private final UserServiceImpl userService;
 
     @GetMapping(value = "/me/accounts")

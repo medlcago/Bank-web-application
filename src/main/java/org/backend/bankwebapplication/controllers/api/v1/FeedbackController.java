@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@RestController
+@RestController(value = "ApiFeedbackController")
 @RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
 @Slf4j
-public class ApiFeedbackController {
+public class FeedbackController {
     private final EmailServiceImpl emailService;
 
     @PostMapping(value = "/feedback")

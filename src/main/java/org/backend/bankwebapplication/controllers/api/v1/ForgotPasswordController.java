@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 import java.util.UUID;
 
-@RestController
+@RestController(value="ApiForgotPasswordController")
 @RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
 @Slf4j
-public class ApiForgotPasswordController {
+public class ForgotPasswordController {
     private final UserServiceImpl userService;
     private final EmailServiceImpl emailService;
     private final WebUtils webUtils;

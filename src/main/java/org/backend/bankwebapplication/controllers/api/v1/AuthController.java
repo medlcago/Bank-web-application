@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController
+@RestController(value="ApiAuthController")
 @RequestMapping(value = "${api.v1.prefix}/auth", produces = "application/json")
 @RequiredArgsConstructor
-public class ApiAuthController {
+public class AuthController {
     private final AuthServiceImpl authService;
 
     @PostMapping("/login")

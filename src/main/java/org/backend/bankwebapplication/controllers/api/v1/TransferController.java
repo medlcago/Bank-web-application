@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.Map;
 
-@RestController
+@RestController(value = "ApiTransferController")
 @RequestMapping(value = "${api.v1.prefix}", produces = "application/json")
 @RequiredArgsConstructor
 @Slf4j
-public class ApiTransferController {
+public class TransferController {
     private final TransferServiceImpl transferService;
 
     @PostMapping(value = "/transfer-funds")
